@@ -1,128 +1,316 @@
-# 📤 Instrucțiuni pentru Trimiterea Proiectului
+# Proiect E-Commerce - Aplicație Full-Stack
 
-## Opțiunea 1: Arhivă ZIP (Recomandat)
+## 📋 Informații Generale
 
-### Pași:
+**Student:** [Numele tău]  
+**Disciplina:** [Numele disciplinei]  
+**Data:** 13 Noiembrie 2025
 
-1. **Oprește toate procesele:**
+---
 
-   - Oprește serverul backend (Ctrl+C)
-   - Oprește serverul frontend (Ctrl+C)
-   - Oprește Docker: `docker-compose down`
+## 🌐 Link-uri Aplicație LIVE
 
-2. **Curăță fișierele temporare:**
+### Frontend (Vercel)
 
-   ```bash
-   # Șterge node_modules
-   rm -rf frontend/node_modules
-   rm -rf backend/node_modules
+**URL:** https://ecommerce-frontend-navy.vercel.app
 
-   # Șterge build-uri
-   rm -rf frontend/.next
-   rm -rf backend/dist
-   ```
+### Backend API (Render)
 
-3. **Creează arhiva:**
+**URL:** https://ecommerce-fullstack-3y1b.onrender.com
 
-   - Click dreapta pe folderul `app`
-   - Selectează "Send to" → "Compressed (zipped) folder"
-   - Sau folosește: `Compress-Archive -Path app -DestinationPath proiect-ecommerce.zip`
+### Repository GitHub
 
-4. **Verifică dimensiunea:**
+**Frontend:** https://github.com/yfuugvvjvk-glitch/ecommerce-frontend  
+**Backend:** https://github.com/yfuugvvjvk-glitch/ecommerce-backend  
+**Repository Principal:** https://github.com/yfuugvvjvk-glitch/ecommerce-fullstack
 
-   - Arhiva ar trebui să fie ~5-10 MB (fără node_modules)
-   - Dacă e mai mare, verifică că ai șters node_modules
+---
 
-5. **Trimite:**
-   - Upload pe platformă (Google Drive, WeTransfer, etc.)
-   - Sau trimite direct prin email dacă e sub 25MB
+## 👤 Credențiale de Testare
 
-## Opțiunea 2: GitHub Repository (Profesional)
+### Cont Administrator
 
-### Pași:
+- **Email:** admin@example.com
+- **Parolă:** Admin1234
+- **Acces:** Panou admin complet, gestionare produse, utilizatori, comenzi, voucher-uri, oferte
 
-1. **Inițializează Git:**
+### Conturi Utilizatori
 
-   ```bash
-   cd app
-   git init
-   git add .
-   git commit -m "Initial commit - Full-Stack E-Commerce App"
-   ```
+1. **Ion Popescu**
 
-2. **Creează repository pe GitHub:**
+   - Email: ion.popescu@example.com
+   - Parolă: User1234
 
-   - Mergi pe github.com
-   - Click "New repository"
-   - Nume: `ecommerce-fullstack`
-   - Public sau Private (după preferință)
+2. **Maria Ionescu**
 
-3. **Push codul:**
+   - Email: maria.ionescu@example.com
+   - Parolă: User1234
 
-   ```bash
-   git remote add origin https://github.com/USERNAME/ecommerce-fullstack.git
-   git branch -M main
-   git push -u origin main
-   ```
+3. **Andrei Popa**
+   - Email: andrei.popa@example.com
+   - Parolă: User1234
 
-4. **Trimite link-ul:**
-   - Trimite profesorului link-ul: `https://github.com/USERNAME/ecommerce-fullstack`
+### Voucher-uri Active
 
-## ⚠️ CE NU TREBUIE SĂ INCLUZI:
+- **WELCOME10** - 10% reducere (valabil 60 zile)
+- **SUMMER50** - 50 RON reducere (valabil 30 zile)
 
-❌ **node_modules/** - Se instalează cu `npm install`
-❌ **frontend/.next/** - Build Next.js
-❌ **backend/dist/** - Build backend
-❌ **.env** - Conține date sensibile (trimite doar .env.example)
-❌ **postgres-data/** - Volumele Docker
-❌ **backend/public/uploads/** - Imagini uploadate
+---
 
-## ✅ CE TREBUIE SĂ INCLUZI:
+## 🚀 Tehnologii Utilizate
 
-✅ **Codul sursă** (frontend/ și backend/)
-✅ **docker-compose.yml**
-✅ **README.md**
-✅ **.env.example** (template-uri)
-✅ **package.json** (ambele)
-✅ **prisma/schema.prisma**
-✅ **prisma/seed.ts**
+### Frontend
 
-## 📝 Notă pentru Profesor:
+- **Framework:** Next.js 16.0.1 (React 19.2.0)
+- **Styling:** Tailwind CSS 4
+- **Form Management:** React Hook Form + Zod
+- **HTTP Client:** Axios
+- **Deployment:** Vercel
 
-Include în email:
+### Backend
+
+- **Runtime:** Node.js
+- **Framework:** Fastify 5.6.2
+- **Database:** PostgreSQL (Prisma ORM 6.19.0)
+- **Authentication:** JWT (JSON Web Tokens)
+- **Security:** Helmet, CORS, Rate Limiting
+- **File Upload:** Multipart
+- **Deployment:** Render.com
+
+### Database
+
+- **PostgreSQL** (hosted on Render)
+- **ORM:** Prisma
+- **Migrații:** 7 migrații complete
+
+---
+
+## ✨ Funcționalități Implementate
+
+### Pentru Utilizatori
+
+- ✅ Autentificare și înregistrare (JWT)
+- ✅ Vizualizare produse cu filtrare și căutare
+- ✅ Sistem de categorii (6 categorii: Electronice, Fashion, Casă & Grădină, Sport, Jucării, Cărți)
+- ✅ Coș de cumpărături persistent
+- ✅ Plasare comenzi (Card sau Ramburs)
+- ✅ Istoric comenzi cu tracking status
+- ✅ Sistem de review-uri și rating
+- ✅ Lista de favorite
+- ✅ Profil utilizator editabil cu avatar
+- ✅ Aplicare voucher-uri la checkout
+- ✅ Cereri de voucher-uri
+- ✅ Chatbot AI pentru asistență (fallback inteligent)
+- ✅ Istoric de navigare
+- ✅ Multilingv (Română/Engleză)
+
+### Pentru Administratori
+
+- ✅ Dashboard complet de administrare
+- ✅ Gestionare produse (CRUD complet)
+- ✅ Gestionare categorii
+- ✅ Gestionare utilizatori
+- ✅ Gestionare comenzi (actualizare status)
+- ✅ Gestionare oferte și promoții
+- ✅ Gestionare voucher-uri (creare, editare, dezactivare)
+- ✅ Aprobare/respingere cereri voucher-uri
+- ✅ Upload imagini pentru produse și oferte
+- ✅ Statistici și rapoarte
+
+### Funcționalități Tehnice
+
+- ✅ Autentificare securizată cu JWT
+- ✅ Rate limiting pentru protecție API
+- ✅ Validare date cu Zod
+- ✅ Responsive design (mobile-first)
+- ✅ Optimizare imagini
+- ✅ Lazy loading componente
+- ✅ Cron jobs pentru curățare automată
+- ✅ Error handling complet
+- ✅ Logging structurat
+- ✅ CORS configurat corect
+- ✅ Security headers (Helmet)
+
+---
+
+## 📊 Date în Baza de Date
+
+### Produse: 12 produse
+
+- 2 Electronice (Laptop, Căști gaming)
+- 2 Fashion (Cămașă, Rochie)
+- 2 Casă & Grădină (Mașină tuns gazon, Despicător busteni)
+- 2 Sport (Bancă exerciții, Gantere)
+- 2 Jucării (Bicicletă, Cub Rubik)
+- 2 Cărți (Chiriașa, Soarele negru)
+
+### Utilizatori: 4 utilizatori
+
+- 1 Administrator
+- 3 Utilizatori normali
+
+### Comenzi: 2 comenzi
+
+- 1 Livrată
+- 1 În procesare
+
+### Oferte: 3 oferte active
+
+- Black Friday Electronice (30% reducere)
+- Ofertă Fashion (25% reducere)
+- Sport & Fitness (20% reducere)
+
+### Voucher-uri: 2 voucher-uri active
+
+### Review-uri: 5 review-uri
+
+### Cereri Voucher: 3 cereri (1 pending, 1 aprobată, 1 respinsă)
+
+---
+
+## 🔧 Cum să Testați Aplicația
+
+### 1. Testare ca Utilizator
+
+1. Accesați: https://ecommerce-frontend-navy.vercel.app
+2. Click pe "Înregistrare" și creați un cont SAU folosiți: ion.popescu@example.com / User1234
+3. Navigați prin categorii și produse
+4. Adăugați produse în coș
+5. Mergeți la checkout și plasați o comandă
+6. Aplicați voucher-ul "WELCOME10" pentru 10% reducere
+7. Verificați istoricul comenzilor
+8. Lăsați un review la un produs
+9. Testați chatbot-ul AI
+
+### 2. Testare ca Administrator
+
+1. Loghează-te cu: admin@example.com / Admin1234
+2. Accesați panoul de administrare
+3. Creați un produs nou
+4. Editați o comandă existentă
+5. Creați un voucher nou
+6. Aprobați/respingeți cereri de voucher-uri
+7. Gestionați utilizatorii
+
+### 3. Testare API (Opțional)
+
+```bash
+# Health check
+curl https://ecommerce-fullstack-3y1b.onrender.com/health
+
+# Get products
+curl https://ecommerce-fullstack-3y1b.onrender.com/api/data/items
+
+# Get categories
+curl https://ecommerce-fullstack-3y1b.onrender.com/api/categories
+```
+
+---
+
+## 📁 Structura Proiectului
 
 ```
-Bună ziua,
-
-Vă trimit proiectul de Full-Stack E-Commerce.
-
-Instrucțiuni de instalare:
-1. Dezarhivați proiectul
-2. Urmați pașii din README.md
-3. Rulați: docker-compose up -d
-4. Instalați dependențele: npm install (în backend și frontend)
-5. Rulați migrările: npx prisma migrate dev (în backend)
-6. Pornește aplicația: npm run dev (în ambele foldere)
-
-Aplicația va rula pe:
-- Frontend: http://localhost:3000
-- Backend: http://localhost:3001
-
-Cont admin de test:
-- Email: admin@example.com
-- Parolă: admin123
-
-Mulțumesc!
+ecommerce-fullstack/
+├── frontend/                 # Aplicația Next.js
+│   ├── app/                 # Pages și layouts
+│   ├── components/          # Componente React
+│   ├── lib/                 # Utilități și API client
+│   └── public/              # Imagini și assets
+│
+├── backend/                 # API Fastify
+│   ├── src/
+│   │   ├── routes/         # Endpoint-uri API
+│   │   ├── services/       # Logică business
+│   │   ├── middleware/     # Autentificare, validare
+│   │   └── utils/          # Utilități
+│   ├── prisma/
+│   │   ├── schema.prisma   # Schema bazei de date
+│   │   ├── migrations/     # Migrații database
+│   │   └── seed.ts         # Date inițiale
+│   └── public/uploads/     # Fișiere încărcate
+│
+└── README.md
 ```
 
-## 🎯 Checklist Final:
+---
 
-- [ ] README.md complet
-- [ ] .env.example creat (fără date reale)
-- [ ] node_modules șters
-- [ ] .next șters
-- [ ] dist șters
-- [ ] docker-compose.yml inclus
-- [ ] Arhiva creată
-- [ ] Dimensiune verificată (<50MB)
-- [ ] Testat că se dezarhivează corect
+## 🔐 Securitate
+
+- ✅ Parole hash-uite cu bcrypt (10 rounds)
+- ✅ JWT pentru autentificare
+- ✅ Rate limiting (100 req/min general, 5 req/min pentru auth)
+- ✅ CORS configurat
+- ✅ Helmet pentru security headers
+- ✅ Validare input cu Zod
+- ✅ SQL injection protection (Prisma ORM)
+- ✅ XSS protection
+
+---
+
+## 📝 Note Importante
+
+1. **Prima încărcare:** Backend-ul pe Render poate dura 30-60 secunde la prima accesare (free tier)
+2. **Imagini:** Imaginile sunt servite din folderul `/public/images`
+3. **Database:** PostgreSQL hosted pe Render
+4. **Deployment:** Automatic deployment la fiecare push pe GitHub
+
+---
+
+## 🎯 Caracteristici Notabile
+
+### 1. AI Chatbot Inteligent
+
+- Răspunde la întrebări despre produse, comenzi, voucher-uri
+- Citește date real-time din baza de date
+- Fallback inteligent când OpenAI API nu este disponibil
+
+### 2. Sistem Complet de Voucher-uri
+
+- Utilizatorii pot cere voucher-uri
+- Adminii pot aproba/respinge cereri
+- Voucher-uri cu expirare automată
+- Suport pentru reduceri procentuale și fixe
+
+### 3. Gestionare Comenzi Avansată
+
+- Multiple statusuri (Pending, Processing, Shipping, Delivered, Cancelled)
+- Tracking complet
+- Istoric detaliat
+- Notificări
+
+### 4. Cleanup Automat
+
+- Cron job zilnic la 3:00 AM
+- Șterge voucher-uri expirate
+- Șterge cereri vechi de voucher-uri
+- Curăță voucher-uri complet utilizate
+
+---
+
+## 📞 Contact
+
+Pentru întrebări sau probleme tehnice, vă rog să mă contactați.
+
+---
+
+## ✅ Checklist Finalizare
+
+- [x] Frontend deploiat pe Vercel
+- [x] Backend deploiat pe Render
+- [x] Baza de date PostgreSQL configurată
+- [x] Toate migrațiile aplicate
+- [x] Date de test populate
+- [x] Autentificare funcțională
+- [x] CRUD produse funcțional
+- [x] Sistem comenzi funcțional
+- [x] Sistem voucher-uri funcțional
+- [x] Panou admin complet
+- [x] Responsive design
+- [x] Securitate implementată
+- [x] Documentație completă
+
+---
+
+**Proiect realizat cu:** Next.js, React, Fastify, PostgreSQL, Prisma, Vercel, Render
+
+**Data finalizării:** 13 Noiembrie 2025
