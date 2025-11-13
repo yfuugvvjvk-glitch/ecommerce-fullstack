@@ -1,333 +1,112 @@
-# 🛍️ Full-Stack E-Commerce Application
+# 🛒 E-Commerce Full-Stack Application
 
-Aplicație e-commerce completă construită cu Next.js, Node.js, PostgreSQL și Prisma.
+Aplicație completă de e-commerce construită cu Next.js, Fastify și PostgreSQL.
 
-## 📋 Funcționalități
+## 🌐 Demo Live
 
-### Pentru Utilizatori:
+- **Frontend:** https://ecommerce-frontend-navy.vercel.app
+- **Backend API:** https://ecommerce-fullstack-3y1b.onrender.com
 
-- ✅ Autentificare și înregistrare
-- ✅ Navigare produse cu filtre (categorie, preț, rating)
-- ✅ Coș de cumpărături
-- ✅ Sistem de comenzi
-- ✅ Favorite
-- ✅ Review-uri și rating-uri
-- ✅ Vouchere și reduceri
-- ✅ Istoric comenzi
-- ✅ Chatbot AI pentru asistență
-- ✅ Multilingv (Română, Engleză, Spaniolă)
+## 🔑 Credențiale Demo
 
-### Pentru Administratori:
+**Admin:**
 
-- ✅ Gestionare produse (CRUD)
-- ✅ Gestionare categorii
-- ✅ Gestionare utilizatori
-- ✅ Gestionare comenzi
-- ✅ Gestionare vouchere
-- ✅ Gestionare oferte speciale
-- ✅ Statistici și dashboard
-- ✅ Aprobare cereri vouchere
+- Email: admin@example.com
+- Parolă: Admin1234
 
-## 🛠️ Tehnologii Utilizate
+**User:**
 
-### Frontend:
+- Email: ion.popescu@example.com
+- Parolă: User1234
 
-- **Next.js 16** (React Framework)
-- **TypeScript**
-- **Tailwind CSS**
-- **Axios** (HTTP client)
-- **React Hook Form**
-- **Lucide Icons**
+**Voucher-uri:** `WELCOME10` (10% off), `SUMMER50` (50 RON off)
 
-### Backend:
+## 🚀 Tehnologii
 
-- **Node.js** cu **Fastify**
-- **TypeScript**
-- **Prisma ORM**
-- **PostgreSQL**
-- **JWT** (autentificare)
-- **Bcrypt** (hash parole)
-- **Zod** (validare)
+### Frontend
 
-### DevOps:
+- Next.js 16 + React 19
+- Tailwind CSS 4
+- React Hook Form + Zod
+- Axios
 
-- **Docker** & **Docker Compose**
-- **Nodemon** (development)
+### Backend
 
-## 📦 Instalare și Rulare
+- Fastify 5
+- PostgreSQL + Prisma ORM
+- JWT Authentication
+- Bcrypt
 
-### Prerequisite:
+## ✨ Funcționalități
+
+- 🔐 Autentificare și autorizare (JWT)
+- 🛍️ Catalog produse cu filtrare și căutare
+- 🛒 Coș de cumpărături persistent
+- 📦 Gestionare comenzi
+- 🎟️ Sistem voucher-uri
+- ⭐ Review-uri și rating-uri
+- 💝 Lista de favorite
+- 👤 Profil utilizator cu avatar
+- 🤖 AI Chatbot pentru asistență
+- 📊 Panou admin complet
+- 🌍 Multilingv (RO/EN)
+
+## 📦 Instalare Locală
+
+### Prerequisites
 
 - Node.js 18+
-- Docker Desktop
+- PostgreSQL
 - npm sau yarn
 
-### 1. Clonează repository-ul:
-
-```bash
-git clone <repository-url>
-cd app
-```
-
-### 2. Instalează dependențele:
-
-**Backend:**
+### Backend
 
 ```bash
 cd backend
 npm install
-```
-
-**Frontend:**
-
-```bash
-cd frontend
-npm install
-```
-
-### 3. Configurare variabile de mediu:
-
-**Backend (.env):**
-
-```bash
-cd backend
 cp .env.example .env
-```
-
-Editează `backend/.env`:
-
-```env
-DATABASE_URL="postgresql://postgres:postgres@localhost:5432/ecommerce"
-JWT_SECRET="your-secret-key-here"
-PORT=3001
-CORS_ORIGIN="http://localhost:3000"
-```
-
-**Frontend (.env.local):**
-
-```bash
-cd frontend
-cp .env.example .env.local
-```
-
-Editează `frontend/.env.local`:
-
-```env
-NEXT_PUBLIC_API_URL=http://localhost:3001
-```
-
-### 4. Pornește baza de date (Docker):
-
-```bash
-docker-compose up -d
-```
-
-Verifică că PostgreSQL rulează:
-
-```bash
-docker ps
-```
-
-### 5. Rulează migrările Prisma:
-
-```bash
-cd backend
+# Configurează DATABASE_URL în .env
 npx prisma migrate dev
 npx prisma db seed
-```
-
-### 6. Pornește aplicația:
-
-**Backend (terminal 1):**
-
-```bash
-cd backend
 npm run dev
 ```
 
-Backend va rula pe: http://localhost:3001
-
-**Frontend (terminal 2):**
+### Frontend
 
 ```bash
 cd frontend
+npm install
+# Creează .env.local cu NEXT_PUBLIC_API_URL=http://localhost:3001
 npm run dev
 ```
 
-Frontend va rula pe: http://localhost:3000
+## 📚 Documentație
 
-### 7. Accesează aplicația:
+Vezi [INSTRUCTIUNI_TRIMITERE.md](./INSTRUCTIUNI_TRIMITERE.md) pentru documentație completă.
 
-- **Frontend:** http://localhost:3000
-- **Backend API:** http://localhost:3001
-
-### Cont Admin Implicit:
-
-După seed, poți folosi:
-
-- **Email:** admin@example.com
-- **Parolă:** admin123
-
-## 📁 Structura Proiectului
+## 🗂️ Structura
 
 ```
-app/
-├── backend/
-│   ├── prisma/
-│   │   ├── schema.prisma      # Schema bază de date
-│   │   └── seed.ts            # Date inițiale
-│   ├── src/
-│   │   ├── routes/            # Rute API
-│   │   ├── services/          # Logică business
-│   │   ├── middleware/        # Middleware-uri
-│   │   ├── utils/             # Utilități
-│   │   └── index.ts           # Entry point
-│   ├── .env.example
-│   └── package.json
-│
-├── frontend/
-│   ├── app/                   # Next.js App Router
-│   │   ├── (auth)/           # Pagini autentificare
-│   │   └── (dashboard)/      # Pagini principale
-│   ├── components/            # Componente React
-│   ├── lib/                   # Utilități și configurări
-│   ├── .env.example
-│   └── package.json
-│
-├── docker-compose.yml         # Configurare Docker
+├── frontend/          # Next.js app
+├── backend/           # Fastify API
+│   ├── prisma/       # Database schema & migrations
+│   └── src/          # Source code
 └── README.md
 ```
 
-## 🗄️ Schema Bază de Date
+## 🔒 Securitate
 
-Aplicația folosește următoarele tabele principale:
-
-- **User** - Utilizatori
-- **Category** - Categorii produse
-- **DataItem** - Produse
-- **Order** - Comenzi
-- **OrderItem** - Produse din comenzi
-- **CartItem** - Coș de cumpărături
-- **Review** - Review-uri
-- **Favorite** - Produse favorite
-- **Voucher** - Vouchere
-- **Offer** - Oferte speciale
-
-## 🔧 Comenzi Utile
-
-### Prisma:
-
-```bash
-# Generează client Prisma
-npx prisma generate
-
-# Creează migrare nouă
-npx prisma migrate dev --name migration_name
-
-# Vizualizează baza de date
-npx prisma studio
-
-# Reset bază de date
-npx prisma migrate reset
-```
-
-### Docker:
-
-```bash
-# Pornește serviciile
-docker-compose up -d
-
-# Oprește serviciile
-docker-compose down
-
-# Vezi log-uri
-docker-compose logs -f
-
-# Șterge volumele (ATENȚIE: șterge datele!)
-docker-compose down -v
-```
-
-## 🚀 Build pentru Producție
-
-### Backend:
-
-```bash
-cd backend
-npm run build
-npm start
-```
-
-### Frontend:
-
-```bash
-cd frontend
-npm run build
-npm start
-```
-
-## 📝 API Endpoints Principale
-
-### Autentificare:
-
-- `POST /api/auth/register` - Înregistrare
-- `POST /api/auth/login` - Autentificare
-- `GET /api/auth/me` - Profil utilizator
-
-### Produse:
-
-- `GET /api/data` - Lista produse
-- `GET /api/data/:id` - Detalii produs
-- `POST /api/data` - Creare produs (admin)
-- `PUT /api/data/:id` - Actualizare produs (admin)
-- `DELETE /api/data/:id` - Ștergere produs (admin)
-
-### Comenzi:
-
-- `POST /api/orders` - Creare comandă
-- `GET /api/orders/my` - Comenzile mele
-- `GET /api/orders/:id` - Detalii comandă
-
-### Coș:
-
-- `GET /api/cart` - Coșul meu
-- `POST /api/cart` - Adaugă în coș
-- `PUT /api/cart/:id` - Actualizează cantitate
-- `DELETE /api/cart/:id` - Șterge din coș
-
-## 🐛 Troubleshooting
-
-### Eroare: "Port already in use"
-
-```bash
-# Windows
-netstat -ano | findstr :3001
-taskkill /PID <PID> /F
-
-# Linux/Mac
-lsof -ti:3001 | xargs kill -9
-```
-
-### Eroare: "Cannot connect to database"
-
-```bash
-# Verifică că Docker rulează
-docker ps
-
-# Repornește containerul
-docker-compose restart postgres
-```
-
-### Eroare: "Prisma Client not generated"
-
-```bash
-cd backend
-npx prisma generate
-```
-
-## 👨‍💻 Autor
-
-Proiect realizat pentru cursul de Full-Stack Development
+- Parole hash-uite cu bcrypt
+- JWT pentru sesiuni
+- Rate limiting
+- CORS configurat
+- Helmet security headers
+- Input validation cu Zod
 
 ## 📄 Licență
 
-MIT License
+MIT
+
+## 👨‍💻 Autor
+
+Proiect realizat pentru disciplina [Numele Disciplinei]
