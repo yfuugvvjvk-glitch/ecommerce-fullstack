@@ -110,3 +110,4 @@ MIT Universitatea Internațională Danubius
 ## 👨‍💻 Autor
 **Student:** [Petrescu Cristian]  
 Proiect realizat pentru disciplina [Dezvoltarea aplicatiilor Web]
+**Data:** 13 Noiembrie 2025
