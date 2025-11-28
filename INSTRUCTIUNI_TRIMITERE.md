@@ -1,11 +1,9 @@
 # Proiect E-Commerce - Aplicație Full-Stack
 
 ## 📋 Informații Generale
-
-**Student:** [Numele tău]  
-**Disciplina:** [Numele disciplinei]  
+**Student:** [Petrescu Cristian]  
+**Disciplina:** [Dezvoltarea aplicatiilor Web]  
 **Data:** 13 Noiembrie 2025
-
 ---
 
 ## 🌐 Link-uri Aplicație LIVE
