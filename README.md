@@ -103,10 +103,10 @@ Vezi [INSTRUCTIUNI_TRIMITERE.md](./INSTRUCTIUNI_TRIMITERE.md) pentru documentaț
 - Helmet security headers
 - Input validation cu Zod
 
-## 📄 Licență
 
-MIT
+## 📄 Licență
+MIT Universitatea Internațională Danubius
 
 ## 👨‍💻 Autor
-
-Proiect realizat pentru disciplina [Numele Disciplinei]
+**Student:** [Petrescu Cristian]  
+Proiect realizat pentru disciplina [Dezvoltarea aplicatiilor Web]
