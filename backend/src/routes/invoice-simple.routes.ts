@@ -19,7 +19,7 @@ export async function invoiceSimpleRoutes(fastify: FastifyInstance) {
     }
   });
 
-  // User: Obține HTML pentru print
+  // User: Obține HTML pentru print (GET și POST pentru compatibilitate)
   fastify.get('/order/:orderId/print', { preHandler: authMiddleware }, async (request, reply) => {
     try {
       const { orderId } = request.params as any;
@@ -29,6 +29,31 @@ export async function invoiceSimpleRoutes(fastify: FastifyInstance) {
       const html = invoiceService.generateInvoiceHTML(invoice);
       
       reply.type('text/html').send(html);
+    } catch (error: any) {
+      reply.code(400).send({ error: error.message });
+    }
+  });
+
+  // POST version pentru admin (cu token în body)
+  fastify.post('/order/:orderId/print', async (request, reply) => {
+    try {
+      const { orderId } = request.params as any;
+      const { token } = request.body as any;
+      
+      if (!token) {
+        return reply.code(401).send({ error: 'No token provided' });
+      }
+
+      // Verifică token-ul manual
+      try {
+        const decoded = request.server.jwt.verify(token) as any;
+        const invoice = await invoiceService.getInvoiceForOrder(orderId, decoded.userId);
+        const html = invoiceService.generateInvoiceHTML(invoice);
+        
+        reply.type('text/html').send(html);
+      } catch (jwtError) {
+        return reply.code(401).send({ error: 'Invalid token' });
+      }
     } catch (error: any) {
       reply.code(400).send({ error: error.message });
     }
