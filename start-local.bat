@@ -37,4 +37,5 @@ echo Frontend: http://localhost:3000
 echo Backend:  http://localhost:3001
 echo.
 echo Apasa orice tasta pentru a inchide acest terminal...
+
 pause >nul
