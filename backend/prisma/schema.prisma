@@ -116,12 +116,21 @@ model Order {
   id              String   @id @default(cuid())
   userId          String
   total           Float
+  subtotal        Float?
+  tax             Float    @default(0)
+  discount        Float    @default(0)
+  shippingCost    Float    @default(0)
   status          String   @default("PROCESSING")
   shippingAddress String   @db.Text
   deliveryPhone   String?
   deliveryName    String?
   paymentMethod   String   @default("cash")
   deliveryMethod  String   @default("courier")
+  invoiceNumber   String?  @unique
+  invoiceGenerated Boolean @default(false)
+  orderLocalTime  String?  // Timpul local când a fost plasată comanda
+  orderLocation   String?  // Locația de unde a fost plasată comanda (oraș, țară)
+  orderTimezone   String?  // Timezone-ul local
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
 
@@ -131,6 +140,7 @@ model Order {
 
   @@index([userId])
   @@index([status])
+  @@index([invoiceNumber])
 }
 
 model OrderItem {

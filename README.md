@@ -6,6 +6,7 @@ Aplicație completă de e-commerce construită cu Next.js, Fastify și PostgreSQ
 
 - **Frontend:** https://ecommerce-frontend-navy.vercel.app
 - **Backend API:** https://ecommerce-fullstack-3y1b.onrender.com
+- **Status:** ⚠️ Baza de date gratuită a expirat - vezi `UPDATE_DATABASE.md` pentru rezolvare
 
 ## 🔑 Credențiale Demo
 
@@ -37,19 +38,36 @@ Aplicație completă de e-commerce construită cu Next.js, Fastify și PostgreSQ
 - JWT Authentication
 - Bcrypt
 
-## ✨ Funcționalități
+## ✨ Funcționalități Complete
 
-- 🔐 Autentificare și autorizare (JWT)
-- 🛍️ Catalog produse cu filtrare și căutare
-- 🛒 Coș de cumpărături persistent
-- 📦 Gestionare comenzi
-- 🎟️ Sistem voucher-uri
-- ⭐ Review-uri și rating-uri
-- 💝 Lista de favorite
-- 👤 Profil utilizator cu avatar
-- 🤖 AI Chatbot pentru asistență
-- 📊 Panou admin complet
-- 🌍 Multilingv (RO/EN)
+### Pentru Utilizatori 👥
+
+- 🔐 **Autentificare completă** - Register, Login, JWT, profil editabil
+- 🛍️ **Catalog produse** - 12 produse, 6 categorii, filtrare, căutare, sortare
+- 🛒 **Coș persistent** - Adăugare/eliminare produse, calcul automat total
+- 📦 **Plasare comenzi** - Checkout complet cu 3 metode plată
+- 🎟️ **Sistem voucher-uri** - Aplicare coduri reducere (WELCOME10, SUMMER50)
+- ⭐ **Review-uri** - Rating și comentarii pentru produse
+- 💝 **Lista favorite** - Salvare produse preferate
+- 👤 **Profil utilizator** - Editare informații și avatar upload
+- 📱 **Design responsive** - Funcționează perfect pe mobile/desktop
+
+### Pentru Administratori 👨‍💼
+
+- 📊 **Dashboard complet** - Statistici vânzări, utilizatori, comenzi în timp real
+- 🛍️ **Gestionare produse** - CRUD complet cu upload imagini
+- 👥 **Gestionare utilizatori** - Vizualizare, editare roluri, dezactivare conturi
+- 📦 **Gestionare comenzi** - Actualizare status, procesare, tracking
+- 🎟️ **Sistem voucher-uri** - Creare, editare, aprobare cereri utilizatori
+- 📈 **Rapoarte și analize** - Export date, statistici detaliate
+
+### Funcționalități Tehnice 🔧
+
+- 🔒 **Securitate avansată** - JWT, bcrypt, rate limiting, CORS, helmet
+- 📦 **Actualizare automată stoc** - La anulare comenzi, stocul se restituie
+- 🤖 **AI Chatbot** - Asistență inteligentă cu fallback responses
+- 🌍 **Suport multilingv** - Română și Engleză
+- ⚡ **Performance optimizat** - Lazy loading, caching, bundle optimization
 
 ## 📦 Instalare Locală
 
@@ -82,7 +100,18 @@ npm run dev
 
 ## 📚 Documentație
 
-Vezi [INSTRUCTIUNI_TRIMITERE.md](./INSTRUCTIUNI_TRIMITERE.md) pentru documentație completă.
+### Documentație Tehnică
+
+- **[ARHITECTURA.md](./ARHITECTURA.md)** - Arhitectura sistemului și design patterns
+- **[API.md](./API.md)** - Documentație completă API cu toate endpoint-urile
+- **[SPECIFICATII.md](./SPECIFICATII.md)** - Cerințe tehnice și funcționale
+- **[TESTARE.md](./TESTARE.md)** - Strategia de testare și exemple
+- **[DEPLOYMENT.md](./DEPLOYMENT.md)** - Ghid deployment și CI/CD
+
+### Documentație Proiect
+
+- **[PROJECT_SUMMARY.md](./PROJECT_SUMMARY.md)** - Rezumat funcționalități
+- **[TRIMITERE_PROFESOR.txt](./TRIMITERE_PROFESOR.txt)** - Informații pentru evaluare
 
 ## 🗂️ Structura
 
