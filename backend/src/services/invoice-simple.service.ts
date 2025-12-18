@@ -93,7 +93,10 @@ export class InvoiceSimpleService {
     return await prisma.order.findMany({
       where: { 
         userId,
-        invoiceGenerated: true
+        OR: [
+          { invoiceGenerated: true },
+          { invoiceNumber: { not: null } }
+        ]
       },
       include: {
         orderItems: {
@@ -112,7 +115,12 @@ export class InvoiceSimpleService {
     
     const [invoices, total] = await Promise.all([
       prisma.order.findMany({
-        where: { invoiceGenerated: true },
+        where: { 
+          OR: [
+            { invoiceGenerated: true },
+            { invoiceNumber: { not: null } }
+          ]
+        },
         include: {
           user: {
             select: { id: true, name: true, email: true }
@@ -129,7 +137,14 @@ export class InvoiceSimpleService {
         skip,
         take: limit
       }),
-      prisma.order.count({ where: { invoiceGenerated: true } })
+      prisma.order.count({ 
+        where: { 
+          OR: [
+            { invoiceGenerated: true },
+            { invoiceNumber: { not: null } }
+          ]
+        }
+      })
     ]);
 
     return {
