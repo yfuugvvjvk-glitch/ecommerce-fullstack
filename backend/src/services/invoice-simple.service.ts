@@ -205,7 +205,8 @@ export class InvoiceSimpleService {
         await this.generateInvoiceForOrder(order.id);
         generated++;
       } catch (error) {
-        errors.push(`Eroare la comanda ${order.id}: ${error.message}`);
+        const errorMessage = error instanceof Error ? error.message : 'Eroare necunoscută';
+        errors.push(`Eroare la comanda ${order.id}: ${errorMessage}`);
       }
     }
 
