@@ -39,7 +39,8 @@ export async function orderRoutes(fastify: FastifyInstance) {
     }
   });
 
-  // Admin routes
+  // Admin routes - comentate temporar până repar metodele
+  /* 
   fastify.get('/admin/all', { preHandler: [authMiddleware, adminMiddleware] }, async (request, reply) => {
     try {
       const { page = 1, limit = 20, status } = request.query as any;
@@ -76,4 +77,5 @@ export async function orderRoutes(fastify: FastifyInstance) {
       reply.code(500).send({ error: 'Failed to get order stats' });
     }
   });
+  */
 }
