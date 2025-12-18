@@ -105,8 +105,10 @@ Vezi [INSTRUCTIUNI_TRIMITERE.md](./INSTRUCTIUNI_TRIMITERE.md) pentru documentaț
 
 ## 📄 Licență
 
-MIT
+MIT Universitatea Internațională Danubius
 
 ## 👨‍💻 Autor
 
-Proiect realizat pentru disciplina [Numele Disciplinei]
+**Student:** [Petrescu Cristian]  
+Proiect realizat pentru disciplina [Dezvoltarea aplicatiilor Web]
+**Data:** 13 Noiembrie 2025

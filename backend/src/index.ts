@@ -17,6 +17,7 @@ import { userRoutes } from './routes/user.routes';
 import { openAIRoutes } from './routes/openai.routes';
 import { offerRoutes } from './routes/offer.routes';
 import { categoryRoutes } from './routes/category.routes';
+import { inventoryRoutes } from './routes/inventory.routes';
 import { scheduleCleanupJobs } from './jobs/cleanup.job';
 
 const fastify = Fastify({
@@ -97,6 +98,32 @@ async function start() {
       return { status: 'ok', timestamp: new Date().toISOString() };
     });
 
+    // Temporary endpoint to run production seed
+    fastify.post('/api/setup-db', async (request, reply) => {
+      try {
+        const { execSync } = require('child_process');
+        const { PrismaClient } = require('@prisma/client');
+        const prisma = new PrismaClient();
+        
+        // Delete existing products
+        await prisma.dataItem.deleteMany({});
+        fastify.log.info('Deleted existing products');
+        
+        // Run production seed
+        execSync('node seed-production-full.js', { stdio: 'inherit', cwd: process.cwd() });
+        
+        await prisma.$disconnect();
+        
+        return { success: true, message: 'Database setup completed' };
+      } catch (error: any) {
+        fastify.log.error('Seed error:', error);
+        return reply.code(500).send({ 
+          success: false, 
+          error: error.message 
+        });
+      }
+    });
+
     // Register data routes
     await fastify.register(dataRoutes, { prefix: '/api/data' });
     
@@ -114,6 +141,9 @@ async function start() {
     
     // Register category routes
     await fastify.register(categoryRoutes, { prefix: '/api/categories' });
+    
+    // Register inventory routes
+    await fastify.register(inventoryRoutes, { prefix: '/api/inventory' });
     
     // Register admin routes
     await fastify.register(adminRoutes, { prefix: '/api/admin' });

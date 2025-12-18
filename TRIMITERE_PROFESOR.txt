@@ -56,6 +56,6 @@ Tehnologii: Next.js, React, Fastify, PostgreSQL, Prisma
 Deployment: Vercel (frontend) + Render (backend)
 
 Cu respect,
-[Numele tău]
+[Petrescu Cristian]
 
 ===================================================================
