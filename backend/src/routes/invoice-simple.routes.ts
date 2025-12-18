@@ -2,6 +2,9 @@ import { FastifyInstance } from 'fastify';
 import { InvoiceSimpleService } from '../services/invoice-simple.service';
 import { authMiddleware } from '../middleware/auth.middleware';
 import { adminMiddleware } from '../middleware/admin.middleware';
+import { PrismaClient } from '@prisma/client';
+
+const prisma = new PrismaClient();
 
 const invoiceService = new InvoiceSimpleService();
 
@@ -35,7 +38,17 @@ export async function invoiceSimpleRoutes(fastify: FastifyInstance) {
   });
 
   // POST version pentru admin (cu token în body)
-  fastify.post('/order/:orderId/print', async (request, reply) => {
+  fastify.post('/order/:orderId/print', {
+    schema: {
+      body: {
+        type: 'object',
+        properties: {
+          token: { type: 'string' }
+        },
+        required: ['token']
+      }
+    }
+  }, async (request, reply) => {
     try {
       const { orderId } = request.params as any;
       const { token } = request.body as any;
@@ -47,9 +60,27 @@ export async function invoiceSimpleRoutes(fastify: FastifyInstance) {
       // Verifică token-ul manual
       try {
         const decoded = request.server.jwt.verify(token) as any;
-        const invoice = await invoiceService.getInvoiceForOrder(orderId, decoded.userId);
-        const html = invoiceService.generateInvoiceHTML(invoice);
         
+        // Verifică dacă utilizatorul există și obține rolul
+        const user = await prisma.user.findUnique({
+          where: { id: decoded.userId },
+          select: { id: true, role: true }
+        });
+
+        if (!user) {
+          return reply.code(401).send({ error: 'User not found' });
+        }
+
+        let invoice;
+        if (user.role === 'admin') {
+          // Admin poate vedea orice factură
+          invoice = await invoiceService.getInvoiceForOrderAdmin(orderId);
+        } else {
+          // Utilizator normal poate vedea doar propriile facturi
+          invoice = await invoiceService.getInvoiceForOrder(orderId, decoded.userId);
+        }
+        
+        const html = invoiceService.generateInvoiceHTML(invoice);
         reply.type('text/html').send(html);
       } catch (jwtError) {
         return reply.code(401).send({ error: 'Invalid token' });
@@ -89,6 +120,16 @@ export async function invoiceSimpleRoutes(fastify: FastifyInstance) {
       reply.send(invoice);
     } catch (error: any) {
       reply.code(400).send({ error: error.message });
+    }
+  });
+
+  // Admin: Generează facturi pentru toate comenzile care nu au facturi
+  fastify.post('/admin/generate-missing', { preHandler: [authMiddleware, adminMiddleware] }, async (request, reply) => {
+    try {
+      const result = await invoiceService.generateMissingInvoices();
+      reply.send(result);
+    } catch (error: any) {
+      reply.code(500).send({ error: error.message });
     }
   });
 }

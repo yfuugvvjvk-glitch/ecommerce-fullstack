@@ -88,6 +88,32 @@ export class InvoiceSimpleService {
     return order;
   }
 
+  // Admin: Obține factura pentru orice comandă (fără restricție de userId)
+  async getInvoiceForOrderAdmin(orderId: string) {
+    const order = await prisma.order.findUnique({
+      where: { id: orderId },
+      include: {
+        user: true,
+        orderItems: {
+          include: {
+            dataItem: true
+          }
+        }
+      }
+    });
+
+    if (!order) {
+      throw new Error('Comanda nu a fost găsită');
+    }
+
+    // Generează factura dacă nu există
+    if (!order.invoiceNumber) {
+      return await this.generateInvoiceForOrder(orderId);
+    }
+
+    return order;
+  }
+
   // Obține toate facturile pentru un utilizator
   async getUserInvoices(userId: string) {
     return await prisma.order.findMany({
@@ -155,6 +181,38 @@ export class InvoiceSimpleService {
         total,
         pages: Math.ceil(total / limit)
       }
+    };
+  }
+
+  // Admin: Generează facturi pentru toate comenzile care nu au facturi
+  async generateMissingInvoices() {
+    // Găsește toate comenzile fără facturi
+    const ordersWithoutInvoices = await prisma.order.findMany({
+      where: {
+        OR: [
+          { invoiceNumber: null },
+          { invoiceGenerated: false }
+        ]
+      },
+      select: { id: true }
+    });
+
+    let generated = 0;
+    const errors: string[] = [];
+
+    for (const order of ordersWithoutInvoices) {
+      try {
+        await this.generateInvoiceForOrder(order.id);
+        generated++;
+      } catch (error) {
+        errors.push(`Eroare la comanda ${order.id}: ${error.message}`);
+      }
+    }
+
+    return {
+      total: ordersWithoutInvoices.length,
+      generated,
+      errors: errors.length > 0 ? errors : undefined
     };
   }
 
