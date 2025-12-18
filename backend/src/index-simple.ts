@@ -17,7 +17,7 @@ import { userRoutes } from './routes/user.routes';
 import { openAIRoutes } from './routes/openai.routes';
 import { offerRoutes } from './routes/offer.routes';
 import { categoryRoutes } from './routes/category.routes';
-// Comentez temporar pentru a repara aplicația
+// Comentez noile routes care pot cauza probleme
 // import { inventoryRoutes } from './routes/inventory.routes';
 import { scheduleCleanupJobs } from './jobs/cleanup.job';
 
@@ -99,57 +99,14 @@ async function start() {
       return { status: 'ok', timestamp: new Date().toISOString() };
     });
 
-    // Temporary endpoint to run production seed
-    fastify.post('/api/setup-db', async (request, reply) => {
-      try {
-        const { execSync } = require('child_process');
-        const { PrismaClient } = require('@prisma/client');
-        const prisma = new PrismaClient();
-        
-        // Delete existing products
-        await prisma.dataItem.deleteMany({});
-        fastify.log.info('Deleted existing products');
-        
-        // Run production seed
-        execSync('node seed-production-full.js', { stdio: 'inherit', cwd: process.cwd() });
-        
-        await prisma.$disconnect();
-        
-        return { success: true, message: 'Database setup completed' };
-      } catch (error: any) {
-        fastify.log.error('Seed error:', error);
-        return reply.code(500).send({ 
-          success: false, 
-          error: error.message 
-        });
-      }
-    });
-
-    // Register data routes
+    // Register DOAR routes-urile originale care funcționau
     await fastify.register(dataRoutes, { prefix: '/api/data' });
-    
-    // Register cart routes
     await fastify.register(cartRoutes, { prefix: '/api/cart' });
-    
-    // Register order routes
     await fastify.register(orderRoutes, { prefix: '/api/orders' });
-    
-    // Register voucher routes
     await fastify.register(voucherRoutes, { prefix: '/api/vouchers' });
-    
-    // Register offer routes
     await fastify.register(offerRoutes, { prefix: '/api/offers' });
-    
-    // Register category routes
     await fastify.register(categoryRoutes, { prefix: '/api/categories' });
-    
-    // Comentez temporar inventory routes
-    // await fastify.register(inventoryRoutes, { prefix: '/api/inventory' });
-    
-    // Register admin routes
     await fastify.register(adminRoutes, { prefix: '/api/admin' });
-    
-    // Register user routes
     await fastify.register(userRoutes, { prefix: '/api/user' });
     
     // Register review routes
@@ -167,38 +124,6 @@ async function start() {
         url: request.url,
         method: request.method,
       });
-
-      if (error.name === 'ValidationError') {
-        reply.code(400).send({
-          error: 'Validation Error',
-          details: error.message,
-        });
-        return;
-      }
-
-      if (error.name === 'UnauthorizedError') {
-        reply.code(401).send({
-          error: 'Unauthorized',
-          message: error.message,
-        });
-        return;
-      }
-
-      if (error.name === 'NotFoundError') {
-        reply.code(404).send({
-          error: 'Not Found',
-          message: error.message,
-        });
-        return;
-      }
-
-      if (error.name === 'ConflictError') {
-        reply.code(409).send({
-          error: 'Conflict',
-          message: error.message,
-        });
-        return;
-      }
 
       reply.code(500).send({
         error: 'Internal Server Error',

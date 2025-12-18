@@ -1,6 +1,7 @@
 import { PrismaClient } from '@prisma/client';
-import { InventoryService } from './inventory.service';
-import { EmailService } from './email.service';
+// Comentez temporar pentru a repara aplicația
+// import { InventoryService } from './inventory.service';
+// import { EmailService } from './email.service';
 
 const prisma = new PrismaClient();
 
@@ -15,23 +16,33 @@ export class OrderService {
     deliveryMethod?: string;
     voucherCode?: string;
   }) {
-    // Verifică stocul înainte de a crea comanda
+    // Verificare stoc simplificată (fără InventoryService)
     for (const item of data.items) {
-      const stockCheck = await InventoryService.checkStock(item.dataItemId, item.quantity);
-      if (!stockCheck.available) {
-        const product = await prisma.dataItem.findUnique({
-          where: { id: item.dataItemId },
-          select: { title: true }
-        });
-        throw new Error(`Stoc insuficient pentru ${product?.title}. Disponibil: ${stockCheck.currentStock}, Cerut: ${item.quantity}`);
+      const product = await prisma.dataItem.findUnique({
+        where: { id: item.dataItemId },
+      });
+
+      if (!product) {
+        throw new Error(`Product ${item.dataItemId} not found`);
+      }
+
+      if (product.stock < item.quantity) {
+        throw new Error(`Insufficient stock for ${product.title}. Available: ${product.stock}, Requested: ${item.quantity}`);
       }
     }
 
     // Use transaction to ensure stock is updated atomically
     return await prisma.$transaction(async (tx) => {
-      // Rezervă stocul pentru fiecare produs
+      // Scade stocul pentru fiecare produs (versiunea simplă)
       for (const item of data.items) {
-        await InventoryService.reserveStock(item.dataItemId, item.quantity);
+        await tx.dataItem.update({
+          where: { id: item.dataItemId },
+          data: {
+            stock: {
+              decrement: item.quantity,
+            },
+          },
+        });
       }
 
       // Handle voucher if provided
@@ -96,35 +107,8 @@ export class OrderService {
         where: { userId },
       });
 
-      // Trimite email de confirmare
-      try {
-        const user = await tx.user.findUnique({
-          where: { id: userId },
-          select: { email: true, name: true }
-        });
-
-        if (user) {
-          await EmailService.sendOrderConfirmation({
-            orderId: order.id,
-            customerName: user.name,
-            customerEmail: user.email,
-            total: data.total,
-            items: data.items.map(item => {
-              const orderItem = order.orderItems.find(oi => oi.dataItemId === item.dataItemId);
-              return {
-                title: orderItem?.dataItem.title || 'Produs',
-                quantity: item.quantity,
-                price: item.price
-              };
-            }),
-            shippingAddress: data.shippingAddress,
-            paymentMethod: data.paymentMethod || 'cash'
-          });
-        }
-      } catch (emailError) {
-        console.error('Eroare trimitere email confirmare:', emailError);
-        // Nu oprește procesul dacă emailul eșuează
-      }
+      // Email notifications comentate temporar
+      console.log('Comandă creată cu succes:', order.id);
 
       return order;
     });
@@ -157,6 +141,7 @@ export class OrderService {
     });
   }
 
+  /* Comentez temporar metodele noi pentru a repara aplicația
   // Actualizează statusul comenzii (pentru admin)
   async updateOrderStatus(orderId: string, status: string, adminId: string) {
     const order = await prisma.order.findUnique({
@@ -303,4 +288,5 @@ export class OrderService {
       todayRevenue: todayRevenue._sum.total || 0
     };
   }
+  */
 }
