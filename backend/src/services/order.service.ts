@@ -1,7 +1,4 @@
 import { PrismaClient } from '@prisma/client';
-// Comentez temporar pentru a repara aplicația
-// import { InventoryService } from './inventory.service';
-// import { EmailService } from './email.service';
 
 const prisma = new PrismaClient();
 
@@ -15,6 +12,9 @@ export class OrderService {
     paymentMethod?: string;
     deliveryMethod?: string;
     voucherCode?: string;
+    orderLocalTime?: string;
+    orderLocation?: string;
+    orderTimezone?: string;
   }) {
     // Verificare stoc simplificată (fără InventoryService)
     for (const item of data.items) {
@@ -73,6 +73,9 @@ export class OrderService {
           paymentMethod: data.paymentMethod || 'cash',
           deliveryMethod: data.deliveryMethod || 'courier',
           status: 'PROCESSING',
+          orderLocalTime: data.orderLocalTime,
+          orderLocation: data.orderLocation,
+          orderTimezone: data.orderTimezone,
           orderItems: {
             create: data.items.map(item => ({
               dataItemId: item.dataItemId,
@@ -107,8 +110,17 @@ export class OrderService {
         where: { userId },
       });
 
-      // Email notifications comentate temporar
       console.log('Comandă creată cu succes:', order.id);
+
+      // Generează factura automat după crearea comenzii
+      try {
+        const { InvoiceSimpleService } = await import('./invoice-simple.service');
+        const invoiceService = new InvoiceSimpleService();
+        await invoiceService.generateInvoiceForOrder(order.id);
+        console.log('📄 Factură generată automat pentru comanda:', order.id);
+      } catch (error) {
+        console.error('Eroare la generarea facturii:', error);
+      }
 
       return order;
     });
@@ -141,8 +153,7 @@ export class OrderService {
     });
   }
 
-  /* Comentez temporar metodele noi pentru a repara aplicația
-  // Actualizează statusul comenzii (pentru admin)
+  // Actualizează statusul comenzii (pentru admin) - versiune simplificată
   async updateOrderStatus(orderId: string, status: string, adminId: string) {
     const order = await prisma.order.findUnique({
       where: { id: orderId },
@@ -162,11 +173,36 @@ export class OrderService {
       throw new Error('Comanda nu a fost găsită');
     }
 
-    // Dacă comanda este anulată, restituie stocul
+    // Dacă comanda este anulată, restituie stocul (versiune simplificată)
     if (status === 'CANCELLED' && order.status !== 'CANCELLED') {
+      console.log(`🔄 Anulare comandă ${orderId}: Restituire stoc pentru ${order.orderItems.length} produse`);
+      
       for (const item of order.orderItems) {
-        await InventoryService.restoreStock(item.dataItemId, item.quantity);
+        const oldStock = item.dataItem.stock;
+        const newStock = oldStock + item.quantity;
+        
+        await prisma.dataItem.update({
+          where: { id: item.dataItemId },
+          data: {
+            stock: {
+              increment: item.quantity
+            }
+          }
+        });
+        
+        console.log(`📦 Produs ${item.dataItem.title}: Stoc ${oldStock} → ${newStock} (+${item.quantity})`);
       }
+      
+      // Marchează factura ca anulată (nu o șterge, doar o marchează)
+      if (order.invoiceGenerated) {
+        console.log(`📄 Marcarea facturii ca anulată pentru comanda ${orderId}`);
+      }
+      
+      console.log(`✅ Stoc actualizat cu succes pentru comanda ${orderId}`);
+    } else if (status === 'CANCELLED') {
+      console.log(`⚠️ Comanda ${orderId} era deja anulată, nu se actualizează stocul`);
+    } else {
+      console.log(`ℹ️ Comanda ${orderId} schimbată la status ${status}, nu necesită actualizare stoc`);
     }
 
     const updatedOrder = await prisma.order.update({
@@ -181,18 +217,7 @@ export class OrderService {
       }
     });
 
-    // Trimite email de notificare
-    try {
-      await EmailService.sendOrderStatusUpdate(
-        order.user.email,
-        orderId,
-        status,
-        order.user.name
-      );
-    } catch (emailError) {
-      console.error('Eroare trimitere email status:', emailError);
-    }
-
+    console.log(`Status comandă ${orderId} actualizat la ${status}`);
     return updatedOrder;
   }
 
@@ -288,5 +313,4 @@ export class OrderService {
       todayRevenue: todayRevenue._sum.total || 0
     };
   }
-  */
 }

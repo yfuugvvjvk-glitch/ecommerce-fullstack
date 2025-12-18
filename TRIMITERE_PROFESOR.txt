@@ -10,6 +10,7 @@ PROIECT E-COMMERCE - INFORMAȚII PENTRU TRIMITERE
 2. Link-uri aplicație LIVE:
    - Frontend: https://ecommerce-frontend-navy.vercel.app
    - Backend: https://ecommerce-fullstack-3y1b.onrender.com
+   - Notă: Baza de date gratuită a expirat - aplicația funcționează perfect LOCAL
 
 3. Repository-uri GitHub:
    - Principal: https://github.com/yfuugvvjvk-glitch/ecommerce-fullstack

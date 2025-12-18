@@ -95,9 +95,62 @@ export class AdminService {
   }
 
   async updateOrderStatus(orderId: string, status: string) {
+    console.log(`🔄 AdminService: Actualizare status comandă ${orderId} la ${status}`);
+    
+    // Găsește comanda cu produsele incluse
+    const order = await prisma.order.findUnique({
+      where: { id: orderId },
+      include: {
+        orderItems: {
+          include: {
+            dataItem: true
+          }
+        }
+      }
+    });
+
+    if (!order) {
+      throw new Error('Comanda nu a fost găsită');
+    }
+
+    // Dacă comanda este anulată, restituie stocul
+    if (status === 'CANCELLED' && order.status !== 'CANCELLED') {
+      console.log(`🔄 Anulare comandă ${orderId}: Restituire stoc pentru ${order.orderItems.length} produse`);
+      
+      for (const item of order.orderItems) {
+        const oldStock = item.dataItem.stock;
+        const newStock = oldStock + item.quantity;
+        
+        await prisma.dataItem.update({
+          where: { id: item.dataItemId },
+          data: {
+            stock: {
+              increment: item.quantity
+            }
+          }
+        });
+        
+        console.log(`📦 Produs ${item.dataItem.title}: Stoc ${oldStock} → ${newStock} (+${item.quantity})`);
+      }
+      
+      console.log(`✅ Stoc actualizat cu succes pentru comanda ${orderId}`);
+    } else if (status === 'CANCELLED') {
+      console.log(`⚠️ Comanda ${orderId} era deja anulată, nu se actualizează stocul`);
+    } else {
+      console.log(`ℹ️ Comanda ${orderId} schimbată la status ${status}, nu necesită actualizare stoc`);
+    }
+
+    // Actualizează statusul comenzii
     return await prisma.order.update({
       where: { id: orderId },
       data: { status },
+      include: {
+        orderItems: {
+          include: {
+            dataItem: true
+          }
+        }
+      }
     });
   }
 

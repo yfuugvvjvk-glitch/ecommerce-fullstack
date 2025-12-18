@@ -196,19 +196,10 @@ export async function adminRoutes(fastify: FastifyInstance) {
     }
   });
 
-  // Cleanup - Run cleanup tasks manually
-  fastify.post('/cleanup', { preHandler }, async (request, reply) => {
-    try {
-      const { runCleanupNow } = await import('../jobs/cleanup.job');
-      const results = await runCleanupNow();
-      reply.send({
-        message: 'Cleanup completed successfully',
-        results,
-      });
-    } catch (error: any) {
-      reply.code(500).send({ error: error.message });
-    }
-  });
+  // Cleanup - Removed for simplicity
+  // fastify.post('/cleanup', { preHandler }, async (request, reply) => {
+  //   reply.send({ message: 'Cleanup feature disabled' });
+  // });
 
   // Upload offer image
   fastify.post('/offers/upload-image', { preHandler }, async (request, reply) => {

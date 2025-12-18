@@ -19,7 +19,7 @@ import { offerRoutes } from './routes/offer.routes';
 import { categoryRoutes } from './routes/category.routes';
 // Comentez noile routes care pot cauza probleme
 // import { inventoryRoutes } from './routes/inventory.routes';
-import { scheduleCleanupJobs } from './jobs/cleanup.job';
+
 
 const fastify = Fastify({
   logger: {
@@ -39,7 +39,7 @@ const fastify = Fastify({
 });
 
 const PORT = parseInt(process.env.PORT || '3001', 10);
-const CORS_ORIGIN = process.env.CORS_ORIGIN || 'http://localhost:3000';
+const CORS_ORIGIN = process.env.CORS_ORIGIN || 'https://ecommerce-frontend-navy.vercel.app';
 
 async function start() {
   try {
@@ -49,7 +49,7 @@ async function start() {
     });
     
     await fastify.register(cors, {
-      origin: CORS_ORIGIN,
+      origin: [CORS_ORIGIN, 'http://localhost:3000'], // Support both production and development
       credentials: true,
       methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
       allowedHeaders: ['Content-Type', 'Authorization'],
@@ -96,7 +96,18 @@ async function start() {
 
     // Health check
     fastify.get('/health', async () => {
-      return { status: 'ok', timestamp: new Date().toISOString() };
+      return { 
+        status: 'ok', 
+        timestamp: new Date().toISOString(),
+        uptime: process.uptime(),
+        memory: process.memoryUsage(),
+        env: process.env.NODE_ENV
+      };
+    });
+
+    // Keep-alive endpoint pentru a preveni sleep mode
+    fastify.get('/ping', async () => {
+      return { pong: true, timestamp: new Date().toISOString() };
     });
 
     // Register DOAR routes-urile originale care funcționau
@@ -115,6 +126,10 @@ async function start() {
     
     // Register OpenAI routes
     await fastify.register(openAIRoutes, { prefix: '/api/ai' });
+    
+    // Register invoice routes
+    const { invoiceSimpleRoutes } = await import('./routes/invoice-simple.routes');
+    await fastify.register(invoiceSimpleRoutes, { prefix: '/api/invoices' });
 
     // Global error handler
     fastify.setErrorHandler((error: Error, request, reply) => {
@@ -136,8 +151,8 @@ async function start() {
     
     console.log(`🚀 Server running on http://localhost:${PORT}`);
     
-    // Schedule cleanup jobs
-    scheduleCleanupJobs();
+    // Schedule cleanup jobs - Removed for simplicity
+    // scheduleCleanupJobs();
   } catch (err) {
     fastify.log.error(err);
     process.exit(1);
