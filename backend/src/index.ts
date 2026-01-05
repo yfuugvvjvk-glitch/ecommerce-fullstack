@@ -154,6 +154,10 @@ async function start() {
     // Register chat routes
     await fastify.register(chatRoutes, { prefix: '/api/chat' });
 
+    // Register upload routes
+    const { uploadRoutes } = await import('./routes/upload.routes');
+    await fastify.register(uploadRoutes, { prefix: '/api/upload' });
+
     // Add Socket.IO to fastify instance for use in routes BEFORE starting server
     const io = new SocketIOServer(fastify.server, {
       cors: {
