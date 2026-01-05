@@ -239,8 +239,24 @@ export class InvoiceSimpleService {
     .totals { text-align: right; }
     .total-row { font-weight: bold; font-size: 1.2em; }
     .footer { margin-top: 50px; text-align: center; color: #666; font-size: 0.9em; }
-    @media print { body { margin: 0; } }
+    .print-buttons { text-align: center; margin: 20px 0; }
+    .btn { padding: 10px 20px; margin: 0 10px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; }
+    .btn-primary { background-color: #007bff; color: white; }
+    .btn-secondary { background-color: #6c757d; color: white; }
+    .btn:hover { opacity: 0.8; }
+    @media print { 
+      body { margin: 0; } 
+      .print-buttons { display: none; }
+    }
   </style>
+  <script>
+    function printInvoice() {
+      window.print();
+    }
+    function closeWindow() {
+      window.close();
+    }
+  </script>
 </head>
 <body>
   <div class="header">
@@ -303,6 +319,11 @@ export class InvoiceSimpleService {
     </div>
   </div>
 
+  <div class="print-buttons">
+    <button class="btn btn-primary" onclick="printInvoice()">🖨️ Imprimă Factura</button>
+    <button class="btn btn-secondary" onclick="closeWindow()">❌ Închide</button>
+  </div>
+
   <div class="footer">
     <p>Mulțumim pentru comandă!</p>
     <p>Pentru întrebări: contact@ecommerce.ro</p>
@@ -310,5 +331,78 @@ export class InvoiceSimpleService {
 </body>
 </html>
     `;
+  }
+
+  // Duplică o factură
+  async duplicateInvoice(orderId: string) {
+    const existingOrder = await prisma.order.findUnique({
+      where: { id: orderId },
+      include: {
+        user: true,
+        orderItems: {
+          include: {
+            dataItem: true,
+          },
+        },
+      },
+    });
+
+    if (!existingOrder) {
+      throw new Error('Comanda nu a fost găsită');
+    }
+
+    // Creează o nouă comandă identică
+    const newOrder = await prisma.order.create({
+      data: {
+        userId: existingOrder.userId,
+        total: existingOrder.total,
+        shippingAddress: existingOrder.shippingAddress,
+        deliveryPhone: existingOrder.deliveryPhone,
+        deliveryName: existingOrder.deliveryName,
+        paymentMethod: existingOrder.paymentMethod,
+        deliveryMethod: existingOrder.deliveryMethod,
+        status: existingOrder.status,
+        orderLocalTime: existingOrder.orderLocalTime,
+        orderLocation: existingOrder.orderLocation,
+        orderTimezone: existingOrder.orderTimezone,
+        invoiceGenerated: true,
+        invoiceNumber: `${existingOrder.invoiceNumber}-DUP-${Date.now()}`, // Număr duplicat
+        orderItems: {
+          create: existingOrder.orderItems.map(item => ({
+            dataItemId: item.dataItemId,
+            quantity: item.quantity,
+            price: item.price,
+          })),
+        },
+      },
+      include: {
+        user: true,
+        orderItems: {
+          include: {
+            dataItem: true,
+          },
+        },
+      },
+    });
+
+    return newOrder;
+  }
+
+  // Șterge o factură
+  async deleteInvoice(orderId: string) {
+    const order = await prisma.order.findUnique({
+      where: { id: orderId },
+    });
+
+    if (!order) {
+      throw new Error('Comanda nu a fost găsită');
+    }
+
+    // Șterge comanda și toate datele asociate (cascade delete)
+    await prisma.order.delete({
+      where: { id: orderId },
+    });
+
+    return { message: 'Factură ștearsă cu succes' };
   }
 }

@@ -62,6 +62,12 @@ async function start() {
       },
     });
 
+    // Register form-urlencoded support
+    const formbody = await import('@fastify/formbody');
+    await fastify.register(formbody.default);
+
+
+
     // Register static file serving
     await fastify.register(fastifyStatic, {
       root: path.join(process.cwd(), 'public'),
@@ -130,6 +136,14 @@ async function start() {
     // Register invoice routes
     const { invoiceSimpleRoutes } = await import('./routes/invoice-simple.routes');
     await fastify.register(invoiceSimpleRoutes, { prefix: '/api/invoices' });
+
+    // Register test card routes
+    const { testCardRoutes } = await import('./routes/test-card.routes');
+    await fastify.register(testCardRoutes, { prefix: '/api/test-cards' });
+
+    // Register payment routes
+    const { paymentRoutes } = await import('./routes/payment.routes');
+    await fastify.register(paymentRoutes, { prefix: '/api/payments' });
 
     // Global error handler
     fastify.setErrorHandler((error: Error, request, reply) => {

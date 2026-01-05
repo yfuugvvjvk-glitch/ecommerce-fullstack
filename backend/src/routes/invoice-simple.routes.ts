@@ -38,20 +38,12 @@ export async function invoiceSimpleRoutes(fastify: FastifyInstance) {
   });
 
   // POST version pentru admin (cu token în body)
-  fastify.post('/order/:orderId/print', {
-    schema: {
-      body: {
-        type: 'object',
-        properties: {
-          token: { type: 'string' }
-        },
-        required: ['token']
-      }
-    }
-  }, async (request, reply) => {
+  fastify.post('/order/:orderId/print', async (request, reply) => {
     try {
       const { orderId } = request.params as any;
-      const { token } = request.body as any;
+      
+      // Obține token-ul din body (suportă atât JSON cât și form-urlencoded)
+      const token = (request.body as any)?.token;
       
       if (!token) {
         return reply.code(401).send({ error: 'No token provided' });
@@ -130,6 +122,28 @@ export async function invoiceSimpleRoutes(fastify: FastifyInstance) {
       reply.send(result);
     } catch (error: any) {
       reply.code(500).send({ error: error.message });
+    }
+  });
+
+  // Admin: Duplică factură
+  fastify.post('/admin/duplicate/:orderId', { preHandler: [authMiddleware, adminMiddleware] }, async (request, reply) => {
+    try {
+      const { orderId } = request.params as any;
+      const invoice = await invoiceService.duplicateInvoice(orderId);
+      reply.send(invoice);
+    } catch (error: any) {
+      reply.code(400).send({ error: error.message });
+    }
+  });
+
+  // Admin: Șterge factură
+  fastify.delete('/admin/delete/:orderId', { preHandler: [authMiddleware, adminMiddleware] }, async (request, reply) => {
+    try {
+      const { orderId } = request.params as any;
+      await invoiceService.deleteInvoice(orderId);
+      reply.send({ message: 'Factură ștearsă cu succes' });
+    } catch (error: any) {
+      reply.code(400).send({ error: error.message });
     }
   });
 }

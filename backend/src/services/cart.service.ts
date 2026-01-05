@@ -18,11 +18,13 @@ export class CartService {
       0
     );
 
-    return {
+    const result = {
       items: cartItems,
       total,
       itemCount: cartItems.reduce((sum, item) => sum + item.quantity, 0),
     };
+
+    return result;
   }
 
   // Add item to cart
@@ -57,15 +59,16 @@ export class CartService {
         throw new Error('Insufficient stock');
       }
 
-      return await prisma.cartItem.update({
+      const updatedItem = await prisma.cartItem.update({
         where: { id: existingItem.id },
         data: { quantity: newQuantity },
         include: { dataItem: { include: { category: true } } },
       });
+      return updatedItem;
     }
 
     // Create new cart item
-    return await prisma.cartItem.create({
+    const newItem = await prisma.cartItem.create({
       data: {
         userId,
         dataItemId,
@@ -73,6 +76,7 @@ export class CartService {
       },
       include: { dataItem: { include: { category: true } } },
     });
+    return newItem;
   }
 
   // Update cart item quantity
