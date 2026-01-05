@@ -6,6 +6,7 @@ import rateLimit from '@fastify/rate-limit';
 import jwt from '@fastify/jwt';
 import multipart from '@fastify/multipart';
 import fastifyStatic from '@fastify/static';
+import { Server as SocketIOServer } from 'socket.io';
 import path from 'path';
 import { authRoutes } from './routes/auth.routes';
 import { dataRoutes } from './routes/data.routes';
@@ -17,6 +18,7 @@ import { userRoutes } from './routes/user.routes';
 import { openAIRoutes } from './routes/openai.routes';
 import { offerRoutes } from './routes/offer.routes';
 import { categoryRoutes } from './routes/category.routes';
+import { chatRoutes } from './routes/chat.routes';
 // Comentez noile routes care pot cauza probleme
 // import { inventoryRoutes } from './routes/inventory.routes';
 
@@ -145,6 +147,24 @@ async function start() {
     const { paymentRoutes } = await import('./routes/payment.routes');
     await fastify.register(paymentRoutes, { prefix: '/api/payments' });
 
+    // Register user card routes
+    const { userCardRoutes } = await import('./routes/user-card.routes');
+    await fastify.register(userCardRoutes, { prefix: '/api/user-cards' });
+
+    // Register chat routes
+    await fastify.register(chatRoutes, { prefix: '/api/chat' });
+
+    // Add Socket.IO to fastify instance for use in routes BEFORE starting server
+    const io = new SocketIOServer(fastify.server, {
+      cors: {
+        origin: [CORS_ORIGIN, 'http://localhost:3000'],
+        methods: ['GET', 'POST'],
+        credentials: true
+      }
+    });
+
+    fastify.decorate('io', io);
+
     // Global error handler
     fastify.setErrorHandler((error: Error, request, reply) => {
       fastify.log.error({
@@ -161,9 +181,81 @@ async function start() {
     });
 
     // Start server
-    await fastify.listen({ port: PORT, host: '0.0.0.0' });
+    const server = await fastify.listen({ port: PORT, host: '0.0.0.0' });
+    
+    // Socket.IO authentication middleware
+    io.use(async (socket, next) => {
+      try {
+        const token = socket.handshake.auth.token;
+        if (!token) {
+          return next(new Error('Authentication error'));
+        }
+
+        const decoded = fastify.jwt.verify(token) as any;
+        socket.userId = decoded.userId;
+        socket.userEmail = decoded.email;
+        socket.userRole = decoded.role;
+        next();
+      } catch (error) {
+        next(new Error('Authentication error'));
+      }
+    });
+
+    // Socket.IO connection handling
+    io.on('connection', (socket) => {
+      console.log(`🔌 User connected: ${socket.userEmail} (${socket.userId})`);
+
+      // Join user to their personal room for notifications
+      socket.join(`user_${socket.userId}`);
+
+      // Join chat rooms
+      socket.on('join_room', (roomId: string) => {
+        socket.join(roomId);
+        console.log(`👥 User ${socket.userEmail} joined room: ${roomId}`);
+      });
+
+      // Leave chat rooms
+      socket.on('leave_room', (roomId: string) => {
+        socket.leave(roomId);
+        console.log(`👋 User ${socket.userEmail} left room: ${roomId}`);
+      });
+
+      // Handle typing indicators
+      socket.on('typing_start', (data: { roomId: string }) => {
+        socket.to(data.roomId).emit('user_typing', {
+          userId: socket.userId,
+          userEmail: socket.userEmail,
+          roomId: data.roomId
+        });
+      });
+
+      socket.on('typing_stop', (data: { roomId: string }) => {
+        socket.to(data.roomId).emit('user_stopped_typing', {
+          userId: socket.userId,
+          roomId: data.roomId
+        });
+      });
+
+      // Handle user status
+      socket.on('user_online', () => {
+        socket.broadcast.emit('user_status_change', {
+          userId: socket.userId,
+          status: 'online'
+        });
+      });
+
+      // Handle disconnection
+      socket.on('disconnect', () => {
+        console.log(`🔌 User disconnected: ${socket.userEmail} (${socket.userId})`);
+        socket.broadcast.emit('user_status_change', {
+          userId: socket.userId,
+          status: 'offline'
+        });
+      });
+    });
     
     console.log(`🚀 Server running on http://localhost:${PORT}`);
+    console.log(`💬 Socket.IO chat server ready`);
     
     // Schedule cleanup jobs - Removed for simplicity
     // scheduleCleanupJobs();

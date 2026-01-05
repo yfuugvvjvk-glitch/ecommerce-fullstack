@@ -111,7 +111,7 @@ DEVOPS & TOOLS
 ### Slide 7: FUNCȚIONALITĂȚI UTILIZATORI
 
 ```
-⭐ FUNCȚIONALITĂȚI PENTRU UTILIZATORI (17)
+⭐ FUNCȚIONALITĂȚI PENTRU UTILIZATORI (19)
 
 🔐 Autentificare completă (JWT)
 🛍️ Catalog produse (12 produse, 6 categorii)
@@ -124,6 +124,8 @@ DEVOPS & TOOLS
 👤 Profil editabil + avatar
 📄 Sistem facturi
 🤖 AI Chatbot (OpenAI)
+💳 Sistem carduri complet (NOU!)
+💬 Chat în timp real (NOU!)
 📱 Design responsive complet
 ```
 
@@ -211,11 +213,12 @@ REZULTATE
 
 APLICAȚIA LOCALĂ (NU MERGE LIVE)
 http://localhost:3000
-⚠️ Baza de date a expirat - doar local
+⚠️ Baza de date temporar indisponibilă - doar local
+📝 Aplicație demonstrativă - toate plățile simulate
 
 CREDENȚIALE DEMO
-👑 Admin: admin@example.com / Admin1234
-👤 User: ion.popescu@example.com / User1234
+👑 Admin: admin@example.com / 123
+👤 User: ion.popescu@example.com / ion123
 🎟️ Voucher: WELCOME10
 
 FUNCȚIONALITĂȚI DE DEMONSTRAT
@@ -268,7 +271,24 @@ FUNCȚIONALITĂȚI PLANIFICATE
 ☁️ Cloud-native deployment
 ```
 
-### Slide 15: VALOAREA PROIECTULUI
+### Slide 14: SISTEM CHAT ÎN TIMP REAL
+
+```
+💬 FUNCȚIONALITĂȚI CHAT (NOU!)
+
+⚡ Socket.IO pentru timp real
+👥 Chat direct între utilizatori
+🎧 Chat de support cu admin
+👨‍👩‍👧‍👦 Grupuri de chat
+✍️ Indicatori de scriere
+📱 Status online/offline
+💾 Istoric complet mesaje
+🔔 Notificări în timp real
+
+DEMONSTRATIV - Toate mesajele simulate
+```
+
+### Slide 16: VALOAREA PROIECTULUI
 
 ```
 💎 VALOAREA ȘI IMPACTUL
@@ -313,7 +333,7 @@ LECȚII ÎNVĂȚATE
 • Beneficiile tehnologiilor moderne
 ```
 
-### Slide 17: MULȚUMIRI
+### Slide 18: MULȚUMIRI
 
 ```
 🙏 MULȚUMIRI

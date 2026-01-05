@@ -34,6 +34,11 @@ model User {
   navigationHistory NavigationHistory[]
   savedCards        SavedCard[]
   cardTransactions  CardTransaction[]
+  
+  // Chat system relations
+  sentMessages      ChatMessage[]     @relation("MessageSender")
+  chatRoomMembers   ChatRoomMember[]
+  createdChatRooms  ChatRoom[]        @relation("ChatRoomCreator")
 
   @@index([email])
 }
@@ -389,4 +394,80 @@ model TestCard {
 
   @@index([cardNumber])
   @@index([isActive])
+}
+
+// Chat System Models
+model ChatRoom {
+  id          String   @id @default(cuid())
+  name        String?  // Numele grupului (null pentru chat direct)
+  description String?
+  type        String   @default("DIRECT") // "DIRECT", "GROUP", "SUPPORT"
+  isActive    Boolean  @default(true)
+  createdById String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  createdBy User             @relation("ChatRoomCreator", fields: [createdById], references: [id], onDelete: Cascade)
+  members   ChatRoomMember[]
+  messages  ChatMessage[]
+
+  @@index([type])
+  @@index([isActive])
+  @@index([createdById])
+}
+
+model ChatRoomMember {
+  id         String    @id @default(cuid())
+  chatRoomId String
+  userId     String
+  role       String    @default("MEMBER") // "MEMBER", "ADMIN", "MODERATOR"
+  joinedAt   DateTime  @default(now())
+  leftAt     DateTime?
+  isActive   Boolean   @default(true)
+
+  chatRoom ChatRoom @relation(fields: [chatRoomId], references: [id], onDelete: Cascade)
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([chatRoomId, userId])
+  @@index([chatRoomId])
+  @@index([userId])
+  @@index([isActive])
+}
+
+model ChatMessage {
+  id         String    @id @default(cuid())
+  chatRoomId String
+  senderId   String
+  content    String    @db.Text
+  type       String    @default("TEXT") // "TEXT", "IMAGE", "FILE", "SYSTEM"
+  fileUrl    String?   // Pentru imagini/fișiere
+  fileName   String?   // Numele original al fișierului
+  isEdited   Boolean   @default(false)
+  editedAt   DateTime?
+  isDeleted  Boolean   @default(false)
+  deletedAt  DateTime?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  chatRoom ChatRoom @relation(fields: [chatRoomId], references: [id], onDelete: Cascade)
+  sender   User     @relation("MessageSender", fields: [senderId], references: [id], onDelete: Cascade)
+  readBy   ChatMessageRead[]
+
+  @@index([chatRoomId])
+  @@index([senderId])
+  @@index([createdAt])
+  @@index([isDeleted])
+}
+
+model ChatMessageRead {
+  id        String   @id @default(cuid())
+  messageId String
+  userId    String
+  readAt    DateTime @default(now())
+
+  message ChatMessage @relation(fields: [messageId], references: [id], onDelete: Cascade)
+
+  @@unique([messageId, userId])
+  @@index([messageId])
+  @@index([userId])
 }
