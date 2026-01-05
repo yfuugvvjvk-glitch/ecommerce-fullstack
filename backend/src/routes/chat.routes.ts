@@ -206,4 +206,61 @@ export async function chatRoutes(fastify: FastifyInstance) {
       reply.code(500).send({ error: errorMessage });
     }
   });
+
+  // Editează un mesaj
+  fastify.put('/rooms/:roomId/messages/:messageId', { preHandler: authMiddleware }, async (request, reply) => {
+    try {
+      const { roomId, messageId } = request.params as any;
+      const { content } = request.body as any;
+
+      if (!content || !content.trim()) {
+        return reply.code(400).send({ error: 'Message content is required' });
+      }
+
+      const result = await chatService.editMessage(
+        messageId,
+        request.user!.userId,
+        content.trim()
+      );
+
+      // Emit message update via Socket.IO
+      if (fastify.io) {
+        fastify.io.to(roomId).emit('message_edited', {
+          messageId,
+          content: content.trim(),
+          editedBy: request.user!.userId
+        });
+      }
+
+      reply.send(result);
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      reply.code(400).send({ error: errorMessage });
+    }
+  });
+
+  // Șterge un mesaj
+  fastify.delete('/rooms/:roomId/messages/:messageId', { preHandler: authMiddleware }, async (request, reply) => {
+    try {
+      const { roomId, messageId } = request.params as any;
+
+      const result = await chatService.deleteMessage(
+        messageId,
+        request.user!.userId
+      );
+
+      // Emit message deletion via Socket.IO
+      if (fastify.io) {
+        fastify.io.to(roomId).emit('message_deleted', {
+          messageId,
+          deletedBy: request.user!.userId
+        });
+      }
+
+      reply.send(result);
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      reply.code(400).send({ error: errorMessage });
+    }
+  });
 }

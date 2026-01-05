@@ -465,8 +465,33 @@ export class ChatService {
     }
   }
 
-  // Obține utilizatorii disponibili pentru chat (excluzând cei cu care deja are chat direct)
+  // Obține utilizatorii disponibili pentru chat
   async getAvailableUsers(userId: string) {
+    try {
+      // Obține toți utilizatorii disponibili (mai puțin utilizatorul curent)
+      const availableUsers = await prisma.user.findMany({
+        where: {
+          id: { not: userId }
+        },
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          avatar: true,
+          role: true
+        },
+        orderBy: { name: 'asc' }
+      });
+
+      return availableUsers;
+    } catch (error) {
+      console.error('Error getting available users:', error);
+      throw new Error('Failed to get available users');
+    }
+  }
+
+  // Obține utilizatorii fără chat direct existent (pentru funcționalitatea originală)
+  async getNewChatUsers(userId: string) {
     try {
       // Obține ID-urile utilizatorilor cu care are deja chat direct
       const existingDirectChats = await prisma.chatRoom.findMany({
@@ -488,8 +513,8 @@ export class ChatService {
         chat.members.map(member => member.userId)
       );
 
-      // Obține toți utilizatorii disponibili
-      const availableUsers = await prisma.user.findMany({
+      // Obține utilizatorii fără chat direct existent
+      const newChatUsers = await prisma.user.findMany({
         where: {
           id: { 
             not: userId,
@@ -506,10 +531,86 @@ export class ChatService {
         orderBy: { name: 'asc' }
       });
 
-      return availableUsers;
+      return newChatUsers;
     } catch (error) {
-      console.error('Error getting available users:', error);
-      throw new Error('Failed to get available users');
+      console.error('Error getting new chat users:', error);
+      throw new Error('Failed to get new chat users');
+    }
+  }
+
+  // Editează un mesaj
+  async editMessage(messageId: string, userId: string, newContent: string) {
+    try {
+      // Verifică dacă mesajul există și aparține utilizatorului
+      const message = await prisma.chatMessage.findFirst({
+        where: {
+          id: messageId,
+          senderId: userId,
+          isDeleted: false
+        }
+      });
+
+      if (!message) {
+        throw new Error('Message not found or you are not authorized to edit it');
+      }
+
+      // Actualizează mesajul
+      const updatedMessage = await prisma.chatMessage.update({
+        where: { id: messageId },
+        data: {
+          content: newContent,
+          isEdited: true,
+          editedAt: new Date()
+        },
+        include: {
+          sender: {
+            select: {
+              id: true,
+              name: true,
+              email: true,
+              avatar: true,
+              role: true
+            }
+          }
+        }
+      });
+
+      return updatedMessage;
+    } catch (error) {
+      console.error('Error editing message:', error);
+      throw new Error('Failed to edit message');
+    }
+  }
+
+  // Șterge un mesaj
+  async deleteMessage(messageId: string, userId: string) {
+    try {
+      // Verifică dacă mesajul există și aparține utilizatorului
+      const message = await prisma.chatMessage.findFirst({
+        where: {
+          id: messageId,
+          senderId: userId,
+          isDeleted: false
+        }
+      });
+
+      if (!message) {
+        throw new Error('Message not found or you are not authorized to delete it');
+      }
+
+      // Marchează mesajul ca șters
+      await prisma.chatMessage.update({
+        where: { id: messageId },
+        data: {
+          isDeleted: true,
+          deletedAt: new Date()
+        }
+      });
+
+      return { success: true, messageId };
+    } catch (error) {
+      console.error('Error deleting message:', error);
+      throw new Error('Failed to delete message');
     }
   }
 }
