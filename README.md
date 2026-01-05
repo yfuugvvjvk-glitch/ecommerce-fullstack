@@ -6,22 +6,23 @@ Aplicație completă de e-commerce construită cu Next.js, Fastify și PostgreSQ
 
 ⚠️ **IMPORTANT: Aplicația funcționează DOAR LOCAL**
 
-- Baza de date gratuită a expirat definitiv
+- Baza de date este temporar indisponibilă
 - Pentru testare, rulează aplicația local (vezi instrucțiunile de mai jos)
 - **Frontend local:** http://localhost:3000
 - **Backend local:** http://localhost:3001
+- 📝 **NOTĂ**: Toate funcționalitățile sunt demonstrative pentru testarea competențelor tehnice
 
 ## 🔑 Credențiale Demo
 
 **Admin:**
 
 - Email: admin@example.com
-- Parolă: Admin1234
+- Parolă: 123
 
 **User:**
 
 - Email: ion.popescu@example.com
-- Parolă: User1234
+- Parolă: ion123
 
 **Voucher-uri:** `WELCOME10` (10% off), `SUMMER50` (50 RON off)
 
@@ -41,7 +42,14 @@ Aplicație completă de e-commerce construită cu Next.js, Fastify și PostgreSQ
 - JWT Authentication
 - Bcrypt
 
-## ✨ Funcționalități Complete
+## ✨ Funcționalități Complete (Demonstrative)
+
+⚠️ **APLICAȚIE DEMONSTRATIVĂ**: Toate funcționalitățile sunt simulate pentru demonstrarea competențelor tehnice:
+
+- Plățile cu carduri sunt simulate (nu se procesează plăți reale)
+- Produsele și prețurile sunt fictive pentru testare
+- Comenzile și livrările sunt simulate
+- Scopul este demonstrarea competențelor full-stack moderne
 
 ### Pentru Utilizatori 👥
 
@@ -53,6 +61,8 @@ Aplicație completă de e-commerce construită cu Next.js, Fastify și PostgreSQ
 - ⭐ **Review-uri** - Rating și comentarii pentru produse
 - 💝 **Lista favorite** - Salvare produse preferate
 - 👤 **Profil utilizator** - Editare informații și avatar upload
+- 💳 **Sistem carduri** - Carduri reale (securizate) și fictive pentru test
+- 💬 **Chat în timp real** - Mesagerie directă, grupuri, support cu Socket.IO
 - 📱 **Design responsive** - Funcționează perfect pe mobile/desktop
 
 ### Pentru Administratori 👨‍💼
@@ -69,6 +79,7 @@ Aplicație completă de e-commerce construită cu Next.js, Fastify și PostgreSQ
 - 🔒 **Securitate avansată** - JWT, bcrypt, rate limiting, CORS, helmet
 - 📦 **Actualizare automată stoc** - La anulare comenzi, stocul se restituie
 - 🤖 **AI Chatbot** - Asistență inteligentă cu fallback responses
+- 💬 **Socket.IO** - Comunicare în timp real pentru chat și notificări
 - 🌍 **Suport multilingv** - Română și Engleză
 - ⚡ **Performance optimizat** - Lazy loading, caching, bundle optimization
 

@@ -7,7 +7,7 @@ async function main() {
   console.log('🌱 Starting complete database seed...');
 
   // Create admin user
-  const hashedPassword = await bcrypt.hash('Admin1234', 10);
+  const hashedPassword = await bcrypt.hash('123', 10);
   
   const admin = await prisma.user.upsert({
     where: { email: 'admin@example.com' },
@@ -219,7 +219,7 @@ async function main() {
   const users = [
     {
       email: 'ion.popescu@example.com',
-      password: await bcrypt.hash('User1234', 10),
+      password: await bcrypt.hash('ion123', 10),
       name: 'Ion Popescu',
       phone: '+40745234567',
       address: 'Str. Mihai Eminescu nr. 15, București',
@@ -227,7 +227,7 @@ async function main() {
     },
     {
       email: 'maria.ionescu@example.com',
-      password: await bcrypt.hash('User1234', 10),
+      password: await bcrypt.hash('maria456', 10),
       name: 'Maria Ionescu',
       phone: '+40756345678',
       address: 'Str. George Coșbuc nr. 23, Cluj-Napoca',
@@ -235,7 +235,7 @@ async function main() {
     },
     {
       email: 'andrei.popa@example.com',
-      password: await bcrypt.hash('User1234', 10),
+      password: await bcrypt.hash('andrei789', 10),
       name: 'Andrei Popa',
       phone: '+40767456789',
       address: 'Bd. Independenței nr. 45, Timișoara',
@@ -454,8 +454,10 @@ async function main() {
 
   console.log('\n🎉 Complete seed finished!');
   console.log('\n👤 Credentials:');
-  console.log('   Admin: admin@example.com / Admin1234');
-  console.log('   User: ion.popescu@example.com / User1234');
+  console.log('   Admin: admin@example.com / 123');
+  console.log('   Ion: ion.popescu@example.com / ion123');
+  console.log('   Maria: maria.ionescu@example.com / maria456');
+  console.log('   Andrei: andrei.popa@example.com / andrei789');
   console.log('\n🎟️  Vouchers: WELCOME10, SUMMER50');
 }
 

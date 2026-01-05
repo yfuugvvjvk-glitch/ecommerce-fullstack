@@ -1714,7 +1714,7 @@ async function main() {
   ]);
 
   // Creare utilizator admin
-  const hashedPassword = await bcrypt.hash('admin123', 10);
+  const hashedPassword = await bcrypt.hash('123', 10);
   const adminUser = await prisma.user.create({
     data: {
       email: 'admin@example.com',
@@ -2345,7 +2345,7 @@ describe('Product API Integration', () => {
         url: '/api/auth/login',
         payload: {
           email: 'admin@example.com',
-          password: 'admin123',
+          password: '123',
         },
       });
 
@@ -2589,6 +2589,8 @@ CREATE INDEX idx_orders_date ON orders(created_at);
 
 ### 5.4. Concluzii și dezvoltări viitoare
 
+**NOTĂ IMPORTANTĂ**: Această aplicație este dezvoltată în scop demonstrativ pentru evaluarea competențelor tehnice. Toate funcționalitățile de plată, produsele și comenzile sunt simulate pentru testarea și demonstrarea capabilităților tehnice ale dezvoltatorului.
+
 **5.4.1. Obiective atinse**
 
 Proiectul a reușit să îndeplinească toate obiectivele propuse:
@@ -2669,12 +2671,16 @@ Proiectul a reușit să îndeplinească toate obiectivele propuse:
 
 **5.4.4. Impactul și valoarea proiectului**
 
-Acest proiect demonstrează implementarea practică a unei aplicații web moderne, scalabile și securizate folosind cele mai noi tehnologii disponibile. Aplicația poate servi ca:
+Acest proiect demonstrează implementarea practică a unei aplicații web moderne, scalabile și securizate folosind cele mai noi tehnologii disponibile.
 
-- **Bază pentru un business real** de e-commerce
+**IMPORTANT**: Aplicația este dezvoltată în scop demonstrativ și educațional. Toate funcționalitățile de plată, produsele și comenzile sunt simulate pentru testarea și demonstrarea competențelor tehnice.
+
+Aplicația poate servi ca:
+
+- **Demonstrație a competențelor** în dezvoltarea full-stack moderne
 - **Template pentru alte proiecte** similare
-- **Demonstrație a competențelor** în dezvoltarea full-stack
-- **Referință pentru best practices** în dezvoltarea web modernă
+- **Referință pentru best practices** în dezvoltarea web
+- **Bază pentru adaptarea la cerințe reale** de business
 
 Arhitectura modulară și tehnologiile alese permit extinderea facilă și adaptarea la cerințe specifice, făcând din această aplicație o soluție viabilă pentru mediul de producție.
 

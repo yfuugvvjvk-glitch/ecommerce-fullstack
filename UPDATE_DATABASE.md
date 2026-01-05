@@ -1,6 +1,7 @@
 # 🔧 REZOLVARE PROBLEMĂ BAZĂ DE DATE EXPIRATĂ
 
 ## 🚨 Problema
+
 Baza de date gratuită de pe Render a expirat după 90 de zile. Aplicația funcționează perfect local, dar nu mai poate accesa baza de date în producție.
 
 ## ✅ Soluția - Pași de Urmat
@@ -8,10 +9,12 @@ Baza de date gratuită de pe Render a expirat după 90 de zile. Aplicația func�
 ### 1. Creare Nouă Bază de Date (Render)
 
 1. **Accesează Render Dashboard:**
+
    - Mergi la https://render.com
    - Login cu contul existent
 
 2. **Creează PostgreSQL Database:**
+
    - Click "New" → "PostgreSQL"
    - Name: `ecommerce-db-new`
    - Database Name: `ecommerce_db`
@@ -27,10 +30,12 @@ Baza de date gratuită de pe Render a expirat după 90 de zile. Aplicația func�
 ### 2. Actualizare Backend Service
 
 1. **Accesează Backend Service:**
+
    - În Render Dashboard → Services
    - Click pe `ecommerce-backend`
 
 2. **Actualizează Environment Variables:**
+
    - Settings → Environment
    - Editează `DATABASE_URL` cu noul connection string
    - Salvează modificările
@@ -42,6 +47,7 @@ Baza de date gratuită de pe Render a expirat după 90 de zile. Aplicația func�
 ### 3. Migrare și Seed Database
 
 1. **Conectează-te la noua bază de date:**
+
    ```bash
    # Local - cu noul DATABASE_URL
    DATABASE_URL="postgresql://..." npx prisma migrate deploy
@@ -59,28 +65,32 @@ Baza de date gratuită de pe Render a expirat după 90 de zile. Aplicația func�
 ### 4. Verificare Funcționalitate
 
 1. **Test Health Check:**
+
    - Accesează: https://ecommerce-fullstack-3y1b.onrender.com/health
    - Ar trebui să returneze status "ok"
 
 2. **Test Frontend:**
    - Accesează: https://ecommerce-frontend-navy.vercel.app
-   - Încearcă login cu: admin@example.com / Admin1234
+   - Încearcă login cu: admin@example.com / 123
 
 ## 🔄 Alternativă: Supabase (Recomandat)
 
 Dacă Render continuă să expire, folosește Supabase:
 
 ### 1. Creare Cont Supabase
+
 - Mergi la https://supabase.com
 - Creează cont gratuit
 - Creează nou proiect: "ecommerce-db"
 
 ### 2. Obține Connection String
+
 - Settings → Database
 - Copiază "Connection string"
 - Format: `postgresql://postgres:[password]@[host]:5432/postgres`
 
 ### 3. Actualizează Backend
+
 - Render Dashboard → ecommerce-backend → Environment
 - Actualizează `DATABASE_URL` cu Supabase connection string
 - Redeploy service
@@ -88,16 +98,19 @@ Dacă Render continuă să expire, folosește Supabase:
 ## 📊 Alternative Gratuite Permanente
 
 ### 1. **Supabase** (Recomandat)
+
 - 500MB storage gratuit
 - Nu expiră
 - Interface grafică excelentă
 
 ### 2. **PlanetScale**
+
 - 5GB gratuit
 - MySQL compatible
 - Branching pentru database
 
 ### 3. **Railway**
+
 - $5 credit lunar gratuit
 - PostgreSQL
 - Deploy simplu
@@ -127,10 +140,12 @@ echo "✅ Baza de date actualizată cu succes!"
 Dacă întâmpini probleme:
 
 1. **Verifică logs:**
+
    - Render Dashboard → Service → Logs
    - Caută erori de conexiune
 
 2. **Test local:**
+
    ```bash
    # Test conexiune nouă
    DATABASE_URL="postgresql://..." npx prisma db pull
@@ -141,6 +156,7 @@ Dacă întâmpini probleme:
    - Supabase: support@supabase.io
 
 ## ⏱️ Timp Estimat
+
 - Creare DB nouă: 5 minute
 - Actualizare config: 2 minute
 - Redeploy: 3-5 minute
