@@ -4,9 +4,12 @@ Aplicație completă de e-commerce construită cu Next.js, Fastify și PostgreSQ
 
 ## 🌐 Demo Live
 
-- **Frontend:** https://ecommerce-frontend-navy.vercel.app
-- **Backend API:** https://ecommerce-fullstack-3y1b.onrender.com
-- **Status:** ⚠️ Baza de date gratuită a expirat - vezi `UPDATE_DATABASE.md` pentru rezolvare
+⚠️ **IMPORTANT: Aplicația funcționează DOAR LOCAL**
+
+- Baza de date gratuită a expirat definitiv
+- Pentru testare, rulează aplicația local (vezi instrucțiunile de mai jos)
+- **Frontend local:** http://localhost:3000
+- **Backend local:** http://localhost:3001
 
 ## 🔑 Credențiale Demo
 
@@ -103,15 +106,15 @@ npm run dev
 ### Documentație Tehnică
 
 - **[ARHITECTURA.md](./ARHITECTURA.md)** - Arhitectura sistemului și design patterns
-- **[API.md](./API.md)** - Documentație completă API cu toate endpoint-urile
-- **[SPECIFICATII.md](./SPECIFICATII.md)** - Cerințe tehnice și funcționale
+- **[SPECIFICATII.md](./SPECIFICATII.md)** - Cerințe tehnice și funcționale complete
 - **[TESTARE.md](./TESTARE.md)** - Strategia de testare și exemple
 - **[DEPLOYMENT.md](./DEPLOYMENT.md)** - Ghid deployment și CI/CD
+- **[ANALIZA_CERINTE.md](./ANALIZA_CERINTE.md)** - Analiza cerințelor vs implementare
 
 ### Documentație Proiect
 
-- **[PROJECT_SUMMARY.md](./PROJECT_SUMMARY.md)** - Rezumat funcționalități
-- **[TRIMITERE_PROFESOR.txt](./TRIMITERE_PROFESOR.txt)** - Informații pentru evaluare
+- **[UPDATE_DATABASE.md](./UPDATE_DATABASE.md)** - Rezolvare problemă bază de date expirată
+- **[TRIMITERE_PROFESOR.txt](./TRIMITERE_PROFESOR.txt)** - Informații pentru trimitere
 
 ## 🗂️ Structura
 

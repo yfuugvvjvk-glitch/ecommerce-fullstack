@@ -55,6 +55,21 @@ export async function adminRoutes(fastify: FastifyInstance) {
     }
   });
 
+  // Get user details including password (for password recovery assistance)
+  fastify.get('/users/:id/details', { preHandler }, async (request, reply) => {
+    try {
+      const { id } = request.params as any;
+      const userDetails = await adminService.getUserDetails(id);
+      if (!userDetails) {
+        reply.code(404).send({ error: 'User not found' });
+        return;
+      }
+      reply.send(userDetails);
+    } catch (error: any) {
+      reply.code(400).send({ error: error.message });
+    }
+  });
+
   // Orders
   fastify.get('/orders', { preHandler }, async (request, reply) => {
     try {

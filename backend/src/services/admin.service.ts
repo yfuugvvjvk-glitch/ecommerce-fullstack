@@ -72,6 +72,30 @@ export class AdminService {
     });
   }
 
+  // Get user details including password (for admin password recovery assistance)
+  async getUserDetails(userId: string) {
+    return await prisma.user.findUnique({
+      where: { id: userId },
+      select: {
+        id: true,
+        email: true,
+        name: true,
+        phone: true,
+        address: true,
+        role: true,
+        password: true, // Include password for admin
+        createdAt: true,
+        _count: { 
+          select: { 
+            orders: true,
+            reviews: true,
+            favorites: true
+          } 
+        },
+      },
+    });
+  }
+
   // Order management
   async getAllOrders(page: number = 1, limit: number = 20, status?: string) {
     const skip = (page - 1) * limit;
