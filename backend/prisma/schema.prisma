@@ -146,6 +146,10 @@ model DataItem {
   // Setări de disponibilitate
   availabilityType     String   @default("always") // always, seasonal, scheduled
   availabilitySchedule String?  // Programul de disponibilitate (JSON)
+  
+  // Afișare în carousel
+  showInCarousel       Boolean  @default(false) // Dacă produsul apare în carousel
+  carouselOrder        Int      @default(0) // Ordinea în carousel (0 = automat)
 
   user              User                @relation(fields: [userId], references: [id], onDelete: Cascade)
   category          Category            @relation(fields: [categoryId], references: [id])
