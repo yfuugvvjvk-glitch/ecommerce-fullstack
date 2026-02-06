@@ -1,5 +1,4 @@
 import { AuthService } from '../auth.service';
-import { PrismaClient } from '@prisma/client';
 
 // Mock the entire auth utils module
 jest.mock('../../utils/auth', () => ({
@@ -9,17 +8,25 @@ jest.mock('../../utils/auth', () => ({
   verifyToken: jest.fn().mockReturnValue({ userId: '1', email: 'test@example.com', role: 'user' }),
 }));
 
-// Mock Prisma
-jest.mock('@prisma/client', () => ({
-  PrismaClient: jest.fn().mockImplementation(() => ({
-    user: {
-      findUnique: jest.fn(),
-      create: jest.fn(),
-    },
-  })),
-}));
+// Mock Prisma with factory functions
+jest.mock('@prisma/client', () => {
+  const mockUserFindUnique = jest.fn();
+  const mockUserCreate = jest.fn();
+  
+  return {
+    PrismaClient: jest.fn().mockImplementation(() => ({
+      user: {
+        findUnique: mockUserFindUnique,
+        create: mockUserCreate,
+      },
+    })),
+    __mockUserFindUnique: mockUserFindUnique,
+    __mockUserCreate: mockUserCreate,
+  };
+});
 
-const mockPrisma = new PrismaClient() as jest.Mocked<PrismaClient>;
+// Import the mocked functions
+const { __mockUserFindUnique: mockUserFindUnique, __mockUserCreate: mockUserCreate } = jest.requireMock('@prisma/client');
 
 describe('AuthService', () => {
   let authService: AuthService;
@@ -45,8 +52,8 @@ describe('AuthService', () => {
         updatedAt: new Date(),
       };
 
-      (mockPrisma.user.findUnique as jest.Mock).mockResolvedValue(null);
-      (mockPrisma.user.create as jest.Mock).mockResolvedValue(mockUser);
+      mockUserFindUnique.mockResolvedValue(null);
+      mockUserCreate.mockResolvedValue(mockUser);
 
       const result = await authService.register(
         'test@example.com',
@@ -55,11 +62,11 @@ describe('AuthService', () => {
       );
 
       expect(result.email).toBe('test@example.com');
-      expect(mockPrisma.user.create).toHaveBeenCalled();
+      expect(mockUserCreate).toHaveBeenCalled();
     });
 
     it('should throw error if user already exists', async () => {
-      (mockPrisma.user.findUnique as jest.Mock).mockResolvedValue({ id: '1', email: 'test@example.com' });
+      mockUserFindUnique.mockResolvedValue({ id: '1', email: 'test@example.com' });
 
       await expect(
         authService.register('test@example.com', 'password123', 'Test User')
@@ -83,7 +90,7 @@ describe('AuthService', () => {
         updatedAt: new Date(),
       };
 
-      (mockPrisma.user.findUnique as jest.Mock).mockResolvedValue(mockUser);
+      mockUserFindUnique.mockResolvedValue(mockUser);
 
       const result = await authService.login('test@example.com', 'password123');
 
@@ -94,7 +101,7 @@ describe('AuthService', () => {
     });
 
     it('should throw error on invalid credentials', async () => {
-      (mockPrisma.user.findUnique as jest.Mock).mockResolvedValue(null);
+      mockUserFindUnique.mockResolvedValue(null);
 
       await expect(
         authService.login('test@example.com', 'wrongpassword')
