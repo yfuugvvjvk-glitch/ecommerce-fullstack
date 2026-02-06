@@ -271,7 +271,7 @@ export class DataService {
     if (data.stock !== undefined) {
       updateData.availableStock = data.stock - (existing.reservedStock || 0);
       updateData.isInStock = data.stock > 0;
-      updateData.lastRestockDate = data.stock > existing.stock ? new Date() : existing.lastRestockDate;
+      updateData.lastRestockDate = data.stock > existing.stock ? new Date() : (existing.lastRestockDate || undefined);
     }
 
     return prisma.dataItem.update({
