@@ -167,6 +167,48 @@ export async function publicRoutes(fastify: FastifyInstance) {
     }
   });
 
+  // === METODE DE LIVRARE PUBLICE ===
+  
+  // Obține metodele de livrare active
+  fastify.get('/delivery-methods', async (request, reply) => {
+    try {
+      const prisma = require('@prisma/client');
+      const db = new prisma.PrismaClient();
+      
+      const methods = await db.deliverySettings.findMany({
+        where: { isActive: true },
+        orderBy: { name: 'asc' }
+      });
+      
+      await db.$disconnect();
+      reply.send(methods);
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      reply.code(500).send({ error: errorMessage });
+    }
+  });
+
+  // === METODE DE PLATĂ PUBLICE ===
+  
+  // Obține metodele de plată active
+  fastify.get('/payment-methods', async (request, reply) => {
+    try {
+      const prisma = require('@prisma/client');
+      const db = new prisma.PrismaClient();
+      
+      const methods = await db.paymentMethod.findMany({
+        where: { isActive: true },
+        orderBy: { name: 'asc' }
+      });
+      
+      await db.$disconnect();
+      reply.send(methods);
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      reply.code(500).send({ error: errorMessage });
+    }
+  });
+
   // Obține o configurație publică specifică
   fastify.get('/site-config/:key', async (request, reply) => {
     try {
