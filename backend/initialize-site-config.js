@@ -8,21 +8,21 @@ async function initializeSiteConfig() {
   const defaultConfigs = [
     {
       key: 'contact_email',
-      value: 'contact@site.ro',
+      value: 'crys.cristi@yahoo.com',
       type: 'text',
       description: 'Email de contact',
       isPublic: true
     },
     {
       key: 'contact_phone',
-      value: '+40 123 456 789',
+      value: '+40 753 615 752',
       type: 'text',
       description: 'Telefon de contact',
       isPublic: true
     },
     {
       key: 'contact_address',
-      value: 'Strada Exemplu, Nr. 123, București, România',
+      value: 'Str. Gari nr. 69, Galați, România, Cod poștal: 800001',
       type: 'text',
       description: 'Adresa companiei',
       isPublic: true
@@ -30,13 +30,13 @@ async function initializeSiteConfig() {
     {
       key: 'business_hours',
       value: JSON.stringify({
-        monday: '09:00 - 18:00',
-        tuesday: '09:00 - 18:00',
-        wednesday: '09:00 - 18:00',
-        thursday: '09:00 - 18:00',
-        friday: '09:00 - 18:00',
-        saturday: '10:00 - 16:00',
-        sunday: 'Închis'
+        luni: '09:00 - 18:00',
+        marți: '09:00 - 18:00',
+        miercuri: '09:00 - 18:00',
+        joi: '09:00 - 18:00',
+        vineri: '09:00 - 18:00',
+        sâmbătă: '10:00 - 16:00',
+        duminică: 'Închis'
       }),
       type: 'json',
       description: 'Program de lucru',
@@ -83,7 +83,12 @@ async function initializeSiteConfig() {
     try {
       await prisma.siteConfig.upsert({
         where: { key: config.key },
-        update: {},
+        update: {
+          value: config.value,
+          type: config.type,
+          description: config.description,
+          isPublic: config.isPublic
+        },
         create: config
       });
       console.log(`✅ Configurație creată/actualizată: ${config.key}`);
