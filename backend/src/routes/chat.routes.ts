@@ -174,8 +174,30 @@ export async function chatRoutes(fastify: FastifyInstance) {
     }
   });
 
+  // Șterge o conversație (doar pentru direct chats și grupuri unde utilizatorul este admin)
+  fastify.delete('/rooms/:roomId', { preHandler: authMiddleware }, async (request, reply) => {
+    try {
+      const { roomId } = request.params as any;
+
+      const result = await chatService.deleteConversation(roomId, request.user!.userId);
+
+      // Emit conversation deletion via Socket.IO
+      if (fastify.io) {
+        fastify.io.to(roomId).emit('conversation_deleted', {
+          roomId,
+          deletedBy: request.user!.userId
+        });
+      }
+
+      reply.send(result);
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      reply.code(400).send({ error: errorMessage });
+    }
+  });
+
   // Părăsește un grup
-  fastify.delete('/rooms/:roomId/leave', { preHandler: authMiddleware }, async (request, reply) => {
+  fastify.post('/rooms/:roomId/leave', { preHandler: authMiddleware }, async (request, reply) => {
     try {
       const { roomId } = request.params as any;
 

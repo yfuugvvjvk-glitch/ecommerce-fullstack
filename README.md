@@ -1,189 +1,352 @@
-# 🛒 E-Commerce Full-Stack Application
+# 🛒 Platformă E-Commerce Live cu AI
 
-Aplicație completă de e-commerce construită cu Next.js, Fastify și PostgreSQL.
+Platformă modernă de comerț electronic cu funcționalități avansate: management de conținut în timp real, asistent AI, sistem de comenzi complet, și gestionare avansată de stoc.
 
-## 🌐 Demo Live
+## 🚀 Caracteristici Principale
 
-✅ **APLICAȚIA FUNCȚIONEAZĂ COMPLET LOCAL**
+### Pentru Clienți
 
-- **Frontend local:** http://localhost:3000
-- **Backend local:** http://localhost:3001
-- **Status:** Toate funcționalitățile sunt operaționale
-- **Baza de date:** PostgreSQL local configurată și funcțională
-- **Chat în timp real:** Socket.IO implementat și testat
-- 📝 **NOTĂ**: Aplicația este demonstrativă pentru testarea competențelor tehnice
+- 🛍️ **Catalog de produse** cu filtrare și căutare avansată
+- 🤖 **Asistent AI** pentru recomandări personalizate
+- 🛒 **Coș de cumpărături** cu actualizări în timp real
+- 💳 **Plată securizată** (card, cash, transfer bancar)
+- 📦 **Tracking comenzi** în timp real
+- 🎟️ **Sistem de vouchere** și reduceri
+- ⭐ **Review-uri și rating** pentru produse
+- 📍 **Locații de livrare** multiple cu program personalizat
 
-## 🔑 Credențiale Demo
+### Pentru Administratori
 
-**Admin:**
+- 📊 **Dashboard complet** cu statistici live
+- 📝 **Management de conținut** - editare pagini în timp real
+- 📦 **Gestionare produse** cu stoc avansat (perisabile, unități, cantități fixe)
+- 👥 **Gestionare utilizatori** și roluri
+- 🎯 **Gestionare comenzi** cu actualizare automată stoc
+- 🎁 **Gestionare oferte** și campanii
+- 💰 **Rapoarte financiare** și cheltuieli/venituri
+- 🚚 **Locații de livrare** cu program și rază de acoperire
+- 🔄 **Actualizări în timp real** pentru toate modificările
 
-- Email: admin@example.com
-- Parolă: 123
-
-**User:**
-
-- Email: ion.popescu@example.com
-- Parolă: ion123
-
-**Voucher-uri:** `WELCOME10` (10% off), `SUMMER50` (50 RON off)
-
-## 🚀 Tehnologii
-
-### Frontend
-
-- Next.js 16 + React 19
-- Tailwind CSS 4
-- React Hook Form + Zod
-- Axios
+## 📋 Tehnologii Utilizate
 
 ### Backend
 
-- Fastify 5
-- PostgreSQL + Prisma ORM
-- JWT Authentication
-- Bcrypt
+- **Node.js** + **TypeScript**
+- **Fastify** - framework web rapid
+- **Prisma** - ORM pentru PostgreSQL
+- **Socket.IO** - comunicare în timp real
+- **JWT** - autentificare securizată
+- **Zod** - validare date
 
-## ✨ Funcționalități Complete (Demonstrative)
+### Frontend
 
-⚠️ **APLICAȚIE DEMONSTRATIVĂ**: Toate funcționalitățile sunt simulate pentru demonstrarea competențelor tehnice:
+- **Next.js 14** - framework React
+- **TypeScript**
+- **Tailwind CSS** - styling
+- **WebSocket** - actualizări live
+- **Context API** - state management
 
-- Plățile cu carduri sunt simulate (nu se procesează plăți reale)
-- Produsele și prețurile sunt fictive pentru testare
-- Comenzile și livrările sunt simulate
-- Scopul este demonstrarea competențelor full-stack moderne
+### Database
 
-### Pentru Utilizatori 👥
+- **PostgreSQL** - bază de date relațională
 
-- 🔐 **Autentificare completă** - Register, Login, JWT, profil editabil
-- 🛍️ **Catalog produse** - 12 produse, 6 categorii, filtrare, căutare, sortare
-- 🛒 **Coș persistent** - Adăugare/eliminare produse, calcul automat total
-- 📦 **Plasare comenzi** - Checkout complet cu 3 metode plată
-- 🎟️ **Sistem voucher-uri** - Aplicare coduri reducere (WELCOME10, SUMMER50)
-- ⭐ **Review-uri** - Rating și comentarii pentru produse
-- 💝 **Lista favorite** - Salvare produse preferate
-- 👤 **Profil utilizator** - Editare informații și avatar upload
-- 💳 **Sistem carduri** - Carduri reale (securizate) și fictive pentru test
-- 💬 **Chat în timp real** - Mesagerie directă, grupuri, support cu Socket.IO
-- 📱 **Design responsive** - Funcționează perfect pe mobile/desktop
+## 🛠️ Instalare și Configurare
 
-### Pentru Administratori 👨‍💼
-
-- 📊 **Dashboard complet** - Statistici vânzări, utilizatori, comenzi în timp real
-- 🛍️ **Gestionare produse** - CRUD complet cu upload imagini
-- 👥 **Gestionare utilizatori** - Vizualizare, editare roluri, dezactivare conturi
-- 📦 **Gestionare comenzi** - Actualizare status, procesare, tracking
-- 🎟️ **Sistem voucher-uri** - Creare, editare, aprobare cereri utilizatori
-- 📈 **Rapoarte și analize** - Export date, statistici detaliate
-
-### Funcționalități Tehnice 🔧
-
-- 🔒 **Securitate avansată** - JWT, bcrypt, rate limiting, CORS, helmet
-- 📦 **Actualizare automată stoc** - La anulare comenzi, stocul se restituie
-- 🤖 **AI Chatbot** - Asistență inteligentă cu fallback responses
-- 💬 **Socket.IO** - Comunicare în timp real pentru chat și notificări
-- 🌍 **Suport multilingv** - Română și Engleză
-- ⚡ **Performance optimizat** - Lazy loading, caching, bundle optimization
-
-## 📦 Instalare și Pornire Rapidă
-
-### Metoda 1: Pornire Automată (Recomandată)
-
-```bash
-# Clonează repository-ul
-git clone https://github.com/yfuugvvjvk-glitch/ecommerce-fullstack.git
-cd ecommerce-fullstack
-
-# Pornește aplicația completă (baza de date + backend + frontend)
-./start-full-app.bat
-```
-
-### Metoda 2: Instalare Manuală
-
-#### Prerequisites
+### Cerințe
 
 - Node.js 18+
-- Docker și Docker Compose (pentru PostgreSQL)
-- Git
+- PostgreSQL 14+
+- npm sau yarn
 
-#### Pași de instalare:
-
-1. **Clonează repository-ul:**
+### 1. Clonează repository-ul
 
 ```bash
-git clone https://github.com/yfuugvvjvk-glitch/ecommerce-fullstack.git
-cd ecommerce-fullstack
+git clone <repository-url>
+cd site-comert-live
 ```
 
-2. **Pornește baza de date:**
-
-```bash
-docker-compose up -d
-```
-
-3. **Backend:**
+### 2. Configurare Backend
 
 ```bash
 cd backend
 npm install
-npx prisma migrate dev
-npx prisma db seed
-npm run dev
+
+# Configurare .env
+cp .env.example .env
+# Editează .env cu datele tale de conexiune PostgreSQL
 ```
 
-4. **Frontend (în terminal nou):**
+**Fișier `.env` necesar:**
+
+```env
+DATABASE_URL="postgresql://user:password@localhost:5432/ecommerce"
+JWT_SECRET="your-secret-key-here"
+PORT=3001
+CORS_ORIGIN="http://localhost:3000"
+```
+
+### 3. Inițializare Bază de Date
+
+```bash
+# Rulează migrările
+npx prisma migrate deploy
+
+# Inițializează sistemul cu date implicite
+node initialize-system.js
+```
+
+Acest script va crea:
+
+- ✅ Configurații site (email, telefon, adresă, program)
+- ✅ Pagini editabile (About, Contact, Dashboard Welcome)
+- ✅ Locație de livrare implicită
+- ✅ Utilizator admin (dacă nu există)
+
+### 4. Configurare Frontend
 
 ```bash
 cd frontend
 npm install
+
+# Configurare .env
+cp .env.example .env.local
+```
+
+**Fișier `.env.local` necesar:**
+
+```env
+NEXT_PUBLIC_API_URL=http://localhost:3001
+```
+
+### 5. Pornire Aplicație
+
+**Opțiune 1: Manual (pentru development)**
+
+```bash
+# Terminal 1 - Backend
+cd backend
+npm run dev
+
+# Terminal 2 - Frontend
+cd frontend
 npm run dev
 ```
 
-### Accesare Aplicație
+**Opțiune 2: Script automat (Windows)**
+
+```bash
+# Pornește ambele servere
+start-local.bat
+
+# Oprește serverele
+stop-app.bat
+```
+
+### 6. Acces Aplicație
 
 - **Frontend:** http://localhost:3000
 - **Backend API:** http://localhost:3001
-- **Chat în timp real:** Funcțional prin Socket.IO
+- **Admin Panel:** http://localhost:3000/admin
 
-## 📚 Documentație
+**Credențiale admin implicite:**
 
-### Documentație Tehnică
+- Email: `admin@site.ro`
+- Parolă: `admin123`
 
-- **[ARHITECTURA.md](./ARHITECTURA.md)** - Arhitectura sistemului și design patterns
-- **[SPECIFICATII.md](./SPECIFICATII.md)** - Cerințe tehnice și funcționale complete
-- **[TESTARE.md](./TESTARE.md)** - Strategia de testare și exemple
-- **[DEPLOYMENT.md](./DEPLOYMENT.md)** - Ghid deployment și CI/CD
-- **[ANALIZA_CERINTE.md](./ANALIZA_CERINTE.md)** - Analiza cerințelor vs implementare
+## 📱 Structura Aplicației
 
-### Documentație Proiect
+### Pagini Principale
 
-- **[UPDATE_DATABASE.md](./UPDATE_DATABASE.md)** - Rezolvare problemă bază de date expirată
-- **[TRIMITERE_PROFESOR.txt](./TRIMITERE_PROFESOR.txt)** - Informații pentru trimitere
+#### Pentru Clienți
 
-## 🗂️ Structura
+- `/` - Redirect automat la dashboard sau login
+- `/login` - Autentificare
+- `/register` - Înregistrare cont nou
+- `/dashboard` - Pagina principală cu produse și oferte
+- `/shop` - Catalog complet de produse
+- `/products/:id` - Detalii produs
+- `/cart` - Coș de cumpărături
+- `/checkout` - Finalizare comandă
+- `/orders` - Istoricul comenzilor
+- `/profile` - Profil utilizator
+- `/about` - Despre noi (editabil de admin)
+- `/contact` - Contact (editabil de admin)
+- `/offers` - Oferte speciale
+- `/favorites` - Produse favorite
 
+#### Pentru Administratori
+
+- `/admin` - Panoul de administrare cu:
+  - 📊 Dashboard cu statistici
+  - 👥 Gestionare utilizatori
+  - 📦 Gestionare produse
+  - 🛒 Gestionare comenzi
+  - 🎟️ Gestionare vouchere
+  - 🎁 Gestionare oferte
+  - 📝 Gestionare conținut (pagini editabile)
+  - 🚚 Locații de livrare
+  - 💰 Rapoarte financiare
+  - 📊 Inventar și stoc
+
+## 🎯 Funcționalități Avansate
+
+### 1. Management de Conținut Live
+
+Administratorii pot edita paginile site-ului în timp real:
+
+- **Pagini editabile:** About, Contact, Dashboard Welcome
+- **Editor live** cu preview în timp real
+- **Actualizări instantanee** - modificările apar imediat pe site
+- **Istoric modificări** - tracking complet
+
+### 2. Sistem Avansat de Produse
+
+- **Produse perisabile** cu date de expirare
+- **Unități de măsură** flexibile (kg, litru, bucată)
+- **Cantități fixe** stabilite de admin (ex: 0.5kg, 1kg, 2kg)
+- **Comandă în avans** pentru produse proaspete
+- **Stoc rezervat** vs stoc disponibil
+- **Alertă stoc scăzut** automată
+
+### 3. Locații de Livrare
+
+- **Multiple locații** de ridicare/livrare
+- **Program personalizat** pentru fiecare locație
+- **Rază de acoperire** cu calcul distanță
+- **Cost livrare dinamic** bazat pe valoarea comenzii
+- **Livrare gratuită** peste un prag configurat
+
+### 4. Actualizări în Timp Real
+
+- **WebSocket** pentru comunicare bidirecțională
+- **Notificări live** pentru comenzi noi
+- **Actualizare automată stoc** la schimbări
+- **Sincronizare** între toate sesiunile admin
+
+### 5. Rapoarte și Statistici
+
+- **Dashboard financiar** cu venituri/cheltuieli
+- **Rapoarte inventar** cu valori stoc
+- **Statistici comenzi** pe perioade
+- **Export date** pentru analiză
+
+## 🔧 Configurare Avansată
+
+### Configurații Site (editabile din admin)
+
+Toate configurațiile pot fi modificate din panoul admin:
+
+- Nume site
+- Descriere
+- Email contact
+- Telefon contact
+- Adresă companie
+- Program de lucru
+- Rețele sociale
+- Valoare minimă comandă
+- Prag livrare gratuită
+- Mod mentenanță
+
+### Locații de Livrare
+
+Configurare completă pentru fiecare locație:
+
+- Nume și adresă
+- Coordonate GPS
+- Program de lucru pe zile
+- Cost livrare
+- Prag livrare gratuită
+- Rază de acoperire (km)
+- Instrucțiuni speciale
+- Persoană de contact
+
+## 📊 API Endpoints
+
+### Public (fără autentificare)
+
+- `GET /api/public/pages` - Lista pagini publicate
+- `GET /api/public/pages/:slug` - Conținut pagină
+- `GET /api/public/site-config` - Configurații publice
+- `GET /api/public/delivery-locations` - Locații active
+- `GET /api/public/contact-info` - Informații contact
+
+### Autentificare
+
+- `POST /api/auth/register` - Înregistrare
+- `POST /api/auth/login` - Autentificare
+- `GET /api/auth/me` - Profil utilizator
+
+### Produse
+
+- `GET /api/data` - Lista produse
+- `GET /api/data/:id` - Detalii produs
+- `POST /api/data` - Creare produs (admin)
+- `PUT /api/data/:id` - Actualizare produs (admin)
+- `DELETE /api/data/:id` - Ștergere produs (admin)
+
+### Comenzi
+
+- `GET /api/orders` - Comenzile utilizatorului
+- `POST /api/orders` - Creare comandă
+- `GET /api/orders/:id` - Detalii comandă
+- `PUT /api/orders/:id/status` - Actualizare status (admin)
+
+### Admin
+
+- `GET /api/admin/stats` - Statistici generale
+- `GET /api/admin/users` - Lista utilizatori
+- `GET /api/admin/orders` - Toate comenzile
+- `GET /api/admin/content/pages` - Pagini editabile
+- `PUT /api/admin/content/pages/:id` - Actualizare pagină
+- `GET /api/admin/delivery-locations` - Locații livrare
+- `POST /api/admin/delivery-locations` - Creare locație
+
+## 🧪 Testare
+
+### Test Sistem Complet
+
+```bash
+node test-real-pages-system.js
 ```
-├── frontend/          # Next.js app
-├── backend/           # Fastify API
-│   ├── prisma/       # Database schema & migrations
-│   └── src/          # Source code
-└── README.md
-```
 
-## 🔒 Securitate
+Testează:
 
-- Parole hash-uite cu bcrypt
-- JWT pentru sesiuni
-- Rate limiting
-- CORS configurat
-- Helmet security headers
-- Input validation cu Zod
+- ✅ Pagini reale (About, Contact, Dashboard)
+- ✅ Configurații site
+- ✅ Locații de livrare
+- ✅ API endpoints publice
+
+## 📝 Informații Contact Reale
+
+**Email:** crys.cristi@yahoo.com  
+**Telefon:** 0753615742  
+**Adresă:** Str. Gari nr. 69, Galati, România, Cod poștal: 08001
+
+**Program:**
+
+- Magazin fizic: Luni-Vineri 9:00-18:00, Sâmbătă 10:00-14:00
+- Magazin online: Non-stop
+
+## 📚 Documentație Academică
+
+Pentru susținerea lucrării de licență, sunt disponibile următoarele documente:
+
+- **LUCRARE_DIPLOMA.md** - Lucrarea de licență completă în format Markdown
+- **Lucrare licenta.docx** - Lucrarea de licență în format Word
+- **POWERPOINT_PREZENTARE.md** - Prezentarea PowerPoint (17 slide-uri)
+- **DISCURS_SUSTINERE.md** - Discursul pentru susținere (15-20 minute)
+- **TRIMITERE_PROFESOR.txt** - Instrucțiuni complete pentru profesor
+
+## 🤝 Contribuții
+
+Pentru îmbunătățiri sau raportare bug-uri, contactați echipa de dezvoltare.
 
 ## 📄 Licență
 
-MIT Universitatea Internațională Danubius
+Acest proiect este dezvoltat pentru uz educațional și comercial.
 
-## 👨‍💻 Autor
+---
 
-**Student:** [Petrescu Cristian]  
-Proiect realizat pentru disciplina [Dezvoltarea aplicatiilor Web]
-**Data:** 13 Noiembrie 2025
+**Versiune:** 2.0  
+**Ultima actualizare:** Februarie 2026  
+**Status:** ✅ Complet funcțional și testat

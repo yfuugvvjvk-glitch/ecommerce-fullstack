@@ -425,6 +425,81 @@ async function main() {
 
   console.log(`✅ Created ${voucherRequests.length} voucher requests`);
 
+  // Create default delivery settings
+  const deliverySettings = [
+    {
+      name: 'Livrare Standard',
+      deliveryTimeHours: 24,
+      deliveryTimeDays: 1,
+      deliveryCost: 15.0,
+      freeDeliveryThreshold: 200.0,
+      isActive: true
+    },
+    {
+      name: 'Livrare Rapidă',
+      deliveryTimeHours: 4,
+      deliveryTimeDays: 0,
+      deliveryCost: 25.0,
+      freeDeliveryThreshold: 300.0,
+      isActive: true
+    },
+    {
+      name: 'Livrare Express',
+      deliveryTimeHours: 2,
+      deliveryTimeDays: 0,
+      deliveryCost: 35.0,
+      isActive: true
+    }
+  ];
+
+  for (const setting of deliverySettings) {
+    await prisma.deliverySettings.upsert({
+      where: { name: setting.name },
+      update: {},
+      create: setting
+    });
+  }
+
+  console.log('✅ Created 3 delivery settings');
+
+  // Create default payment methods
+  const paymentMethods = [
+    {
+      name: 'Card Bancar',
+      type: 'CARD',
+      description: 'Plată cu cardul bancar (Visa, MasterCard)',
+      isActive: true
+    },
+    {
+      name: 'Numerar la Livrare',
+      type: 'CASH',
+      description: 'Plată în numerar la primirea comenzii',
+      isActive: true
+    },
+    {
+      name: 'Transfer Bancar',
+      type: 'BANK_TRANSFER',
+      description: 'Transfer bancar în contul companiei',
+      isActive: true
+    },
+    {
+      name: 'PayPal',
+      type: 'ONLINE',
+      description: 'Plată online prin PayPal',
+      isActive: true
+    }
+  ];
+
+  for (const method of paymentMethods) {
+    await prisma.paymentMethod.upsert({
+      where: { name: method.name },
+      update: {},
+      create: method
+    });
+  }
+
+  console.log('✅ Created 4 payment methods');
+
   // Create orders
   const orders = [
     {
@@ -529,6 +604,8 @@ async function main() {
   console.log(`   - Offers: ${createdOffers.length}`);
   console.log(`   - Vouchers: ${vouchers.length}`);
   console.log(`   - Voucher Requests: ${voucherRequests.length}`);
+  console.log(`   - Delivery Settings: 3`);
+  console.log(`   - Payment Methods: 4`);
   console.log('\n👤 Test Credentials:');
   console.log('   Admin: admin@example.com / Admin1234');
   console.log('   User 1: ion.popescu@example.com / User1234');

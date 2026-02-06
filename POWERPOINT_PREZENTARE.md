@@ -111,39 +111,41 @@ DEVOPS & TOOLS
 ### Slide 7: FUNCȚIONALITĂȚI UTILIZATORI
 
 ```
-⭐ FUNCȚIONALITĂȚI PENTRU UTILIZATORI (19)
+⭐ FUNCȚIONALITĂȚI PENTRU UTILIZATORI
 
 🔐 Autentificare completă (JWT)
 🛍️ Catalog produse (12 produse, 6 categorii)
 🔍 Căutare și filtrare avansată
-🛒 Coș persistent cu indicator automat
+🛒 Coș persistent cu cantități fixe
 📦 Checkout complet (3 metode plată)
-🎟️ Sistem voucher-uri
-⭐ Review-uri și rating
-💝 Lista favorite
-👤 Profil editabil + avatar
-📄 Sistem facturi
-🤖 AI Chatbot (OpenAI)
-💳 Sistem carduri complet (NOU!)
-💬 Chat în timp real (NOU!)
+🎟️ Sistem voucher-uri cu validare
+⭐ Review-uri și rating produse
+💝 Lista favorite persistentă
+👤 Profil editabil + upload avatar
+📄 Sistem facturi complet
+📍 Locații de livrare multiple
+🔔 Notificări în timp real
 📱 Design responsive complet
 ```
 
 ### Slide 8: PANOUL ADMIN
 
 ```
-👨‍💼 FUNCȚIONALITĂȚI ADMIN (12)
+👨‍💼 FUNCȚIONALITĂȚI ADMIN
 
-📊 Dashboard cu statistici live
-🛍️ Gestionare produse (CRUD + imagini)
-👥 Gestionare utilizatori + parole
-📦 Gestionare comenzi + tracking
-🎟️ Sistem voucher-uri complet
-📄 Gestionare facturi
-💳 Carduri test pentru simulări
-📈 Rapoarte și analize
-⭐ Moderare review-uri
-🔄 Actualizare automată stoc
+📊 Dashboard cu statistici în timp real
+🛍️ Gestionare produse avansată
+   • Cantități fixe (0.5kg, 1kg, 2kg)
+   • Unități de măsură (kg, litru, bucată)
+   • Produse perisabile cu comandă în avans
+👥 Gestionare utilizatori și roluri
+📦 Gestionare comenzi cu actualizare stoc
+🎟️ Sistem voucher-uri și oferte
+📝 Editor LIVE pentru pagini (About, Contact)
+📍 Locații de livrare cu program
+💰 Rapoarte financiare (venituri/cheltuieli)
+📊 Inventar cu alerte stoc scăzut
+🔄 Actualizări WebSocket în timp real
 ```
 
 ### Slide 9: SECURITATEA
@@ -211,22 +213,26 @@ REZULTATE
 ```
 🎬 DEMONSTRAȚIE APLICAȚIE
 
-APLICAȚIA LOCALĂ (NU MERGE LIVE)
+✅ APLICAȚIA LOCALĂ COMPLET FUNCȚIONALĂ
 http://localhost:3000
-⚠️ Baza de date temporar indisponibilă - doar local
-📝 Aplicație demonstrativă - toate plățile simulate
+📝 Toate funcționalitățile operaționale
 
 CREDENȚIALE DEMO
-👑 Admin: admin@example.com / 123
-👤 User: ion.popescu@example.com / ion123
-🎟️ Voucher: WELCOME10
+👑 Admin: admin@example.com / Admin1234
+👤 User: ion.popescu@example.com / User1234
+🎟️ Voucher: WELCOME10 (10% reducere)
 
 FUNCȚIONALITĂȚI DE DEMONSTRAT
-1. Navigare și căutare produse
-2. Adăugare în coș + indicator
-3. Checkout cu simulator plăți
-4. Panou admin
-5. Design responsive
+1. Navigare produse cu cantități fixe
+2. Adăugare în coș cu actualizare automată
+3. Checkout cu 3 metode de plată
+4. Panou admin complet:
+   • Editor live pagini
+   • Gestionare stoc automată
+   • Locații de livrare
+   • Rapoarte financiare
+5. Actualizări în timp real (WebSocket)
+6. Design responsive pe toate dispozitivele
 ```
 
 ### Slide 13: PROVOCĂRI
@@ -257,35 +263,44 @@ DEPLOYMENT SCALABIL
 🚀 PLANURI DE DEZVOLTARE
 
 FUNCȚIONALITĂȚI PLANIFICATE
-💳 Plăți online integrate (Stripe/PayPal)
-🤖 Sistem recomandări AI
+💳 Integrare plăți reale (Stripe/PayPal)
+🤖 Sistem recomandări AI avansat
 📱 Aplicație mobilă React Native
-💬 Chat live cu suport
-📊 Analytics avansate
+📊 Analytics și rapoarte avansate
+🌍 Suport multilingv extins
 
 ÎMBUNĂTĂȚIRI TEHNICE
 🔄 Microservices architecture
-📡 GraphQL API
-🔔 WebSockets real-time
-🌐 PWA features
-☁️ Cloud-native deployment
+📡 GraphQL API alternativ
+🌐 PWA features complete
+☁️ Deployment cloud scalabil
+🔐 Securitate avansată (2FA)
 ```
 
-### Slide 14: SISTEM CHAT ÎN TIMP REAL
+### Slide 15: SISTEM AVANSAT DE PRODUSE
 
 ```
-💬 FUNCȚIONALITĂȚI CHAT (NOU!)
+📦 GESTIONARE PRODUSE AVANSATĂ
 
-⚡ Socket.IO pentru timp real
-👥 Chat direct între utilizatori
-🎧 Chat de support cu admin
-👨‍👩‍👧‍👦 Grupuri de chat
-✍️ Indicatori de scriere
-📱 Status online/offline
-💾 Istoric complet mesaje
-🔔 Notificări în timp real
+🎯 CANTITĂȚI FIXE
+• Admin setează cantități (0.5kg, 1kg, 2kg)
+• Client alege doar din opțiunile disponibile
+• Previne erori și facilitează gestionarea
 
-DEMONSTRATIV - Toate mesajele simulate
+📏 UNITĂȚI DE MĂSURĂ
+• Kilogram, Litru, Bucată, Metru
+• Afișare clară preț per unitate
+• Calcul automat valoare stoc
+
+⏰ COMANDĂ ÎN AVANS
+• Produse perisabile cu comandă 1-2 zile înainte
+• Ora limită pentru comenzi (ex: 20:00)
+• Previne deteriorarea produselor
+
+🔄 STOC AUTOMAT
+• Rezervare la plasare comandă
+• Actualizare la livrare/anulare
+• Alerte pentru stoc scăzut
 ```
 
 ### Slide 16: VALOAREA PROIECTULUI

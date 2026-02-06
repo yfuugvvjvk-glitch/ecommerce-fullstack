@@ -11,15 +11,13 @@ import { uploadProductImage } from '../middleware/upload.middleware';
 const dataService = new DataService();
 
 export async function dataRoutes(fastify: FastifyInstance) {
-  // All routes require authentication
-  fastify.addHook('onRequest', authMiddleware);
-
-  // GET /api/data - List all data items with pagination
+  // GET /api/data - List all data items with pagination (PUBLIC)
   fastify.get('/', async (request, reply) => {
     try {
       const query = QueryParamsSchema.parse(request.query);
-      const userId = request.user!.userId;
-      const userRole = request.user!.role || 'user';
+      // For public access, we don't require userId
+      const userId = request.user?.userId || null;
+      const userRole = request.user?.role || 'user';
 
       const result = await dataService.findAll(userId, userRole, query);
 
@@ -33,12 +31,12 @@ export async function dataRoutes(fastify: FastifyInstance) {
     }
   });
 
-  // GET /api/data/:id - Get single data item
+  // GET /api/data/:id - Get single data item (PUBLIC)
   fastify.get('/:id', async (request, reply) => {
     try {
       const { id } = request.params as { id: string };
-      const userId = request.user!.userId;
-      const userRole = request.user!.role || 'user';
+      const userId = request.user?.userId || null;
+      const userRole = request.user?.role || 'user';
 
       const item = await dataService.findById(id, userId, userRole);
 
@@ -57,8 +55,8 @@ export async function dataRoutes(fastify: FastifyInstance) {
     }
   });
 
-  // POST /api/data - Create new data item
-  fastify.post('/', async (request, reply) => {
+  // POST /api/data - Create new data item (REQUIRES AUTH)
+  fastify.post('/', { preHandler: authMiddleware }, async (request, reply) => {
     try {
       const body = CreateDataSchema.parse(request.body);
       const userId = request.user!.userId;
@@ -75,8 +73,8 @@ export async function dataRoutes(fastify: FastifyInstance) {
     }
   });
 
-  // PUT /api/data/:id - Update data item
-  fastify.put('/:id', async (request, reply) => {
+  // PUT /api/data/:id - Update data item (REQUIRES AUTH)
+  fastify.put('/:id', { preHandler: authMiddleware }, async (request, reply) => {
     try {
       const { id } = request.params as { id: string };
       const body = UpdateDataSchema.parse(request.body);
@@ -98,8 +96,8 @@ export async function dataRoutes(fastify: FastifyInstance) {
     }
   });
 
-  // DELETE /api/data/:id - Delete data item
-  fastify.delete('/:id', async (request, reply) => {
+  // DELETE /api/data/:id - Delete data item (REQUIRES AUTH)
+  fastify.delete('/:id', { preHandler: authMiddleware }, async (request, reply) => {
     try {
       const { id } = request.params as { id: string };
       const userId = request.user!.userId;
@@ -120,8 +118,8 @@ export async function dataRoutes(fastify: FastifyInstance) {
     }
   });
 
-  // POST /api/data/upload-image - Upload product image
-  fastify.post('/upload-image', async (request, reply) => {
+  // POST /api/data/upload-image - Upload product image (REQUIRES AUTH)
+  fastify.post('/upload-image', { preHandler: authMiddleware }, async (request, reply) => {
     try {
       const uploadedFile = await uploadProductImage(request, reply);
       reply.send({
