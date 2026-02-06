@@ -1,82 +1,137 @@
-# 🎨 Ghid: Editare Imagini din Flux (Carousel)
+# 🎨 Ghid Complet: Editare Imagini Carousel (Flux)
 
-## Ce sunt imaginile din "flux"?
+## ❓ Ce sunt imaginile din "flux" (carousel)?
 
-Imaginile din **flux** (carousel) care apar pe pagina principală (Dashboard) sunt de fapt **OFERTELE** create în panoul de administrare.
+Imaginile care apar în **carousel-ul de pe pagina principală** (Dashboard) sunt generate automat din **produsele care au reduceri** (au `oldPrice` mai mare decât `price`).
 
-## 📍 Unde se editează?
+## 🎯 Cum funcționează sistemul?
 
-### Pas 1: Accesează Panoul Admin
+### Sistem Automat
 
-1. Loghează-te cu contul de admin: `admin@example.com` / `Admin1234`
-2. Mergi la pagina **Admin** din meniul principal
+Aplicația ia **primele 3 produse cu reduceri** și le afișează în carousel:
 
-### Pas 2: Selectează Tab-ul Oferte
+- Imaginea produsului devine imaginea din carousel
+- Titlul devine "Ofertă: [Nume Produs]"
+- Procentul de reducere se calculează automat
+- **Click pe imagine → duce direct la pagina produsului**
 
-1. În panoul admin, găsești mai multe tab-uri: **Produse**, **Oferte**, **Vouchere**, **Comenzi**
-2. Click pe tab-ul **🎁 Oferte**
+## 📝 Cum ADAUGI sau MODIFICI imaginile din carousel?
 
-### Pas 3: Editează Imaginile
+### Metoda 1: Prin Produse cu Reduceri (RECOMANDAT)
 
-1. Vei vedea lista tuturor ofertelor existente
-2. Pentru fiecare ofertă există un buton **📷 Încarcă Imagine**
-3. Click pe buton și introdu URL-ul imaginii noi
-4. Salvează modificările
+#### Pas 1: Accesează Admin
 
-## 🔄 Cum funcționează?
+1. Loghează-te cu: `admin@example.com` / `Admin1234`
+2. Mergi la **Admin** → Tab **📦 Produse**
 
-- Ofertele active (cu `isActive: true`) apar automat în carousel-ul de pe Dashboard
-- Când un utilizator dă click pe o imagine din carousel, este redirecționat către pagina cu produsele din acea ofertă
-- Poți adăuga, edita sau șterge oferte din panoul admin
+#### Pas 2: Editează un Produs
 
-## 📦 Oferte Actuale în Baza de Date
+1. Click pe **⚙️ Configurează** la produsul dorit
+2. În modal, vei vedea secțiunea **📝 Informații de Bază**
+3. Completează/Modifică:
+   - **Preț per unitate** (ex: 50 RON)
+   - **Preț original (pentru oferte)** (ex: 100 RON) ← IMPORTANT!
+   - **URL Imagine** (ex: `/images/products/laptop.jpg`)
 
-După rularea scriptului de populare, ai următoarele oferte:
+#### Pas 3: Salvează
 
-1. **Black Friday - Electronice**
-   - Discount: 30%
-   - Produse: Laptop, Căști
-   - Imagine: `/images/offers/black-friday-electronics.jpg`
+- Click **💾 Actualizează Produs**
+- Produsul va apărea AUTOMAT în carousel dacă are reducere
 
-2. **Ofertă Fashion**
-   - Discount: 25%
-   - Produse: Cămașă, Rochie
-   - Imagine: `/images/offers/fashion-spring.jpg`
+### Exemplu Practic
 
-3. **Sport & Fitness**
-   - Discount: 20%
-   - Produse: Bancă fitness, Gantere
-   - Imagine: `/images/offers/sport-fitness.jpg`
+Pentru a avea 3 imagini în carousel:
 
-## ➕ Cum adaugi o ofertă nouă?
+**Produs 1: Laptop Gaming**
 
-1. Mergi la **Admin** → **🎁 Oferte**
-2. Click pe **➕ Adaugă Ofertă Nouă**
-3. Completează:
-   - Titlu (ex: "Reduceri de Vară")
-   - Descriere (ex: "Până la 40% discount la toate produsele!")
-   - Discount (ex: 40)
-   - URL Imagine (ex: `/images/offers/summer-sale.jpg`)
-   - Data început și sfârșit
-4. Selectează produsele care fac parte din ofertă
-5. Salvează
+- Preț: 2500 RON
+- Preț original: 3500 RON (reducere 29%)
+- Imagine: `/images/products/laptop-gaming.jpg`
 
-## 🎯 Notă Importantă
+**Produs 2: Telefon Samsung**
 
-**Imaginile din carousel NU sunt imagini separate** - ele sunt imaginile ofertelor tale. Dacă vrei să schimbi ce apare în carousel, trebuie să:
+- Preț: 1800 RON
+- Preț original: 2500 RON (reducere 28%)
+- Imagine: `/images/products/samsung-phone.jpg`
 
-- Editezi ofertele existente (schimbi imaginea)
-- SAU creezi oferte noi
-- SAU dezactivezi ofertele vechi (setează `isActive: false`)
+**Produs 3: Căști Wireless**
 
-## 🔗 Click pe Imagine
+- Preț: 150 RON
+- Preț original: 300 RON (reducere 50%)
+- Imagine: `/images/products/headphones.jpg`
 
-Când un utilizator dă click pe o imagine din carousel:
+## 🗑️ Cum ELIMINI o imagine din carousel?
 
-1. Este redirecționat către `/offers?offerId=<id-ul-ofertei>`
-2. Pagina afișează toate produsele din acea ofertă
-3. Utilizatorul poate vedea detaliile și adăuga produse în coș
+### Opțiunea 1: Elimină reducerea
+
+1. Editează produsul
+2. Șterge valoarea din **Preț original (pentru oferte)**
+3. Salvează → Produsul dispare din carousel
+
+### Opțiunea 2: Dezactivează produsul
+
+1. Editează produsul
+2. Debifează **Produs activ**
+3. Salvează → Produsul nu mai apare nicăieri
+
+## 🔄 Ordinea imaginilor în carousel
+
+Imaginile apar în ordinea produselor cu cele mai mari reduceri:
+
+- Primul produs cu reducere → Prima imagine
+- Al doilea produs cu reducere → A doua imagine
+- Al treilea produs cu reducere → A treia imagine
+
+## 📍 Unde sunt stocate imaginile?
+
+Imaginile pot fi:
+
+1. **URL-uri externe**: `https://example.com/image.jpg`
+2. **Imagini locale**: `/images/products/produs.jpg`
+3. **Imagini urcate**: `/uploads/products/produs-123456.jpg`
+
+## 💡 IMPORTANT: Metode de Plată
+
+Când editezi un produs, vei vedea și secțiunea **💳 Metode de Plată Acceptate**:
+
+- ✅ Card Bancar
+- ✅ Numerar la Livrare
+- ✅ Transfer Bancar
+- ✅ PayPal
+
+Bifează metodele pe care le accepți pentru acel produs.
+
+## 🎁 Metoda 2: Prin Oferte (AVANSAT)
+
+Dacă vrei control mai mare, poți crea oferte în **Admin → 🎁 Oferte**:
+
+1. Click **➕ Adaugă Ofertă Nouă**
+2. Completează:
+   - Titlu (ex: "Black Friday")
+   - Descriere
+   - Discount (%)
+   - **Imagine** (aceasta va apărea în carousel)
+   - Selectează produsele din ofertă
+3. Salvează
+
+**NOTĂ**: Ofertele au prioritate față de produsele cu reduceri simple.
+
+## 📊 Rezumat Rapid
+
+| Acțiune              | Unde                           | Cum                               |
+| -------------------- | ------------------------------ | --------------------------------- |
+| **Adaugă imagine**   | Admin → Produse                | Setează Preț Original > Preț      |
+| **Modifică imagine** | Admin → Produse → Configurează | Schimbă URL Imagine               |
+| **Elimină imagine**  | Admin → Produse → Configurează | Șterge Preț Original              |
+| **Schimbă ordine**   | Admin → Produse                | Modifică procentul de reducere    |
+| **Click pe imagine** | -                              | Duce automat la pagina produsului |
+
+## 🔗 Link-uri Utile
+
+- **Pagina Admin**: http://localhost:3000/admin
+- **Dashboard (unde apare carousel)**: http://localhost:3000/dashboard
+- **Produse**: http://localhost:3000/shop
 
 ---
 
-**Rezumat:** Imaginile din flux = Imaginile ofertelor. Editează-le în **Admin → Oferte → 📷 Încarcă Imagine**
+**TL;DR**: Imaginile din carousel = Produse cu reduceri. Pentru a le modifica, editează produsele și setează "Preț original" mai mare decât "Preț". Click pe imagine duce direct la produs.
