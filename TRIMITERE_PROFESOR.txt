@@ -14,10 +14,10 @@ PROIECT E-COMMERCE - INFORMAȚII PENTRU TRIMITERE
    - 📝 NOTĂ: Aplicația este demonstrativă pentru testarea competențelor tehnice
 
 3. Credențiale pentru testare:
-   - Admin: admin@example.com / 123
-   - User: ion.popescu@example.com / ion123
-   - Alte conturi: maria.ionescu@example.com / maria456, andrei.popa@example.com / andrei789
-   - Voucher: WELCOME10 (10% reducere)
+   - Admin: admin@example.com / Admin1234
+   - User: ion.popescu@example.com / User1234
+   - Alte conturi: maria.ionescu@example.com / User1234, andrei.popa@example.com / User1234
+   - Voucher: WELCOME10 (10% reducere), SUMMER50 (50 RON reducere)
 
 4. Setup local RAPID (2 minute):
    - git clone https://github.com/yfuugvvjvk-glitch/ecommerce-fullstack
@@ -107,51 +107,39 @@ VERIFICARE CERINȚE - TOATE ÎNDEPLINITE 100%
 FUNCȚIONALITĂȚI IMPLEMENTATE (31 TOTAL)
 ===================================================================
 
-👥 PENTRU UTILIZATORI (19 funcționalități):
+👥 PENTRU UTILIZATORI (funcționalități complete):
 ✅ Autentificare completă (Register/Login/JWT)
 ✅ Catalog produse (12 produse, 6 categorii)
 ✅ Căutare și filtrare avansată
-✅ Coș persistent cu indicator automat
+✅ Coș persistent cu cantități fixe
 ✅ Checkout complet cu 3 metode plată
 ✅ Sistem voucher-uri (WELCOME10, SUMMER50)
 ✅ Review-uri și rating produse
-✅ Lista favorite
+✅ Lista favorite persistentă
 ✅ Profil editabil cu avatar upload
-✅ Istoric comenzi cu tracking
+✅ Istoric comenzi cu tracking detaliat
 ✅ Sistem facturi (generare/download)
-✅ AI Chatbot inteligent
+✅ Locații de livrare multiple cu program
 ✅ Design complet responsive
-✅ Simulator plăți cu carduri test
-✅ 💳 SISTEM CARDURI COMPLET (NOU!)
-   - Adăugare carduri reale (salvează doar ultimele 4 cifre)
-   - Carduri fictive pentru test cu balanță
-   - Verificare fonduri (reale: simulat, fictive: real)
-   - Istoric tranzacții complet
-   - Rambursări automate la anulări
-✅ 💬 SISTEM CHAT ÎN TIMP REAL (NOU!)
-   - Chat direct între utilizatori
-   - Grupuri de chat cu mai mulți membri
-   - Chat de support cu administratorii
-   - Mesaje în timp real cu Socket.IO
-   - Indicatori de scriere și status online
-   - Istoric complet al mesajelor
 ✅ Notificări în timp real
-✅ Suport multilingv (RO/EN)
 ✅ Actualizare automată stoc
 
-👨‍💼 PENTRU ADMINISTRATORI (12 funcționalități):
+👨‍💼 PENTRU ADMINISTRATORI (funcționalități complete):
 ✅ Dashboard cu statistici în timp real
-✅ Gestionare produse (CRUD + imagini)
-✅ Gestionare utilizatori (roluri + parole)
-✅ Gestionare comenzi (status + tracking)
-✅ Sistem voucher-uri (creare + aprobare)
-✅ Gestionare facturi (vizualizare + duplicare)
-✅ Carduri test pentru simulări
-✅ Actualizare automată stoc la anulări
-✅ Rapoarte și statistici detaliate
-✅ Moderare review-uri
-✅ Suport utilizatori
-✅ Export date și analize
+✅ Gestionare produse avansată:
+   - Cantități fixe (0.5kg, 1kg, 2kg)
+   - Unități de măsură (kg, litru, bucată)
+   - Produse perisabile cu comandă în avans
+   - Upload imagini și gestionare stoc
+✅ Gestionare utilizatori (roluri + parole vizibile)
+✅ Gestionare comenzi cu actualizare automată stoc
+✅ Sistem voucher-uri și oferte cu discount-uri
+✅ Editor LIVE pentru pagini (About, Contact, Dashboard)
+✅ Locații de livrare cu program și rază acoperire
+✅ Rapoarte financiare (venituri/cheltuieli)
+✅ Inventar avansat cu alerte stoc scăzut
+✅ Actualizări WebSocket în timp real
+✅ Moderare review-uri și suport utilizatori
 
 ===================================================================
 DOCUMENTAȚIA COMPLETĂ PENTRU PROFESOR
@@ -172,30 +160,43 @@ DOCUMENTAȚIA COMPLETĂ PENTRU PROFESOR
 - TypeScript: 100% coverage
 
 ===================================================================
-SISTEMUL DE CARDURI (FUNCȚIONALITATE NOUĂ) - DEMONSTRATIV
+FUNCȚIONALITĂȚI AVANSATE IMPLEMENTATE
 ===================================================================
 
-⚠️ **IMPORTANT - APLICAȚIE DEMONSTRATIVĂ**:
-- Toate plățile sunt SIMULATE pentru demonstrație
-- Cardurile "reale" nu procesează plăți reale - doar simulează verificarea fondurilor
-- Produsele și comenzile sunt fictive pentru testarea funcționalităților
-- Aplicația demonstrează competențele tehnice, nu este un magazin real
+📦 **SISTEM AVANSAT DE PRODUSE**:
+- Cantități fixe stabilite de admin (ex: 0.5kg, 1kg, 2kg)
+- Unități de măsură flexibile (kilogram, litru, bucată, metru)
+- Produse perisabile cu comandă obligatorie în avans (1-2 zile)
+- Ora limită pentru comenzi (ex: 20:00 ziua precedentă)
+- Afișare clară preț per unitate (RON/kg, RON/litru)
+- Calcul automat valoare totală stoc
 
-💳 **PENTRU UTILIZATORI**:
-- Pot adăuga carduri reale (se salvează doar ultimele 4 cifre pentru securitate) - DOAR SIMULAT
-- Pot folosi carduri fictive pentru test (cu balanță reală în aplicație)
-- Verificare fonduri: carduri reale (simulat 90% succes), fictive (verificare reală în app)
-- Istoric complet al tranzacțiilor (toate simulate)
-- Rambursări automate când comenzile sunt anulate
-- Setare card default
-- Ștergere carduri
+🔄 **GESTIONARE STOC AUTOMATĂ**:
+- Stoc rezervat la plasarea comenzii
+- Stoc actualizat automat la livrare
+- Stoc eliberat la anularea comenzii
+- Alerte pentru stoc scăzut
+- Rapoarte inventar cu valori
 
-🔒 **SECURITATE ȘI SIMULARE**:
-- Carduri reale: se salvează DOAR ultimele 4 cifre (NICIO plată reală nu este procesată)
-- Carduri fictive: pentru testare, cu balanță controlată în aplicație
-- Toate tranzacțiile sunt înregistrate în baza de date pentru demonstrație
-- Rambursări automate pentru comenzi anulate (simulate)
-- Produsele și prețurile sunt fictive pentru testarea funcționalităților
+📝 **EDITOR LIVE PENTRU PAGINI**:
+- Editare în timp real pentru pagini About, Contact, Dashboard
+- Preview instant al modificărilor
+- Actualizări WebSocket - modificările apar imediat pe site
+- Istoric complet al modificărilor
+
+📍 **LOCAȚII DE LIVRARE**:
+- Multiple puncte de ridicare/livrare
+- Program personalizat pentru fiecare locație
+- Rază de acoperire cu calcul distanță
+- Cost livrare dinamic bazat pe valoarea comenzii
+- Livrare gratuită peste un prag configurat
+- Informații contact și instrucțiuni speciale
+
+💰 **RAPOARTE FINANCIARE**:
+- Dashboard cu venituri și cheltuieli
+- Statistici pe perioade
+- Rapoarte inventar cu valori stoc
+- Export date pentru analiză
 
 ===================================================================
 Bună ziua 
@@ -210,7 +211,7 @@ Vă trimit proiectul de e-commerce finalizat pentru susținerea lucrării de lic
 
 ⚠️ **IMPORTANT**: Aplicația funcționează COMPLET LOCAL
 ✅ Toate funcționalitățile sunt operaționale și testate
-📝 **NOTĂ**: Toate funcționalitățile sunt demonstrative - plățile, produsele și comenzile sunt simulate pentru testarea competențelor tehnice.
+📝 **NOTĂ**: Aplicația este complet funcțională local cu toate caracteristicile implementate și testate.
 
 📁 **Repository GitHub**:
 https://github.com/yfuugvvjvk-glitch/ecommerce-fullstack
@@ -222,9 +223,9 @@ https://github.com/yfuugvvjvk-glitch/ecommerce-fullstack
 4. Accesează: http://localhost:3000
 
 🔑 **Credențiale testare**:
-- Admin: admin@example.com / 123
-- User: ion.popescu@example.com / ion123
-- Alte conturi: maria.ionescu@example.com / maria456, andrei.popa@example.com / andrei789
+- Admin: admin@example.com / Admin1234
+- User: ion.popescu@example.com / User1234
+- Alte conturi: maria.ionescu@example.com / User1234, andrei.popa@example.com / User1234
 
 🛠️ **TEHNOLOGII**:
 - Frontend: Next.js 16, React 19, Tailwind CSS 4, TypeScript
@@ -237,19 +238,31 @@ https://github.com/yfuugvvjvk-glitch/ecommerce-fullstack
 - POWERPOINT_PREZENTARE.md - Prezentarea PowerPoint (17 slide-uri)
 - DISCURS_SUSTINERE.md - Discursul pentru susținere (15-20 min)
 
-🆕 **FUNCȚIONALITATE NOUĂ**: Sistem complet de chat în timp real (DEMONSTRATIV)
-- Chat direct între utilizatori + grupuri de chat
-- Chat de support cu administratorii
-- Mesaje în timp real cu Socket.IO și indicatori de scriere
-- Istoric complet al conversațiilor
+✨ **FUNCȚIONALITĂȚI AVANSATE IMPLEMENTATE**:
 
-🆕 **FUNCȚIONALITATE ANTERIOARĂ**: Sistem complet de carduri pentru utilizatori (DEMONSTRATIV)
-- Carduri reale (securizate, DOAR simulare) + carduri fictive pentru test
-- Verificare fonduri și rambursări automate (toate simulate)
-- Istoric tranzacții complet pentru demonstrarea funcționalităților
+📦 **Sistem Avansat de Produse**:
+- Cantități fixe stabilite de admin (previne erori)
+- Unități de măsură flexibile (kg, litru, bucată)
+- Comandă în avans pentru produse perisabile
+- Gestionare stoc automată cu alerte
 
-Aplicația demonstrează competențe full-stack moderne complete și respectă toate cerințele didactice + funcționalități bonus.
-🎯 **SCOP**: Demonstrarea competențelor tehnice prin simularea unui magazin online complet funcțional.
+📝 **Editor Live pentru Pagini**:
+- Editare în timp real cu preview instant
+- Actualizări WebSocket - modificările apar imediat
+- Pagini editabile: About, Contact, Dashboard Welcome
+
+📍 **Locații de Livrare**:
+- Multiple puncte cu program personalizat
+- Cost livrare dinamic și livrare gratuită
+- Rază de acoperire și calcul distanță
+
+💰 **Rapoarte Financiare**:
+- Dashboard cu venituri/cheltuieli
+- Inventar cu valori stoc
+- Statistici detaliate pe perioade
+
+Aplicația demonstrează competențe full-stack moderne complete și respectă toate cerințele didactice + funcționalități avansate.
+🎯 **SCOP**: Demonstrarea competențelor tehnice prin implementarea unui magazin online complet funcțional.
 
 Cu respect,
 Petrescu Cristian

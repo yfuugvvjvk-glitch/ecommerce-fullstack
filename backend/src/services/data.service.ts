@@ -21,7 +21,7 @@ export interface FilterOptions {
 
 export class DataService {
   async findAll(
-    userId: string,
+    userId: string | null,
     userRole: string,
     filters: FilterOptions
   ): Promise<PaginatedResult<DataItem>> {
@@ -29,7 +29,7 @@ export class DataService {
     const limit = filters.limit || 100; // Increased from 20 to 100
     const skip = (page - 1) * limit;
 
-    // For regular users, show only published products
+    // For regular users and guests, show only published products
     // For admins, show all products (or filter by userId if needed)
     const where: any = userRole === 'admin' ? {} : { status: 'published' };
 
@@ -80,6 +80,12 @@ export class DataService {
         ...itemWithoutReviews,
         averageRating: Math.round(averageRating * 10) / 10, // Round to 1 decimal
         reviewCount,
+        // Parse availableQuantities from JSON if it exists
+        availableQuantities: item.availableQuantities ? 
+          (typeof item.availableQuantities === 'string' ? 
+            JSON.parse(item.availableQuantities) : 
+            item.availableQuantities) : 
+          [1]
       };
     });
 
@@ -92,8 +98,8 @@ export class DataService {
     };
   }
 
-  async findById(id: string, userId: string, userRole?: string): Promise<any> {
-    // For regular users, only show published products
+  async findById(id: string, userId: string | null, userRole?: string): Promise<any> {
+    // For regular users and guests, only show published products
     // For admins, show all products
     const where: any = { id };
     if (userRole !== 'admin') {
@@ -127,6 +133,12 @@ export class DataService {
       ...itemWithoutReviews,
       averageRating: Math.round(averageRating * 10) / 10,
       reviewCount,
+      // Parse availableQuantities from JSON if it exists
+      availableQuantities: (item as any).availableQuantities ? 
+        (typeof (item as any).availableQuantities === 'string' ? 
+          JSON.parse((item as any).availableQuantities) : 
+          (item as any).availableQuantities) : 
+        [1]
     };
   }
 
@@ -141,6 +153,22 @@ export class DataService {
       image: string;
       categoryId: string;
       status?: string;
+      // Advanced product fields
+      isPerishable?: boolean;
+      expirationDate?: string | null;
+      productionDate?: string | null;
+      advanceOrderDays?: number;
+      orderCutoffTime?: string;
+      deliveryTimeHours?: number;
+      deliveryTimeDays?: number;
+      paymentMethods?: string[];
+      isActive?: boolean;
+      unitType?: string;
+      unitName?: string;
+      minQuantity?: number;
+      quantityStep?: number;
+      allowFractional?: boolean;
+      availableQuantities?: number[];
     },
     userId: string
   ): Promise<DataItem> {
@@ -148,6 +176,30 @@ export class DataService {
       data: {
         ...data,
         userId,
+        // Convert date strings to Date objects if provided - use correct field names from schema
+        expiryDate: data.expirationDate ? new Date(data.expirationDate) : null,
+        productionDate: data.productionDate ? new Date(data.productionDate) : null,
+        // Inițializează câmpurile de stoc pentru inventar
+        availableStock: data.stock,
+        reservedStock: 0,
+        totalSold: 0,
+        totalOrdered: 0,
+        lowStockAlert: Math.max(1, Math.floor(data.stock * 0.1)), // 10% din stoc ca alertă
+        isInStock: data.stock > 0,
+        trackInventory: true,
+        lastRestockDate: new Date(),
+        // Set default values for advanced fields
+        isPerishable: data.isPerishable || false,
+        advanceOrderDays: data.advanceOrderDays || 0,
+        deliveryTimeHours: data.deliveryTimeHours || 0,
+        deliveryTimeDays: data.deliveryTimeDays || 0,
+        unitType: data.unitType || 'piece',
+        unitName: data.unitName || 'bucată',
+        minQuantity: data.minQuantity || 1,
+        quantityStep: data.quantityStep || 1,
+        allowFractional: false, // Întotdeauna false pentru cantități fixe
+        // Salvează cantitățile disponibile ca JSON
+        availableQuantities: data.availableQuantities ? JSON.stringify(data.availableQuantities) : JSON.stringify([1])
       },
     });
   }
@@ -178,7 +230,15 @@ export class DataService {
 
     return prisma.dataItem.update({
       where: { id },
-      data,
+      data: {
+        ...data,
+        // Dacă se actualizează stocul, actualizează și availableStock
+        ...(data.stock !== undefined && {
+          availableStock: data.stock - (existing.reservedStock || 0),
+          isInStock: data.stock > 0,
+          lastRestockDate: data.stock > existing.stock ? new Date() : existing.lastRestockDate
+        })
+      },
     });
   }
 

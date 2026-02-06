@@ -19,6 +19,8 @@ import { openAIRoutes } from './routes/openai.routes';
 import { offerRoutes } from './routes/offer.routes';
 import { categoryRoutes } from './routes/category.routes';
 import { chatRoutes } from './routes/chat.routes';
+import { publicRoutes } from './routes/public.routes';
+import { initializeRealtimeService } from './services/realtime.service';
 // Comentez noile routes care pot cauza probleme
 // import { inventoryRoutes } from './routes/inventory.routes';
 
@@ -119,6 +121,7 @@ async function start() {
     });
 
     // Register DOAR routes-urile originale care funcționau
+    await fastify.register(publicRoutes, { prefix: '/api/public' });
     await fastify.register(dataRoutes, { prefix: '/api/data' });
     await fastify.register(cartRoutes, { prefix: '/api/cart' });
     await fastify.register(orderRoutes, { prefix: '/api/orders' });
@@ -158,6 +161,10 @@ async function start() {
     const { uploadRoutes } = await import('./routes/upload.routes');
     await fastify.register(uploadRoutes, { prefix: '/api/upload' });
 
+    // Register advanced product routes
+    const { productAdvancedRoutes } = await import('./routes/product-advanced.routes');
+    await fastify.register(productAdvancedRoutes, { prefix: '/api' });
+
     // Add Socket.IO to fastify instance for use in routes BEFORE starting server
     const io = new SocketIOServer(fastify.server, {
       cors: {
@@ -168,6 +175,9 @@ async function start() {
     });
 
     fastify.decorate('io', io);
+
+    // Inițializează serviciul realtime
+    initializeRealtimeService(fastify);
 
     // Global error handler
     fastify.setErrorHandler((error: Error, request, reply) => {

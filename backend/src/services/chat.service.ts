@@ -613,6 +613,94 @@ export class ChatService {
       throw new Error('Failed to delete message');
     }
   }
+
+  // Șterge o conversație completă
+  async deleteConversation(chatRoomId: string, userId: string) {
+    try {
+      // Verifică dacă utilizatorul este membru al camerei
+      const membership = await prisma.chatRoomMember.findFirst({
+        where: {
+          chatRoomId,
+          userId
+        },
+        include: {
+          chatRoom: {
+            include: {
+              members: true
+            }
+          }
+        }
+      });
+
+      if (!membership) {
+        throw new Error('You are not a member of this chat room');
+      }
+
+      const chatRoom = membership.chatRoom;
+
+      // Pentru chat-uri directe, permite ștergerea
+      if (chatRoom.type === 'DIRECT') {
+        // Șterge toate mesajele
+        await prisma.chatMessage.updateMany({
+          where: { chatRoomId },
+          data: {
+            isDeleted: true,
+            deletedAt: new Date()
+          }
+        });
+
+        // Șterge membrii
+        await prisma.chatRoomMember.deleteMany({
+          where: { chatRoomId }
+        });
+
+        // Șterge camera
+        await prisma.chatRoom.delete({
+          where: { id: chatRoomId }
+        });
+
+        return { success: true, message: 'Direct chat deleted successfully' };
+      }
+
+      // Pentru grupuri, doar administratorul poate șterge
+      if (chatRoom.type === 'GROUP') {
+        if (membership.role !== 'ADMIN' && chatRoom.createdById !== userId) {
+          throw new Error('Only group administrators can delete the group');
+        }
+
+        // Șterge toate mesajele
+        await prisma.chatMessage.updateMany({
+          where: { chatRoomId },
+          data: {
+            isDeleted: true,
+            deletedAt: new Date()
+          }
+        });
+
+        // Șterge membrii
+        await prisma.chatRoomMember.deleteMany({
+          where: { chatRoomId }
+        });
+
+        // Șterge camera
+        await prisma.chatRoom.delete({
+          where: { id: chatRoomId }
+        });
+
+        return { success: true, message: 'Group chat deleted successfully' };
+      }
+
+      // Pentru chat-uri de support, nu permite ștergerea
+      if (chatRoom.type === 'SUPPORT') {
+        throw new Error('Support chats cannot be deleted');
+      }
+
+      throw new Error('Invalid chat room type');
+    } catch (error) {
+      console.error('Error deleting conversation:', error);
+      throw new Error(error instanceof Error ? error.message : 'Failed to delete conversation');
+    }
+  }
 }
 
 export const chatService = new ChatService();

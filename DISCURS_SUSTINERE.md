@@ -58,26 +58,33 @@ Am implementat o **arhitectură în trei niveluri**:
 - Autentificare completă cu JWT
 - Catalog de produse cu 12 produse organizate în 6 categorii
 - Căutare și filtrare avansată
-- Coș de cumpărături persistent cu indicator automat
+- Coș de cumpărături persistent cu cantități fixe
 - Proces de checkout complet cu 3 metode de plată
 - Sistem de voucher-uri pentru reduceri
 - Review-uri și rating-uri pentru produse
-- Lista de favorite
+- Lista de favorite persistentă
 - Profil editabil cu posibilitatea de upload avatar
 - Sistem complet de facturi
-- AI Chatbot pentru asistență
+- Locații de livrare multiple cu program
 - Design complet responsive pentru toate dispozitivele
+- Notificări în timp real
 
 **Pentru administratori**, am dezvoltat un panou complet cu:
 
 - Dashboard cu statistici în timp real
-- Gestionarea produselor cu CRUD complet
+- Gestionarea produselor avansată:
+  - Cantități fixe stabilite de admin (0.5kg, 1kg, 2kg)
+  - Unități de măsură flexibile (kg, litru, bucată)
+  - Produse perisabile cu comandă în avans
+  - Stoc rezervat vs stoc disponibil
 - Gestionarea utilizatorilor, inclusiv vizualizarea parolelor pentru suport
-- Gestionarea comenzilor cu tracking
-- Sistem complet de voucher-uri
-- Gestionarea facturilor
-- Carduri de test pentru simularea plăților
-- Rapoarte și analize detaliate
+- Gestionarea comenzilor cu actualizare automată stoc
+- Sistem complet de voucher-uri și oferte
+- Editor LIVE pentru pagini (About, Contact, Dashboard)
+- Locații de livrare cu program și rază de acoperire
+- Rapoarte financiare (venituri/cheltuieli)
+- Inventar avansat cu alerte stoc scăzut
+- Actualizări în timp real cu WebSocket
 
 **Securitatea** a fost o prioritate majoră. Am implementat:
 
@@ -126,16 +133,22 @@ Am implementat o **arhitectură în trei niveluri**:
 
 "**Acum vă voi demonstra aplicația în funcțiune.**
 
-⚠️ IMPORTANT: Aplicația rulează DOAR LOCAL (baza de date live a expirat)
-Aplicația este disponibilă la: http://localhost:3000
+✅ Aplicația rulează LOCAL și este complet funcțională
+📍 Disponibilă la: http://localhost:3000
 
 Voi demonstra:
 
 1. **Navigarea** prin catalog și căutarea produselor
-2. **Adăugarea în coș** și actualizarea automată a indicatorului
-3. **Procesul de checkout** complet cu simulatorul de plăți
-4. **Panoul administrativ** cu gestionarea produselor
-5. **Responsivitatea** pe dispozitive mobile
+2. **Adăugarea în coș** cu cantități fixe și actualizarea automată
+3. **Procesul de checkout** complet cu 3 metode de plată
+4. **Panoul administrativ** cu toate funcționalitățile:
+   - Gestionare produse cu unități de măsură
+   - Gestionare comenzi cu actualizare automată stoc
+   - Editor live pentru pagini (About, Contact, Dashboard)
+   - Locații de livrare cu program personalizat
+   - Rapoarte financiare și inventar
+5. **Actualizări în timp real** cu WebSocket
+6. **Responsivitatea** pe toate dispozitivele
 
 _[Demonstrația practică - 2-3 minute de navigare prin aplicație]_"
 
@@ -159,9 +172,11 @@ _[Demonstrația practică - 2-3 minute de navigare prin aplicație]_"
 **Dezvoltările viitoare** planificate includ:
 
 - Integrarea cu sisteme de plată reale (Stripe, PayPal)
-- Implementarea unui sistem de recomandări AI
+- Implementarea unui sistem de recomandări AI avansat
 - Dezvoltarea unei aplicații mobile React Native
-- Extinderea cu funcționalități de chat live și analytics avansate
+- Extinderea cu funcționalități de analytics avansate
+- Suport multilingv extins
+- Implementarea PWA features complete
 
 **Această aplicație poate servi** ca bază pentru un business real de e-commerce, template pentru alte proiecte similare, sau demonstrație a competențelor în dezvoltarea web modernă.
 
@@ -173,7 +188,7 @@ Mulțumesc pentru atenție și sunt pregătit să răspund la întrebările dumn
 
 ### 1. "De ce ați ales aceste tehnologii specifice?"
 
-**Răspuns:** "Am ales acest stack tehnologic pe baza mai multor criterii: performanța, scalabilitatea, comunitatea de dezvoltatori și tendințele actuale din industrie. React 19 și Next.js 16 oferă cele mai noi optimizări pentru performanță, Fastify este de 2-3 ori mai rapid decât Express.js, iar Prisma oferă type safety complet pentru interacțiunea cu baza de date. Toate aceste tehnologii au comunități active și documentație excelentă."
+**Răspuns:** "Am ales acest stack tehnologic pe baza mai multor criterii: performanța, scalabilitatea, comunitatea de dezvoltatori și tendințele actuale din industrie. React 19 și Next.js 16 oferă cele mai noi optimizări pentru performanță, Fastify este de 2-3 ori mai rapid decât Express.js, iar Prisma oferă type safety complet pentru interacțiunea cu baza de date. Socket.IO permite comunicare în timp real pentru actualizări live. Toate aceste tehnologii au comunități active și documentație excelentă."
 
 ### 2. "Cum ați asigurat securitatea aplicației?"
 
@@ -181,7 +196,7 @@ Mulțumesc pentru atenție și sunt pregătit să răspund la întrebările dumn
 
 ### 3. "Care au fost cele mai mari provocări tehnice?"
 
-**Răspuns:** "Principalele provocări au fost: gestionarea stării complexe între componente - rezolvată prin Context API optimizat, performanța cu volume mari de date - optimizată prin paginare și lazy loading, și implementarea securității comprehensive - realizată prin middleware specializat și validare pe mai multe niveluri."
+**Răspuns:** "Principalele provocări au fost: implementarea sistemului de cantități fixe pentru produse - rezolvată prin validare strictă pe backend și frontend, gestionarea stocului automat la schimbarea statusului comenzilor - implementată prin evenimente și actualizări tranzacționale, editarea live a paginilor cu preview în timp real - realizată prin WebSocket și sincronizare instantanee, și performanța cu actualizări în timp real - optimizată prin debouncing și batching de evenimente."
 
 ### 4. "Cum ați testat aplicația?"
 
@@ -189,7 +204,7 @@ Mulțumesc pentru atenție și sunt pregătit să răspund la întrebările dumn
 
 ### 5. "Aplicația este pregătită pentru producție?"
 
-**Răspuns:** "Da, aplicația este complet pregătită pentru producție. Are performanțe excelente (Lighthouse 94/100), securitate robustă (OWASP compliant), este scalabilă prin arhitectura modulară, și poate fi folosită ca bază pentru un business real de e-commerce. Rulează perfect local și poate fi deployată pe platforme cloud."
+**Răspuns:** "Da, aplicația este complet pregătită pentru producție. Are performanțe excelente (Lighthouse 94/100), securitate robustă (OWASP compliant), este scalabilă prin arhitectura modulară, include funcționalități avansate precum editor live de conținut, gestionare stoc automată, actualizări în timp real cu WebSocket, și poate fi folosită ca bază pentru un business real de e-commerce. Rulează perfect local și poate fi deployată pe platforme cloud."
 
 ---
 

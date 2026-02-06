@@ -10,38 +10,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  password  String
-  name      String
-  phone     String?
-  address   String?
-  avatar    String?
-  role      String   @default("user")
-  locale    String   @default("ro")
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  dataItems         DataItem[]
-  reviews           Review[]
-  favorites         Favorite[]
-  orders            Order[]
-  cartItems         CartItem[]
-  vouchers          Voucher[]
-  userVouchers      UserVoucher[]
-  voucherRequests   VoucherRequest[]
-  navigationHistory NavigationHistory[]
-  savedCards        SavedCard[]
-  cardTransactions  CardTransaction[]
-  
-  // Chat system relations
-  sentMessages      ChatMessage[]     @relation("MessageSender")
-  chatRoomMembers   ChatRoomMember[]
-  createdChatRooms  ChatRoom[]        @relation("ChatRoomCreator")
-
-  @@index([email])
-}
 
 model SavedCard {
   id          String   @id @default(cuid())
@@ -136,6 +104,49 @@ model DataItem {
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
 
+  // Noi câmpuri pentru funcționalități avansate
+  // Perioada de comandă în avans
+  requiresAdvanceOrder Boolean  @default(false)
+  advanceOrderDays     Int      @default(0) // Câte zile în avans trebuie comandat
+  advanceOrderHours    Int      @default(0) // Câte ore în avans trebuie comandat
+
+  // Unități de măsură
+  unitType             String   @default("piece") // piece, kg, liter, gram, ml
+  unitName             String   @default("bucată") // bucată, kg, litru, gram, ml
+  minQuantity          Float    @default(1) // Cantitatea minimă de comandă
+  maxQuantity          Float?   // Cantitatea maximă de comandă
+  quantityStep         Float    @default(1) // Pasul de incrementare (ex: 0.5 pentru jumătăți)
+  allowFractional      Boolean  @default(false) // Permite cantități fracționare
+  availableQuantities  String?  // Cantitățile fixe disponibile (JSON array)
+
+  // Produse perisabile
+  isPerishable         Boolean  @default(false)
+  shelfLifeDays        Int?     // Durata de viață în zile
+  productionDate       DateTime? // Data producției
+  expiryDate           DateTime? // Data expirării
+  warrantyDays         Int?     // Perioada de garanție în zile
+  storageInstructions  String?  // Instrucțiuni de depozitare
+  consumeBeforeNote    String?  // Notă "A se consuma înainte de"
+
+  // Gestionare stoc avansată
+  reservedStock        Int      @default(0) // Stoc rezervat pentru comenzi în procesare
+  availableStock       Int      @default(0) // Stoc disponibil pentru vânzare
+  totalOrdered         Int      @default(0) // Total comandat (pentru statistici)
+  totalSold            Int      @default(0) // Total vândut
+  restockAlert         Boolean  @default(false) // Alertă pentru restocarea
+  lastRestockDate      DateTime? // Ultima dată când s-a restocat
+
+  // Setări de livrare specifice produsului
+  customDeliveryRules  Boolean  @default(false)
+  deliveryTimeHours    Int?     // Timp de livrare în ore
+  deliveryTimeDays     Int?     // Timp de livrare în zile
+  availableDeliveryDays String? // Zilele săptămânii disponibile pentru livrare (JSON)
+  specialHandling      String?  // Instrucțiuni speciale de manipulare
+
+  // Setări de disponibilitate
+  availabilityType     String   @default("always") // always, seasonal, scheduled
+  availabilitySchedule String?  // Programul de disponibilitate (JSON)
+
   user              User                @relation(fields: [userId], references: [id], onDelete: Cascade)
   category          Category            @relation(fields: [categoryId], references: [id])
   reviews           Review[]
@@ -144,10 +155,14 @@ model DataItem {
   cartItems         CartItem[]
   productOffers     ProductOffer[]
   navigationHistory NavigationHistory[]
+  stockMovements    StockMovement[]
 
   @@index([userId])
   @@index([status])
   @@index([categoryId])
+  @@index([isPerishable])
+  @@index([requiresAdvanceOrder])
+  @@index([availabilityType])
 }
 
 model Review {
@@ -179,37 +194,7 @@ model Favorite {
   @@index([userId])
 }
 
-model Order {
-  id              String   @id @default(cuid())
-  userId          String
-  total           Float
-  subtotal        Float?
-  tax             Float    @default(0)
-  discount        Float    @default(0)
-  shippingCost    Float    @default(0)
-  status          String   @default("PROCESSING")
-  shippingAddress String   @db.Text
-  deliveryPhone   String?
-  deliveryName    String?
-  paymentMethod   String   @default("cash")
-  deliveryMethod  String   @default("courier")
-  invoiceNumber   String?  @unique
-  invoiceGenerated Boolean @default(false)
-  orderLocalTime  String?  // Timpul local când a fost plasată comanda
-  orderLocation   String?  // Locația de unde a fost plasată comanda (oraș, țară)
-  orderTimezone   String?  // Timezone-ul local
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
 
-  user            User             @relation(fields: [userId], references: [id], onDelete: Cascade)
-  orderItems      OrderItem[]
-  voucherUsed     UserVoucher?
-  cardTransaction CardTransaction?
-
-  @@index([userId])
-  @@index([status])
-  @@index([invoiceNumber])
-}
 
 model OrderItem {
   id         String @id @default(cuid())
@@ -471,3 +456,220 @@ model ChatMessageRead {
   @@index([messageId])
   @@index([userId])
 }
+// Model pentru gestionarea mișcărilor de stoc
+model StockMovement {
+  id          String   @id @default(cuid())
+  dataItemId  String
+  type        String   // IN, OUT, RESERVED, RELEASED, EXPIRED, DAMAGED
+  quantity    Int
+  reason      String?  // Motivul mișcării
+  orderId     String?  // ID-ul comenzii asociate (dacă aplicabil)
+  userId      String?  // Utilizatorul care a făcut mișcarea
+  notes       String?  // Note suplimentare
+  createdAt   DateTime @default(now())
+
+  dataItem DataItem @relation(fields: [dataItemId], references: [id], onDelete: Cascade)
+  user     User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([dataItemId])
+  @@index([type])
+  @@index([createdAt])
+}
+
+// Model pentru setările de livrare globale
+model DeliverySettings {
+  id                    String   @id @default(cuid())
+  name                  String   @unique
+  isActive              Boolean  @default(true)
+  deliveryTimeHours     Int?     // Timp standard de livrare în ore
+  deliveryTimeDays      Int?     // Timp standard de livrare în zile
+  availableDeliveryDays String?  // Zilele săptămânii disponibile (JSON)
+  deliveryAreas         String?  // Zonele de livrare disponibile (JSON)
+  minimumOrderValue     Float?   // Valoarea minimă a comenzii
+  deliveryCost          Float    @default(0)
+  freeDeliveryThreshold Float?   // Pragul pentru livrare gratuită
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+
+  @@index([isActive])
+}
+
+// Model pentru metodele de plată disponibile
+model PaymentMethod {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  type        String   // CASH, CARD, BANK_TRANSFER, ONLINE
+  isActive    Boolean  @default(true)
+  description String?
+  icon        String?  // Iconița metodei de plată
+  settings    String?  // Setări specifice metodei (JSON)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([isActive])
+  @@index([type])
+}
+
+// Model pentru paginile site-ului
+model Page {
+  id          String   @id @default(cuid())
+  slug        String   @unique // URL-ul paginii (ex: "about", "contact", "home")
+  title       String
+  content     String   @db.Text
+  metaTitle   String?
+  metaDescription String?
+  isPublished Boolean  @default(false)
+  template    String   @default("default") // Template-ul folosit pentru randare
+  sections    PageSection[]
+  createdById String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  createdBy User @relation("PageCreator", fields: [createdById], references: [id], onDelete: Cascade)
+
+  @@index([slug])
+  @@index([isPublished])
+  @@index([createdById])
+}
+
+// Model pentru secțiunile paginilor (pentru editare modulară)
+model PageSection {
+  id        String   @id @default(cuid())
+  pageId    String
+  type      String   // "text", "image", "gallery", "contact", "products", "custom"
+  title     String?
+  content   String?  @db.Text
+  settings  String?  // Setări specifice secțiunii (JSON)
+  position  Int      @default(0) // Ordinea secțiunii pe pagină
+  isVisible Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  page Page @relation(fields: [pageId], references: [id], onDelete: Cascade)
+
+  @@index([pageId])
+  @@index([position])
+  @@index([isVisible])
+}
+
+// Model pentru locațiile de livrare reale
+model DeliveryLocation {
+  id                    String   @id @default(cuid())
+  name                  String
+  address               String   @db.Text
+  city                  String
+  postalCode            String?
+  country               String   @default("România")
+  coordinates           String?  // JSON cu lat/lng
+  phone                 String?
+  email                 String?
+  isActive              Boolean  @default(true)
+  deliveryRadius        Float?   // Raza de livrare în km
+  deliveryFee           Float    @default(0)
+  freeDeliveryThreshold Float?   // Pragul pentru livrare gratuită
+  workingHours          String?  // JSON cu programul de lucru
+  specialInstructions   String?  @db.Text
+  contactPerson         String?
+  isMainLocation        Boolean  @default(false)
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+
+  orders Order[] @relation("DeliveryLocationOrders")
+
+  @@index([isActive])
+  @@index([city])
+  @@index([isMainLocation])
+}
+
+// Model pentru configurația site-ului
+model SiteConfig {
+  id          String   @id @default(cuid())
+  key         String   @unique // Cheia configurației (ex: "site_name", "contact_email")
+  value       String   @db.Text // Valoarea configurației
+  type        String   @default("text") // "text", "json", "boolean", "number"
+  description String?
+  isPublic    Boolean  @default(false) // Dacă poate fi accesată public
+  updatedById String?
+  updatedAt   DateTime @updatedAt
+
+  updatedBy User? @relation("ConfigUpdater", fields: [updatedById], references: [id], onDelete: SetNull)
+
+  @@index([key])
+  @@index([isPublic])
+}
+
+// Actualizez modelul User pentru noile relații
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String
+  phone     String?
+  address   String?
+  avatar    String?
+  role      String   @default("user")
+  locale    String   @default("ro")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  dataItems         DataItem[]
+  reviews           Review[]
+  favorites         Favorite[]
+  orders            Order[]
+  cartItems         CartItem[]
+  vouchers          Voucher[]
+  userVouchers      UserVoucher[]
+  voucherRequests   VoucherRequest[]
+  navigationHistory NavigationHistory[]
+  savedCards        SavedCard[]
+  cardTransactions  CardTransaction[]
+  stockMovements    StockMovement[]
+  
+  // Chat system relations
+  sentMessages      ChatMessage[]     @relation("MessageSender")
+  chatRoomMembers   ChatRoomMember[]
+  createdChatRooms  ChatRoom[]        @relation("ChatRoomCreator")
+
+  // Noi relații pentru pagini și configurații
+  createdPages      Page[]            @relation("PageCreator")
+  configUpdates     SiteConfig[]      @relation("ConfigUpdater")
+
+  @@index([email])
+}
+
+// Actualizez modelul Order pentru locația de livrare
+model Order {
+  id                 String   @id @default(cuid())
+  userId             String
+  total              Float
+  subtotal           Float?
+  tax                Float    @default(0)
+  discount           Float    @default(0)
+  shippingCost       Float    @default(0)
+  status             String   @default("PROCESSING")
+  shippingAddress    String   @db.Text
+  deliveryPhone      String?
+  deliveryName       String?
+  paymentMethod      String   @default("cash")
+  deliveryMethod     String   @default("courier")
+  deliveryLocationId String?  // Referință la locația de livrare
+  invoiceNumber      String?  @unique
+  invoiceGenerated   Boolean  @default(false)
+  orderLocalTime     String?  // Timpul local când a fost plasată comanda
+  orderLocation      String?  // Locația de unde a fost plasată comanda (oraș, țară)
+  orderTimezone      String?  // Timezone-ul local
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  user             User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  deliveryLocation DeliveryLocation? @relation("DeliveryLocationOrders", fields: [deliveryLocationId], references: [id], onDelete: SetNull)
+  orderItems       OrderItem[]
+  voucherUsed      UserVoucher?
+  cardTransaction  CardTransaction?
+
+  @@index([userId])
+  @@index([status])
+  @@index([invoiceNumber])
+  @@index([deliveryLocationId])
+}
+

@@ -2,17 +2,26 @@ import { FastifyInstance } from 'fastify';
 import { OrderService } from '../services/order.service';
 import { authMiddleware } from '../middleware/auth.middleware';
 import { adminMiddleware } from '../middleware/admin.middleware';
+import { CreateOrderSchema, UpdateOrderStatusSchema } from '../schemas/order.schema';
 
 const orderService = new OrderService();
 
 export async function orderRoutes(fastify: FastifyInstance) {
   fastify.post('/', { preHandler: authMiddleware }, async (request, reply) => {
     try {
-      const data = request.body as any;
-      const order = await orderService.createOrder(request.user!.userId, data);
+      // Validate input with Zod
+      const validatedData = CreateOrderSchema.parse(request.body);
+      const order = await orderService.createOrder(request.user!.userId, validatedData);
       reply.code(201).send(order);
     } catch (error: any) {
-      reply.code(400).send({ error: error.message });
+      if (error.name === 'ZodError') {
+        reply.code(400).send({ 
+          error: 'Validation failed', 
+          details: error.errors.map((e: any) => ({ field: e.path.join('.'), message: e.message }))
+        });
+      } else {
+        reply.code(400).send({ error: error.message });
+      }
     }
   });
 
@@ -53,18 +62,21 @@ export async function orderRoutes(fastify: FastifyInstance) {
   fastify.put('/admin/:id/status', { preHandler: [authMiddleware, adminMiddleware] }, async (request, reply) => {
     try {
       const { id } = request.params as any;
-      const { status } = request.body as any;
       
-      const validStatuses = ['PENDING', 'PROCESSING', 'SHIPPING', 'DELIVERED', 'CANCELLED'];
-      if (!validStatuses.includes(status)) {
-        reply.code(400).send({ error: 'Invalid status' });
-        return;
-      }
-
-      const order = await orderService.updateOrderStatus(id, status, request.user!.userId);
+      // Validate status with Zod
+      const { status } = UpdateOrderStatusSchema.parse(request.body);
+      
+      const order = await orderService.updateOrderStatus(id, status);
       reply.send(order);
     } catch (error: any) {
-      reply.code(400).send({ error: error.message });
+      if (error.name === 'ZodError') {
+        reply.code(400).send({ 
+          error: 'Validation failed', 
+          details: error.errors.map((e: any) => ({ field: e.path.join('.'), message: e.message }))
+        });
+      } else {
+        reply.code(400).send({ error: error.message });
+      }
     }
   });
 

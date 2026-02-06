@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client';
+import { realtimeService } from './realtime.service';
 
 const prisma = new PrismaClient();
 
@@ -16,31 +17,30 @@ export class OrderService {
     orderLocation?: string;
     orderTimezone?: string;
   }) {
-    // Verificare stoc simplificată (fără InventoryService)
-    for (const item of data.items) {
-      const product = await prisma.dataItem.findUnique({
-        where: { id: item.dataItemId },
-      });
-
-      if (!product) {
-        throw new Error(`Product ${item.dataItemId} not found`);
-      }
-
-      if (product.stock < item.quantity) {
-        throw new Error(`Insufficient stock for ${product.title}. Available: ${product.stock}, Requested: ${item.quantity}`);
-      }
-    }
-
     // Use transaction to ensure stock is updated atomically
     return await prisma.$transaction(async (tx) => {
-      // Scade stocul pentru fiecare produs (versiunea simplă)
+      // Verificare și rezervare stoc pentru fiecare produs
       for (const item of data.items) {
+        const product = await tx.dataItem.findUnique({
+          where: { id: item.dataItemId },
+        });
+
+        if (!product) {
+          throw new Error(`Product ${item.dataItemId} not found`);
+        }
+
+        // Verifică stocul disponibil (nu rezervat)
+        const availableStock = product.availableStock || product.stock;
+        if (availableStock < item.quantity) {
+          throw new Error(`Insufficient stock for ${product.title}. Available: ${availableStock}, Requested: ${item.quantity}`);
+        }
+
+        // Rezervă stocul (nu îl scade încă)
         await tx.dataItem.update({
           where: { id: item.dataItemId },
           data: {
-            stock: {
-              decrement: item.quantity,
-            },
+            reservedStock: { increment: item.quantity },
+            availableStock: { decrement: item.quantity },
           },
         });
       }
@@ -49,7 +49,7 @@ export class OrderService {
       let voucherId: string | undefined;
       if (data.voucherCode) {
         const voucher = await tx.voucher.findUnique({
-          where: { code: data.voucherCode },
+          where: { code: data.voucherCode.toUpperCase() }, // Case insensitive
         });
 
         if (voucher && voucher.isActive) {
@@ -110,19 +110,153 @@ export class OrderService {
         where: { userId },
       });
 
-      console.log('Comandă creată cu succes:', order.id);
-
-      // Generează factura automat după crearea comenzii
-      try {
-        const { InvoiceSimpleService } = await import('./invoice-simple.service');
-        const invoiceService = new InvoiceSimpleService();
-        await invoiceService.generateInvoiceForOrder(order.id);
-        console.log('📄 Factură generată automat pentru comanda:', order.id);
-      } catch (error) {
-        console.error('Eroare la generarea facturii:', error);
+      // Broadcast new order to admin dashboard
+      if (realtimeService) {
+        realtimeService.broadcastNewOrder(order);
       }
 
       return order;
+    });
+  }
+
+  async updateOrderStatus(orderId: string, status: string) {
+    return await prisma.$transaction(async (tx) => {
+      const order = await tx.order.findUnique({
+        where: { id: orderId },
+        include: {
+          orderItems: {
+            include: {
+              dataItem: true,
+            },
+          },
+        },
+      });
+
+      if (!order) {
+        throw new Error('Order not found');
+      }
+
+      // Update order status
+      const updatedOrder = await tx.order.update({
+        where: { id: orderId },
+        data: { status },
+        include: {
+          orderItems: {
+            include: {
+              dataItem: true,
+            },
+          },
+        },
+      });
+
+      // Handle stock based on status change
+      if (status === 'DELIVERED') {
+        // Finalize stock reduction - move from reserved to sold
+        for (const item of order.orderItems) {
+          await tx.dataItem.update({
+            where: { id: item.dataItemId },
+            data: {
+              stock: { decrement: item.quantity },
+              reservedStock: { decrement: item.quantity },
+              totalSold: { increment: item.quantity },
+            },
+          });
+
+          // Create stock movement record
+          await tx.stockMovement.create({
+            data: {
+              dataItemId: item.dataItemId,
+              type: 'OUT',
+              quantity: item.quantity,
+              reason: `Order delivered #${orderId.slice(-6)}`,
+              orderId: orderId,
+            },
+          });
+
+          // Broadcast inventory update
+          if (realtimeService) {
+            const updatedProduct = await tx.dataItem.findUnique({
+              where: { id: item.dataItemId },
+              select: { 
+                stock: true, 
+                reservedStock: true, 
+                availableStock: true, 
+                title: true, 
+                unitName: true, 
+                price: true 
+              }
+            });
+            
+            if (updatedProduct) {
+              realtimeService.broadcastInventoryUpdate(item.dataItemId, {
+                stock: updatedProduct.stock,
+                reservedStock: updatedProduct.reservedStock,
+                availableStock: updatedProduct.availableStock,
+                lastUpdated: new Date(),
+                productTitle: updatedProduct.title,
+                unitName: updatedProduct.unitName,
+                price: updatedProduct.price
+              });
+            }
+          }
+        }
+      } else if (status === 'CANCELLED') {
+        // Release reserved stock back to available
+        for (const item of order.orderItems) {
+          await tx.dataItem.update({
+            where: { id: item.dataItemId },
+            data: {
+              reservedStock: { decrement: item.quantity },
+              availableStock: { increment: item.quantity },
+            },
+          });
+
+          // Create stock movement record
+          await tx.stockMovement.create({
+            data: {
+              dataItemId: item.dataItemId,
+              type: 'RELEASED',
+              quantity: item.quantity,
+              reason: `Order cancelled #${orderId.slice(-6)}`,
+              orderId: orderId,
+            },
+          });
+
+          // Broadcast inventory update
+          if (realtimeService) {
+            const updatedProduct = await tx.dataItem.findUnique({
+              where: { id: item.dataItemId },
+              select: { 
+                stock: true, 
+                reservedStock: true, 
+                availableStock: true, 
+                title: true, 
+                unitName: true, 
+                price: true 
+              }
+            });
+            
+            if (updatedProduct) {
+              realtimeService.broadcastInventoryUpdate(item.dataItemId, {
+                stock: updatedProduct.stock,
+                reservedStock: updatedProduct.reservedStock,
+                availableStock: updatedProduct.availableStock,
+                lastUpdated: new Date(),
+                productTitle: updatedProduct.title,
+                unitName: updatedProduct.unitName,
+                price: updatedProduct.price
+              });
+            }
+          }
+        }
+      }
+
+      // Broadcast order status update
+      if (realtimeService) {
+        realtimeService.broadcastOrderUpdate(orderId, status, updatedOrder);
+      }
+
+      return updatedOrder;
     });
   }
 
@@ -153,164 +287,83 @@ export class OrderService {
     });
   }
 
-  // Actualizează statusul comenzii (pentru admin) - versiune simplificată
-  async updateOrderStatus(orderId: string, status: string, adminId: string) {
-    const order = await prisma.order.findUnique({
-      where: { id: orderId },
-      include: {
-        user: {
-          select: { email: true, name: true }
-        },
-        orderItems: {
-          include: {
-            dataItem: true
-          }
-        }
-      }
-    });
-
-    if (!order) {
-      throw new Error('Comanda nu a fost găsită');
-    }
-
-    // Dacă comanda este anulată, restituie stocul (versiune simplificată)
-    if (status === 'CANCELLED' && order.status !== 'CANCELLED') {
-      console.log(`🔄 Anulare comandă ${orderId}: Restituire stoc pentru ${order.orderItems.length} produse`);
-      
-      for (const item of order.orderItems) {
-        const oldStock = item.dataItem.stock;
-        const newStock = oldStock + item.quantity;
-        
-        await prisma.dataItem.update({
-          where: { id: item.dataItemId },
-          data: {
-            stock: {
-              increment: item.quantity
-            }
-          }
-        });
-        
-        console.log(`📦 Produs ${item.dataItem.title}: Stoc ${oldStock} → ${newStock} (+${item.quantity})`);
-      }
-      
-      // Marchează factura ca anulată (nu o șterge, doar o marchează)
-      if (order.invoiceGenerated) {
-        console.log(`📄 Marcarea facturii ca anulată pentru comanda ${orderId}`);
-      }
-      
-      console.log(`✅ Stoc actualizat cu succes pentru comanda ${orderId}`);
-    } else if (status === 'CANCELLED') {
-      console.log(`⚠️ Comanda ${orderId} era deja anulată, nu se actualizează stocul`);
-    } else {
-      console.log(`ℹ️ Comanda ${orderId} schimbată la status ${status}, nu necesită actualizare stoc`);
-    }
-
-    const updatedOrder = await prisma.order.update({
-      where: { id: orderId },
-      data: { status },
-      include: {
-        orderItems: {
-          include: {
-            dataItem: true
-          }
-        }
-      }
-    });
-
-    console.log(`Status comandă ${orderId} actualizat la ${status}`);
-    return updatedOrder;
-  }
-
-  // Obține toate comenzile (pentru admin)
   async getAllOrders(page: number = 1, limit: number = 20, status?: string) {
     const skip = (page - 1) * limit;
-    
     const where = status ? { status } : {};
 
     const [orders, total] = await Promise.all([
       prisma.order.findMany({
         where,
+        skip,
+        take: limit,
         include: {
           user: {
-            select: { id: true, name: true, email: true }
+            select: { name: true, email: true },
           },
           orderItems: {
             include: {
-              dataItem: {
-                select: { id: true, title: true, image: true }
-              }
-            }
-          }
+              dataItem: true,
+            },
+          },
         },
         orderBy: { createdAt: 'desc' },
-        skip,
-        take: limit
       }),
-      prisma.order.count({ where })
+      prisma.order.count({ where }),
     ]);
 
     return {
       orders,
-      pagination: {
-        page,
-        limit,
-        total,
-        pages: Math.ceil(total / limit)
-      }
+      total,
+      page,
+      limit,
+      totalPages: Math.ceil(total / limit),
     };
   }
 
-  // Statistici comenzi pentru dashboard
   async getOrderStats() {
     const [
       totalOrders,
-      pendingOrders,
-      processingOrders,
-      shippingOrders,
-      deliveredOrders,
-      cancelledOrders,
       totalRevenue,
       todayOrders,
-      todayRevenue
+      todayRevenue,
+      pendingOrders,
+      processingOrders,
+      deliveredOrders,
     ] = await Promise.all([
       prisma.order.count(),
-      prisma.order.count({ where: { status: 'PENDING' } }),
-      prisma.order.count({ where: { status: 'PROCESSING' } }),
-      prisma.order.count({ where: { status: 'SHIPPING' } }),
-      prisma.order.count({ where: { status: 'DELIVERED' } }),
-      prisma.order.count({ where: { status: 'CANCELLED' } }),
       prisma.order.aggregate({
-        where: { status: { not: 'CANCELLED' } },
-        _sum: { total: true }
+        _sum: { total: true },
+        where: { status: 'DELIVERED' },
       }),
       prisma.order.count({
         where: {
           createdAt: {
-            gte: new Date(new Date().setHours(0, 0, 0, 0))
-          }
-        }
+            gte: new Date(new Date().setHours(0, 0, 0, 0)),
+          },
+        },
       }),
       prisma.order.aggregate({
+        _sum: { total: true },
         where: {
-          status: { not: 'CANCELLED' },
+          status: 'DELIVERED',
           createdAt: {
-            gte: new Date(new Date().setHours(0, 0, 0, 0))
-          }
+            gte: new Date(new Date().setHours(0, 0, 0, 0)),
+          },
         },
-        _sum: { total: true }
-      })
+      }),
+      prisma.order.count({ where: { status: 'PENDING' } }),
+      prisma.order.count({ where: { status: 'PROCESSING' } }),
+      prisma.order.count({ where: { status: 'DELIVERED' } }),
     ]);
 
     return {
       totalOrders,
-      pendingOrders,
-      processingOrders,
-      shippingOrders,
-      deliveredOrders,
-      cancelledOrders,
       totalRevenue: totalRevenue._sum.total || 0,
       todayOrders,
-      todayRevenue: todayRevenue._sum.total || 0
+      todayRevenue: todayRevenue._sum.total || 0,
+      pendingOrders,
+      processingOrders,
+      deliveredOrders,
     };
   }
 }
