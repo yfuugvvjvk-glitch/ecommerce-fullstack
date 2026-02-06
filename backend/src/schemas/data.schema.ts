@@ -10,6 +10,27 @@ export const CreateDataSchema = z.object({
   image: z.string().min(1, 'Image is required'),
   categoryId: z.string().min(1, 'Category is required'),
   status: z.enum(['draft', 'published', 'archived']).default('draft'),
+  
+  // Carousel settings
+  showInCarousel: z.boolean().optional(),
+  carouselOrder: z.number().int().min(0).optional(),
+  
+  // Advanced product fields
+  isPerishable: z.boolean().optional(),
+  expirationDate: z.string().optional(),
+  productionDate: z.string().optional(),
+  advanceOrderDays: z.number().int().min(0).optional(),
+  orderCutoffTime: z.string().optional(),
+  deliveryTimeHours: z.number().int().min(0).optional(),
+  deliveryTimeDays: z.number().int().min(0).optional(),
+  paymentMethods: z.array(z.string()).optional(),
+  isActive: z.boolean().optional(),
+  unitType: z.string().optional(),
+  unitName: z.string().optional(),
+  availableQuantities: z.array(z.number()).optional(),
+  allowFractional: z.boolean().optional(),
+  minQuantity: z.number().optional(),
+  quantityStep: z.number().optional(),
 });
 
 export const UpdateDataSchema = CreateDataSchema.partial();

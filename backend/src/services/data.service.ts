@@ -65,6 +65,13 @@ export class DataService {
       }),
       prisma.dataItem.count({ where }),
     ]);
+    
+    console.log('Sample product carousel fields:', data[0] ? {
+      id: data[0].id,
+      title: data[0].title,
+      showInCarousel: data[0].showInCarousel,
+      carouselOrder: data[0].carouselOrder
+    } : 'No products');
 
     // Calculate average rating and review count for each product
     const dataWithRatings = data.map((item: any) => {
@@ -216,6 +223,25 @@ export class DataService {
       image?: string;
       categoryId?: string;
       status?: string;
+      // Carousel settings
+      showInCarousel?: boolean;
+      carouselOrder?: number;
+      // Advanced fields
+      isPerishable?: boolean;
+      expirationDate?: string;
+      productionDate?: string;
+      advanceOrderDays?: number;
+      orderCutoffTime?: string;
+      deliveryTimeHours?: number;
+      deliveryTimeDays?: number;
+      paymentMethods?: string[];
+      isActive?: boolean;
+      unitType?: string;
+      unitName?: string;
+      availableQuantities?: number[];
+      allowFractional?: boolean;
+      minQuantity?: number;
+      quantityStep?: number;
     },
     userId: string
   ): Promise<DataItem> {
@@ -228,17 +254,29 @@ export class DataService {
       throw new NotFoundError('DataItem');
     }
 
+    // Prepare update data
+    const updateData: any = { ...data };
+    
+    // Convert availableQuantities array to JSON string if provided
+    if (data.availableQuantities) {
+      updateData.availableQuantities = JSON.stringify(data.availableQuantities);
+    }
+    
+    // Convert paymentMethods array to JSON string if provided
+    if (data.paymentMethods) {
+      updateData.paymentMethods = JSON.stringify(data.paymentMethods);
+    }
+    
+    // Dacă se actualizează stocul, actualizează și availableStock
+    if (data.stock !== undefined) {
+      updateData.availableStock = data.stock - (existing.reservedStock || 0);
+      updateData.isInStock = data.stock > 0;
+      updateData.lastRestockDate = data.stock > existing.stock ? new Date() : existing.lastRestockDate;
+    }
+
     return prisma.dataItem.update({
       where: { id },
-      data: {
-        ...data,
-        // Dacă se actualizează stocul, actualizează și availableStock
-        ...(data.stock !== undefined && {
-          availableStock: data.stock - (existing.reservedStock || 0),
-          isInStock: data.stock > 0,
-          lastRestockDate: data.stock > existing.stock ? new Date() : existing.lastRestockDate
-        })
-      },
+      data: updateData,
     });
   }
 
