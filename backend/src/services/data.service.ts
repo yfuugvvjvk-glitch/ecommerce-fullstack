@@ -155,7 +155,7 @@ export class DataService {
       description?: string;
       content: string;
       price: number;
-      oldPrice?: number;
+      oldPrice?: number | null;
       stock: number;
       image: string;
       categoryId: string;
@@ -166,8 +166,8 @@ export class DataService {
       productionDate?: string | null;
       advanceOrderDays?: number;
       orderCutoffTime?: string;
-      deliveryTimeHours?: number;
-      deliveryTimeDays?: number;
+      deliveryTimeHours?: number | null;
+      deliveryTimeDays?: number | null;
       paymentMethods?: string[];
       isActive?: boolean;
       unitType?: string;
@@ -218,7 +218,7 @@ export class DataService {
       description?: string;
       content?: string;
       price?: number;
-      oldPrice?: number;
+      oldPrice?: number | null;
       stock?: number;
       image?: string;
       categoryId?: string;
@@ -228,12 +228,12 @@ export class DataService {
       carouselOrder?: number;
       // Advanced fields
       isPerishable?: boolean;
-      expirationDate?: string;
-      productionDate?: string;
+      expirationDate?: string | null;
+      productionDate?: string | null;
       advanceOrderDays?: number;
       orderCutoffTime?: string;
-      deliveryTimeHours?: number;
-      deliveryTimeDays?: number;
+      deliveryTimeHours?: number | null;
+      deliveryTimeDays?: number | null;
       paymentMethods?: string[];
       isActive?: boolean;
       unitType?: string;
