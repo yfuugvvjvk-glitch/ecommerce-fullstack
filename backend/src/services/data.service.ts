@@ -254,8 +254,15 @@ export class DataService {
       throw new NotFoundError('DataItem');
     }
 
-    // Prepare update data
-    const updateData: any = { ...data };
+    // Prepare update data - remove undefined values
+    const updateData: any = {};
+    
+    // Copy only defined values
+    Object.keys(data).forEach(key => {
+      if (data[key as keyof typeof data] !== undefined) {
+        updateData[key] = data[key as keyof typeof data];
+      }
+    });
     
     // Convert availableQuantities array to JSON string if provided
     if (data.availableQuantities) {
@@ -271,7 +278,9 @@ export class DataService {
     if (data.stock !== undefined) {
       updateData.availableStock = data.stock - (existing.reservedStock || 0);
       updateData.isInStock = data.stock > 0;
-      updateData.lastRestockDate = data.stock > existing.stock ? new Date() : (existing.lastRestockDate || undefined);
+      if (data.stock > existing.stock) {
+        updateData.lastRestockDate = new Date();
+      }
     }
 
     return prisma.dataItem.update({
