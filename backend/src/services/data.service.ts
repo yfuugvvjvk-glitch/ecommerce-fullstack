@@ -257,21 +257,39 @@ export class DataService {
     // Prepare update data - remove undefined values
     const updateData: any = {};
     
-    // Copy only defined values
-    Object.keys(data).forEach(key => {
-      if (data[key as keyof typeof data] !== undefined) {
-        updateData[key] = data[key as keyof typeof data];
-      }
-    });
+    // Copy only defined values and map to correct schema fields
+    if (data.title !== undefined) updateData.title = data.title;
+    if (data.description !== undefined) updateData.description = data.description;
+    if (data.content !== undefined) updateData.content = data.content;
+    if (data.price !== undefined) updateData.price = data.price;
+    if (data.oldPrice !== undefined) updateData.oldPrice = data.oldPrice;
+    if (data.stock !== undefined) updateData.stock = data.stock;
+    if (data.image !== undefined) updateData.image = data.image;
+    if (data.categoryId !== undefined) updateData.categoryId = data.categoryId;
+    if (data.status !== undefined) updateData.status = data.status;
+    if (data.showInCarousel !== undefined) updateData.showInCarousel = data.showInCarousel;
+    if (data.carouselOrder !== undefined) updateData.carouselOrder = data.carouselOrder;
+    if (data.isPerishable !== undefined) updateData.isPerishable = data.isPerishable;
+    if (data.advanceOrderDays !== undefined) updateData.advanceOrderDays = data.advanceOrderDays;
+    if (data.deliveryTimeHours !== undefined) updateData.deliveryTimeHours = data.deliveryTimeHours;
+    if (data.deliveryTimeDays !== undefined) updateData.deliveryTimeDays = data.deliveryTimeDays;
+    if (data.unitType !== undefined) updateData.unitType = data.unitType;
+    if (data.unitName !== undefined) updateData.unitName = data.unitName;
+    if (data.allowFractional !== undefined) updateData.allowFractional = data.allowFractional;
+    if (data.minQuantity !== undefined) updateData.minQuantity = data.minQuantity;
+    if (data.quantityStep !== undefined) updateData.quantityStep = data.quantityStep;
     
-    // Convert availableQuantities array to JSON string if provided
-    if (data.availableQuantities) {
-      updateData.availableQuantities = JSON.stringify(data.availableQuantities);
+    // Convert date strings to Date objects if provided
+    if (data.expirationDate !== undefined) {
+      updateData.expiryDate = data.expirationDate ? new Date(data.expirationDate) : null;
+    }
+    if (data.productionDate !== undefined) {
+      updateData.productionDate = data.productionDate ? new Date(data.productionDate) : null;
     }
     
-    // Convert paymentMethods array to JSON string if provided
-    if (data.paymentMethods) {
-      updateData.paymentMethods = JSON.stringify(data.paymentMethods);
+    // Convert availableQuantities array to JSON string if provided
+    if (data.availableQuantities !== undefined) {
+      updateData.availableQuantities = JSON.stringify(data.availableQuantities);
     }
     
     // Dacă se actualizează stocul, actualizează și availableStock
@@ -283,7 +301,7 @@ export class DataService {
       }
     }
 
-    return prisma.dataItem.update({
+    return await prisma.dataItem.update({
       where: { id },
       data: updateData,
     });
