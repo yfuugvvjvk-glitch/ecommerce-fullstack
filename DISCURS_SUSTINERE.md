@@ -80,11 +80,15 @@ Am implementat o **arhitectură în trei niveluri**:
 - Gestionarea utilizatorilor, inclusiv vizualizarea parolelor pentru suport
 - Gestionarea comenzilor cu actualizare automată stoc
 - Sistem complet de voucher-uri și oferte
-- Editor LIVE pentru pagini (About, Contact, Dashboard)
+- Editor LIVE pentru pagini (About, Contact)
 - Locații de livrare cu program și rază de acoperire
 - Rapoarte financiare (venituri/cheltuieli)
 - Inventar avansat cu alerte stoc scăzut
-- Actualizări în timp real cu WebSocket
+- Actualizări LIVE în timp real:
+  - Metode de livrare și plată configurabile
+  - Informații contact actualizate automat
+  - Produse în carousel configurabile
+  - Toate modificările din admin apar instant pe site
 
 **Securitatea** a fost o prioritate majoră. Am implementat:
 

@@ -190,11 +190,71 @@ stop-app.bat
 
 ## 🎯 Funcționalități Avansate
 
-### 1. Management de Conținut Live
+### 1. Actualizări Live în Timp Real ⚡
+
+**Toate modificările din admin se actualizează automat pe site fără restart sau rebuild!**
+
+#### Ce se actualizează live:
+
+**📦 Metode de Livrare**
+
+- Admin modifică în "💳 Plată & Livrare"
+- Checkout page afișează imediat noile metode
+- Costuri și praguri de livrare gratuită actualizate automat
+- API: `GET /api/public/delivery-methods`
+
+**💳 Metode de Plată**
+
+- Admin modifică metodele de plată (card, cash, transfer, crypto, PayPal)
+- Checkout page afișează metodele active
+- Iconițe și descrieri actualizate automat
+- API: `GET /api/public/payment-methods`
+
+**📞 Informații de Contact**
+
+- Admin modifică email, telefon, adresă, program
+- Contact page și Checkout afișează datele noi
+- Actualizare automată pe toate paginile
+- API: `GET /api/public/site-config`, `GET /api/public/contact-info`
+
+**📍 Locații de Livrare/Ridicare**
+
+- Admin adaugă/modifică locații
+- Checkout afișează locațiile active cu program
+- Calcul automat taxe de livrare
+- API: `GET /api/public/delivery-locations`
+
+**🎠 Produse în Carousel**
+
+- Admin marchează produse cu "Show in Carousel"
+- Dashboard afișează automat produsele în carousel
+- Ordine manuală sau automată după discount
+
+**📄 Pagini Personalizate**
+
+- Admin editează conținut pagini (About, Contact)
+- Modificările apar imediat pe site
+- API: `GET /api/public/pages/:slug`
+
+#### Cum funcționează:
+
+1. **Admin modifică** → Salvare → Baza de date
+2. **Frontend solicită** → fetch API → setState
+3. **React re-render** → UI actualizat
+
+#### Testare:
+
+1. Deschide site în browser
+2. Deschide Admin Panel în alt tab
+3. Modifică o setare (ex: cost livrare)
+4. Reîncarcă pagina site-ului (F5)
+5. ✅ Modificarea este vizibilă!
+
+### 2. Management de Conținut Live
 
 Administratorii pot edita paginile site-ului în timp real:
 
-- **Pagini editabile:** About, Contact, Dashboard Welcome
+- **Pagini editabile:** About, Contact
 - **Editor live** cu preview în timp real
 - **Actualizări instantanee** - modificările apar imediat pe site
 - **Istoric modificări** - tracking complet
@@ -216,14 +276,7 @@ Administratorii pot edita paginile site-ului în timp real:
 - **Cost livrare dinamic** bazat pe valoarea comenzii
 - **Livrare gratuită** peste un prag configurat
 
-### 4. Actualizări în Timp Real
-
-- **WebSocket** pentru comunicare bidirecțională
-- **Notificări live** pentru comenzi noi
-- **Actualizare automată stoc** la schimbări
-- **Sincronizare** între toate sesiunile admin
-
-### 5. Rapoarte și Statistici
+### 4. Rapoarte și Statistici
 
 - **Dashboard financiar** cu venituri/cheltuieli
 - **Rapoarte inventar** cu valori stoc
@@ -268,6 +321,8 @@ Configurare completă pentru fiecare locație:
 - `GET /api/public/pages/:slug` - Conținut pagină
 - `GET /api/public/site-config` - Configurații publice
 - `GET /api/public/delivery-locations` - Locații active
+- `GET /api/public/delivery-methods` - Metode de livrare active
+- `GET /api/public/payment-methods` - Metode de plată active
 - `GET /api/public/contact-info` - Informații contact
 
 ### Autentificare
@@ -347,6 +402,6 @@ Acest proiect este dezvoltat pentru uz educațional și comercial.
 
 ---
 
-**Versiune:** 2.0  
-**Ultima actualizare:** Februarie 2026  
-**Status:** ✅ Complet funcțional și testat
+**Versiune:** 2.1  
+**Ultima actualizare:** 6 Februarie 2026  
+**Status:** ✅ Complet funcțional cu actualizări live în timp real

@@ -145,7 +145,11 @@ DEVOPS & TOOLS
 📍 Locații de livrare cu program
 💰 Rapoarte financiare (venituri/cheltuieli)
 📊 Inventar cu alerte stoc scăzut
-🔄 Actualizări WebSocket în timp real
+🔄 Actualizări LIVE în timp real:
+   • Metode de livrare și plată configurabile
+   • Informații contact actualizate automat
+   • Produse în carousel configurabile
+   • Toate modificările din admin apar instant
 ```
 
 ### Slide 9: SECURITATEA

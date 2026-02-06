@@ -134,11 +134,15 @@ FUNCȚIONALITĂȚI IMPLEMENTATE (31 TOTAL)
 ✅ Gestionare utilizatori (roluri + parole vizibile)
 ✅ Gestionare comenzi cu actualizare automată stoc
 ✅ Sistem voucher-uri și oferte cu discount-uri
-✅ Editor LIVE pentru pagini (About, Contact, Dashboard)
+✅ Editor LIVE pentru pagini (About, Contact)
 ✅ Locații de livrare cu program și rază acoperire
 ✅ Rapoarte financiare (venituri/cheltuieli)
 ✅ Inventar avansat cu alerte stoc scăzut
-✅ Actualizări WebSocket în timp real
+✅ Actualizări LIVE în timp real:
+   - Metode de livrare și plată configurabile
+   - Informații contact actualizate automat
+   - Produse în carousel configurabile
+   - Toate modificările din admin apar instant pe site
 ✅ Moderare review-uri și suport utilizatori
 
 ===================================================================

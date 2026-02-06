@@ -52,5 +52,5 @@ pgadmin-data/
 # Uploads
 backend/public/uploads/
 
-# Prisma
-backend/prisma/migrations/
+# Prisma - NU exclude migrations, sunt necesare!
+# backend/prisma/migrations/
