@@ -161,6 +161,10 @@ async function start() {
     const { uploadRoutes } = await import('./routes/upload.routes');
     await fastify.register(uploadRoutes, { prefix: '/api/upload' });
 
+    // Register media routes
+    const { mediaRoutes } = await import('./routes/media.routes');
+    await fastify.register(mediaRoutes, { prefix: '/api/admin' });
+
     // Register advanced product routes
     const { productAdvancedRoutes } = await import('./routes/product-advanced.routes');
     await fastify.register(productAdvancedRoutes, { prefix: '/api' });
