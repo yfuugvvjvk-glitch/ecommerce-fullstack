@@ -61,7 +61,17 @@ export async function dataRoutes(fastify: FastifyInstance) {
       const body = CreateDataSchema.parse(request.body);
       const userId = request.user!.userId;
 
-      const item = await dataService.create(body, userId);
+      // Convert null to undefined for TypeScript compatibility
+      const cleanedBody = {
+        ...body,
+        oldPrice: body.oldPrice === null ? undefined : body.oldPrice,
+        expirationDate: body.expirationDate === null ? undefined : body.expirationDate,
+        productionDate: body.productionDate === null ? undefined : body.productionDate,
+        deliveryTimeHours: body.deliveryTimeHours === null ? undefined : body.deliveryTimeHours,
+        deliveryTimeDays: body.deliveryTimeDays === null ? undefined : body.deliveryTimeDays,
+      };
+
+      const item = await dataService.create(cleanedBody, userId);
 
       reply.code(201).send({ data: item });
     } catch (error) {
@@ -77,17 +87,33 @@ export async function dataRoutes(fastify: FastifyInstance) {
   fastify.put('/:id', { preHandler: authMiddleware }, async (request, reply) => {
     try {
       const { id } = request.params as { id: string };
+      console.log('PUT /api/data/:id - Request body:', JSON.stringify(request.body, null, 2));
+      
       const body = UpdateDataSchema.parse(request.body);
       const userId = request.user!.userId;
 
-      const item = await dataService.update(id, body, userId);
+      // Convert null to undefined for TypeScript compatibility
+      const cleanedBody = {
+        ...body,
+        oldPrice: body.oldPrice === null ? undefined : body.oldPrice,
+        expirationDate: body.expirationDate === null ? undefined : body.expirationDate,
+        productionDate: body.productionDate === null ? undefined : body.productionDate,
+        deliveryTimeHours: body.deliveryTimeHours === null ? undefined : body.deliveryTimeHours,
+        deliveryTimeDays: body.deliveryTimeDays === null ? undefined : body.deliveryTimeDays,
+      };
+      
+      console.log('Cleaned body:', JSON.stringify(cleanedBody, null, 2));
+
+      const item = await dataService.update(id, cleanedBody, userId);
 
       reply.send({ data: item });
     } catch (error) {
+      console.error('Error in PUT /api/data/:id:', error);
       if (error instanceof Error) {
         if (error.name === 'NotFoundError') {
           reply.code(404).send({ error: error.message });
         } else {
+          console.error('Validation or other error:', error.message);
           reply.code(400).send({ error: error.message });
         }
       } else {
