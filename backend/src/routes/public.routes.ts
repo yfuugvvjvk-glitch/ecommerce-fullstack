@@ -21,6 +21,16 @@ export async function publicRoutes(fastify: FastifyInstance) {
   fastify.get('/pages/:slug', async (request, reply) => {
     try {
       const { slug } = request.params as any;
+      
+      // Verifică dacă există serviciul de pagini
+      if (!pageService || typeof pageService.getPageBySlug !== 'function') {
+        // Returnează un răspuns implicit pentru pagini care nu există încă
+        return reply.code(404).send({ 
+          error: 'Page not found',
+          message: 'Page service not available or page does not exist'
+        });
+      }
+      
       const page = await pageService.getPageBySlug(slug);
       
       if (!page || !page.isPublished) {
@@ -30,7 +40,8 @@ export async function publicRoutes(fastify: FastifyInstance) {
       reply.send(page);
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-      reply.code(500).send({ error: errorMessage });
+      // Returnează 404 în loc de 500 pentru pagini care nu există
+      reply.code(404).send({ error: 'Page not found', message: errorMessage });
     }
   });
 
@@ -130,6 +141,24 @@ export async function publicRoutes(fastify: FastifyInstance) {
   // Obține configurațiile publice pentru frontend
   fastify.get('/site-config', async (request, reply) => {
     try {
+      const { keys } = request.query as { keys?: string };
+      
+      if (keys) {
+        // Dacă sunt specificate chei, returnează doar acele configurații
+        const keyArray = keys.split(',').map(k => k.trim());
+        const configs = await siteConfigService.getPublicConfigs();
+        
+        const filteredConfigs: Record<string, any> = {};
+        keyArray.forEach(key => {
+          if (configs[key] !== undefined) {
+            filteredConfigs[key] = configs[key];
+          }
+        });
+        
+        return reply.send(filteredConfigs);
+      }
+      
+      // Altfel, returnează toate configurațiile publice
       const configs = await siteConfigService.getPublicConfigs();
       reply.send(configs);
     } catch (error) {
