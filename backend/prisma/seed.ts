@@ -214,6 +214,9 @@ async function main() {
       data: {
         ...productData,
         categoryId,
+        availableStock: product.stock, // Setează availableStock = stock
+        isInStock: product.stock > 0,
+        reservedStock: 0
       },
     });
   }
