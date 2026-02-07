@@ -1,7 +1,14 @@
 import { PrismaClient } from '@prisma/client';
+import { PrismaPg } from '@prisma/adapter-pg';
+import { Pool } from 'pg';
 import * as bcrypt from 'bcrypt';
+import * as dotenv from 'dotenv';
 
-const prisma = new PrismaClient();
+dotenv.config();
+
+const pool = new Pool({ connectionString: process.env.DATABASE_URL });
+const adapter = new PrismaPg(pool);
+const prisma = new PrismaClient({ adapter });
 
 async function main() {
   console.log('🌱 Starting database seed...');
@@ -36,7 +43,11 @@ async function main() {
 
   const createdCategories: any = {};
   for (const category of categories) {
-    const created = await prisma.category.create({ data: category });
+    const created = await prisma.category.upsert({
+      where: { name: category.name },
+      update: {},
+      create: category,
+    });
     createdCategories[category.slug] = created;
   }
 
@@ -395,7 +406,11 @@ async function main() {
   ];
 
   for (const voucher of vouchers) {
-    await prisma.voucher.create({ data: voucher });
+    await prisma.voucher.upsert({
+      where: { code: voucher.code },
+      update: {},
+      create: voucher,
+    });
   }
 
   console.log(`✅ Created ${vouchers.length} vouchers`);
@@ -499,6 +514,182 @@ async function main() {
   }
 
   console.log('✅ Created 4 payment methods');
+
+  // Create pages
+  const pages = [
+    {
+      title: 'Despre Noi',
+      slug: 'despre',
+      content: JSON.stringify({
+        sections: [
+          {
+            type: 'hero',
+            title: 'Despre Magazinul Nostru',
+            subtitle: 'Povestea noastră și valorile care ne ghidează',
+          },
+          {
+            type: 'text',
+            content: 'Suntem o companie dedicată să ofere cele mai bune produse clienților noștri. Cu o experiență de peste 10 ani în domeniu, ne-am construit o reputație solidă bazată pe calitate și servicii excelente.',
+          },
+          {
+            type: 'features',
+            items: [
+              { icon: '🚚', title: 'Livrare Rapidă', description: 'Livrăm în toată țara în 24-48h' },
+              { icon: '💳', title: 'Plată Securizată', description: 'Tranzacții 100% sigure' },
+              { icon: '🎁', title: 'Oferte Speciale', description: 'Reduceri și promoții regulate' },
+            ],
+          },
+        ],
+      }),
+      isPublished: true,
+      metaTitle: 'Despre Noi - Shop',
+      metaDescription: 'Află mai multe despre magazinul nostru și valorile noastre',
+      createdById: admin.id,
+    },
+    {
+      title: 'Contact',
+      slug: 'contact',
+      content: JSON.stringify({
+        sections: [
+          {
+            type: 'hero',
+            title: 'Contactează-ne',
+            subtitle: 'Suntem aici să te ajutăm',
+          },
+          {
+            type: 'contact-info',
+            email: 'contact@shop.ro',
+            phone: '+40 745 123 456',
+            address: 'Str. Exemplu nr. 123, București, România',
+            schedule: 'Luni - Vineri: 9:00 - 18:00',
+          },
+        ],
+      }),
+      isPublished: true,
+      metaTitle: 'Contact - Shop',
+      metaDescription: 'Contactează-ne pentru orice întrebare',
+      createdById: admin.id,
+    },
+    {
+      title: 'Termeni și Condiții',
+      slug: 'termeni',
+      content: JSON.stringify({
+        sections: [
+          {
+            type: 'text',
+            content: 'Acești termeni și condiții reglementează utilizarea site-ului nostru...',
+          },
+        ],
+      }),
+      isPublished: true,
+      metaTitle: 'Termeni și Condiții - Shop',
+      metaDescription: 'Termeni și condiții de utilizare',
+      createdById: admin.id,
+    },
+  ];
+
+  for (const page of pages) {
+    await prisma.page.upsert({
+      where: { slug: page.slug },
+      update: {},
+      create: page,
+    });
+  }
+
+  console.log(`✅ Created ${pages.length} pages`);
+
+  // Create delivery locations
+  const deliveryLocations = [
+    {
+      name: 'București - Centru',
+      address: 'Str. Exemplu nr. 123',
+      city: 'București',
+      postalCode: '010101',
+      phone: '+40 745 123 456',
+      deliveryFee: 15.0,
+      freeDeliveryThreshold: 200.0,
+      isActive: true,
+      isMainLocation: true,
+    },
+    {
+      name: 'Cluj-Napoca',
+      address: 'Str. Memorandumului nr. 45',
+      city: 'Cluj-Napoca',
+      postalCode: '400114',
+      phone: '+40 745 234 567',
+      deliveryFee: 20.0,
+      freeDeliveryThreshold: 250.0,
+      isActive: true,
+    },
+    {
+      name: 'Timișoara',
+      address: 'Bd. Revoluției nr. 78',
+      city: 'Timișoara',
+      postalCode: '300054',
+      phone: '+40 745 345 678',
+      deliveryFee: 20.0,
+      freeDeliveryThreshold: 250.0,
+      isActive: true,
+    },
+    {
+      name: 'Iași',
+      address: 'Bd. Carol I nr. 12',
+      city: 'Iași',
+      postalCode: '700506',
+      phone: '+40 745 456 789',
+      deliveryFee: 20.0,
+      freeDeliveryThreshold: 250.0,
+      isActive: true,
+    },
+    {
+      name: 'Constanța',
+      address: 'Bd. Tomis nr. 234',
+      city: 'Constanța',
+      postalCode: '900178',
+      phone: '+40 745 567 890',
+      deliveryFee: 25.0,
+      freeDeliveryThreshold: 300.0,
+      isActive: true,
+    },
+    {
+      name: 'Brașov',
+      address: 'Str. Republicii nr. 56',
+      city: 'Brașov',
+      postalCode: '500030',
+      phone: '+40 745 678 901',
+      deliveryFee: 18.0,
+      freeDeliveryThreshold: 220.0,
+      isActive: true,
+    },
+    {
+      name: 'Galați',
+      address: 'Str. Domnească nr. 89',
+      city: 'Galați',
+      postalCode: '800008',
+      phone: '+40 745 789 012',
+      deliveryFee: 22.0,
+      freeDeliveryThreshold: 250.0,
+      isActive: true,
+    },
+    {
+      name: 'Craiova',
+      address: 'Calea Unirii nr. 123',
+      city: 'Craiova',
+      postalCode: '200585',
+      phone: '+40 745 890 123',
+      deliveryFee: 22.0,
+      freeDeliveryThreshold: 250.0,
+      isActive: true,
+    },
+  ];
+
+  for (const location of deliveryLocations) {
+    await prisma.deliveryLocation.create({
+      data: location,
+    });
+  }
+
+  console.log(`✅ Created ${deliveryLocations.length} delivery locations`);
 
   // Create orders
   const orders = [
