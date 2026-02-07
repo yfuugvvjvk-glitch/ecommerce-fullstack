@@ -19,7 +19,8 @@ Platformă modernă de comerț electronic cu funcționalități avansate: manage
 
 - 📊 **Dashboard complet** cu statistici live
 - 📝 **Management de conținut** - editare pagini în timp real
-- 📦 **Gestionare produse** cu stoc avansat (perisabile, unități, cantități fixe)
+- �️ **Gestionare Media** - upload și organizare imagini/fișiere
+- �📦 **Gestionare produse** cu stoc avansat (perisabile, unități, cantități fixe)
 - 👥 **Gestionare utilizatori** și roluri
 - 🎯 **Gestionare comenzi** cu actualizare automată stoc
 - 🎁 **Gestionare oferte** și campanii
@@ -184,11 +185,84 @@ stop-app.bat
   - 🎟️ Gestionare vouchere
   - 🎁 Gestionare oferte
   - 📝 Gestionare conținut (pagini editabile)
-  - 🚚 Locații de livrare
+  - �️ **Gestionare Media** (imagini și fișiere)
+  - �🚚 Locații de livrare
   - 💰 Rapoarte financiare
   - 📊 Inventar și stoc
 
 ## 🎯 Funcționalități Avansate
+
+### 0. Gestionare Media 🖼️
+
+**Sistem complet de management pentru imagini și fișiere:**
+
+#### Funcționalități:
+
+- 📤 **Upload fișiere** - Imagini (JPG, PNG, GIF, WEBP) și documente (PDF)
+- 🔍 **Căutare și filtrare** - După nume, tip, categorie
+- 📊 **Statistici** - Total fișiere, spațiu folosit, număr imagini
+- 👁️ **Preview** - Vizualizare imagini cu detalii complete
+- 🗑️ **Ștergere** - Individuală sau în masă
+- 📋 **Copiere URL** - Pentru utilizare în conținut
+- 🏷️ **Metadata** - Titlu, descriere, text alternativ, tag-uri
+- 📍 **Tracking utilizare** - Vezi unde este folosit fișierul
+
+#### Acces:
+
+```
+Admin Panel → Editare Conținut → 🖼️ Media
+```
+
+#### Breadcrumb vizibil:
+
+```
+Admin Panel → Editare Conținut → 🖼️ Gestionare Media
+```
+
+#### Moduri de vizualizare:
+
+- 🔲 **Grid** - Afișare în grilă cu preview-uri mari
+- 📋 **Listă** - Afișare tabelară cu detalii complete
+
+#### Limite:
+
+- Mărime maximă: **5MB** per fișier
+- Formate acceptate: JPG, PNG, GIF, WEBP, PDF
+- Upload multiplu: **Da**
+
+#### Scanare automată:
+
+La prima accesare, sistemul scanează automat directoarele:
+
+- `/uploads/products/` - Imagini produse
+- `/uploads/avatars/` - Avatare utilizatori
+- `/uploads/offers/` - Imagini oferte
+- `/uploads/media/` - Fișiere noi încărcate
+
+#### API Endpoints:
+
+- `GET /api/media` - Lista fișiere (admin)
+- `POST /api/media/upload` - Upload fișier (admin)
+- `PATCH /api/media/:id` - Actualizare metadata (admin)
+- `DELETE /api/media/:id` - Ștergere fișier (admin)
+- `POST /api/media/bulk-delete` - Ștergere în masă (admin)
+- `GET /api/media/:id/usage` - Detectare utilizare (admin)
+
+#### Verificare setup:
+
+```bash
+# Windows PowerShell
+.\check-media-setup.ps1
+
+# Sau manual
+cd backend
+node test-image-serving.js
+```
+
+#### Documentație completă:
+
+- **MEDIA_FINAL_FIX.md** - Detalii tehnice
+- **GHID_UTILIZARE_MEDIA.md** - Ghid utilizator complet
 
 ### 1. Actualizări Live în Timp Real ⚡
 
@@ -402,6 +476,6 @@ Acest proiect este dezvoltat pentru uz educațional și comercial.
 
 ---
 
-**Versiune:** 2.1  
+**Versiune:** 2.2  
 **Ultima actualizare:** 6 Februarie 2026  
-**Status:** ✅ Complet funcțional cu actualizări live în timp real
+**Status:** ✅ Complet funcțional cu Media Manager și actualizări live în timp real

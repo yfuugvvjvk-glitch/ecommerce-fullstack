@@ -58,6 +58,9 @@ export async function dataRoutes(fastify: FastifyInstance) {
   // POST /api/data - Create new data item (REQUIRES AUTH)
   fastify.post('/', { preHandler: authMiddleware }, async (request, reply) => {
     try {
+      console.log('📦 POST /api/data - Creating product...');
+      console.log('Request body:', JSON.stringify(request.body, null, 2));
+      
       const body = CreateDataSchema.parse(request.body);
       const userId = request.user!.userId;
 
@@ -75,7 +78,10 @@ export async function dataRoutes(fastify: FastifyInstance) {
 
       reply.code(201).send({ data: item });
     } catch (error) {
+      console.error('❌ Error creating product:', error);
       if (error instanceof Error) {
+        console.error('Error message:', error.message);
+        console.error('Error name:', error.name);
         reply.code(400).send({ error: error.message });
       } else {
         reply.code(500).send({ error: 'Internal server error' });
