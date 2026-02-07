@@ -677,3 +677,42 @@ model Order {
   @@index([deliveryLocationId])
 }
 
+// Model pentru gestionarea fișierelor media cu metadata completă
+model Media {
+  id              String   @id @default(cuid())
+  filename        String   // Numele fișierului pe disk
+  originalName    String   // Numele original al fișierului
+  path            String   // Calea relativă către fișier
+  url             String   // URL-ul public al fișierului
+  mimeType        String   // Tipul MIME
+  size            Int      // Mărimea în bytes
+  width           Int?     // Lățimea (pentru imagini)
+  height          Int?     // Înălțimea (pentru imagini)
+  
+  // Metadata editabilă
+  title           String?  // Titlul fișierului
+  description     String?  @db.Text // Descrierea fișierului
+  altText         String?  // Text alternativ (pentru imagini)
+  category        String?  // Categoria (products, avatars, offers, etc.)
+  tags            String?  // Tag-uri (JSON array)
+  
+  // Informații despre utilizare
+  usedOnPages     String?  // Paginile unde este folosit (JSON array)
+  usageCount      Int      @default(0) // Numărul de utilizări
+  
+  // Setări de afișare
+  displaySize     String?  // thumbnail, medium, large, full
+  position        String?  // Poziția pe pagină (JSON)
+  
+  // Metadata sistem
+  uploadedById    String
+  uploadedBy      String   // Email-ul utilizatorului
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([category])
+  @@index([uploadedById])
+  @@index([createdAt])
+  @@index([mimeType])
+}
+
