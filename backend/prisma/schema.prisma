@@ -7,6 +7,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 
@@ -112,6 +113,7 @@ model DataItem {
   // Unități de măsură
   unitType             String   @default("piece") // piece, kg, liter, gram, ml
   unitName             String   @default("bucată") // bucată, kg, litru, gram, ml
+  priceType            String   @default("per_unit") // "per_unit" (preț per unitate) sau "fixed" (preț fix per produs)
   minQuantity          Float    @default(1) // Cantitatea minimă de comandă
   maxQuantity          Float?   // Cantitatea maximă de comandă
   quantityStep         Float    @default(1) // Pasul de incrementare (ex: 0.5 pentru jumătăți)
@@ -713,5 +715,58 @@ model Media {
   @@index([uploadedById])
   @@index([createdAt])
   @@index([mimeType])
+}
+
+// Model pentru monede și conversii valutare
+model Currency {
+  id          String   @id @default(cuid())
+  code        String   @unique // EUR, RON, USD, GBP, etc.
+  name        String   // Euro, Leu românesc, Dolar american
+  symbol      String   // €, lei, $, £
+  isBase      Boolean  @default(false) // Moneda de bază pentru conversii
+  isActive    Boolean  @default(true)
+  position    String   @default("before") // before sau after (poziția simbolului)
+  decimals    Int      @default(2) // Numărul de zecimale
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  exchangeRatesFrom ExchangeRate[] @relation("FromCurrency")
+  exchangeRatesTo   ExchangeRate[] @relation("ToCurrency")
+
+  @@index([code])
+  @@index([isBase])
+  @@index([isActive])
+}
+
+// Model pentru cursurile de schimb
+model ExchangeRate {
+  id             String   @id @default(cuid())
+  fromCurrencyId String
+  toCurrencyId   String
+  rate           Float    // Cursul de schimb
+  source         String   @default("manual") // manual, api, bnr
+  lastUpdated    DateTime @default(now())
+  createdAt      DateTime @default(now())
+
+  fromCurrency Currency @relation("FromCurrency", fields: [fromCurrencyId], references: [id], onDelete: Cascade)
+  toCurrency   Currency @relation("ToCurrency", fields: [toCurrencyId], references: [id], onDelete: Cascade)
+
+  @@unique([fromCurrencyId, toCurrencyId])
+  @@index([fromCurrencyId])
+  @@index([toCurrencyId])
+  @@index([lastUpdated])
+}
+
+// Model pentru istoricul cursurilor valutare
+model ExchangeRateHistory {
+  id             String   @id @default(cuid())
+  fromCurrency   String   // Codul monedei (EUR, RON, etc.)
+  toCurrency     String
+  rate           Float
+  source         String   @default("manual")
+  recordedAt     DateTime @default(now())
+
+  @@index([fromCurrency, toCurrency])
+  @@index([recordedAt])
 }
 

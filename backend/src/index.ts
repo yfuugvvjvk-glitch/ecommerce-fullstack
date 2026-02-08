@@ -21,6 +21,7 @@ import { categoryRoutes } from './routes/category.routes';
 import { chatRoutes } from './routes/chat.routes';
 import { publicRoutes } from './routes/public.routes';
 import { initializeRealtimeService } from './services/realtime.service';
+import { scheduleCurrencyUpdate, updateCurrenciesOnStartup } from './jobs/currency-update.job';
 // Comentez noile routes care pot cauza probleme
 // import { inventoryRoutes } from './routes/inventory.routes';
 
@@ -169,6 +170,10 @@ async function start() {
     const { productAdvancedRoutes } = await import('./routes/product-advanced.routes');
     await fastify.register(productAdvancedRoutes, { prefix: '/api' });
 
+    // Register currency routes
+    const { currencyRoutes } = await import('./routes/currency.routes');
+    await fastify.register(currencyRoutes, { prefix: '/api' });
+
     // Add Socket.IO to fastify instance for use in routes BEFORE starting server
     const io = new SocketIOServer(fastify.server, {
       cors: {
@@ -274,6 +279,12 @@ async function start() {
     
     console.log(`🚀 Server running on http://localhost:${PORT}`);
     console.log(`💬 Socket.IO chat server ready`);
+    
+    // Actualizează cursurile valutare la pornire
+    await updateCurrenciesOnStartup();
+    
+    // Programează actualizarea zilnică a cursurilor
+    scheduleCurrencyUpdate();
     
     // Schedule cleanup jobs - Removed for simplicity
     // scheduleCleanupJobs();
