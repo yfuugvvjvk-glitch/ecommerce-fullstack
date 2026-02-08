@@ -84,6 +84,13 @@ Am implementat o **arhitectură în trei niveluri**:
 - Locații de livrare cu program și rază de acoperire
 - Rapoarte financiare (venituri/cheltuieli)
 - Inventar avansat cu alerte stoc scăzut
+- **Sistem complet de conversie valutară**:
+  - Suport pentru multiple monede (EUR, RON, USD, GBP, etc.)
+  - Actualizare automată zilnică a cursurilor de la BNR și API-uri externe
+  - Setare monedă de bază configurabilă
+  - Adăugare/editare/ștergere monede
+  - Istoric complet al cursurilor valutare
+  - Conversie automată prețuri în timp real
 - Actualizări LIVE în timp real:
   - Metode de livrare și plată configurabile
   - Informații contact actualizate automat
@@ -152,7 +159,8 @@ Voi demonstra:
    - Locații de livrare cu program personalizat
    - Rapoarte financiare și inventar
 5. **Actualizări în timp real** cu WebSocket
-6. **Responsivitatea** pe toate dispozitivele
+6. **Sistem de conversie valutară** cu actualizare automată
+7. **Responsivitatea** pe toate dispozitivele
 
 _[Demonstrația practică - 2-3 minute de navigare prin aplicație]_"
 
@@ -181,6 +189,9 @@ _[Demonstrația practică - 2-3 minute de navigare prin aplicație]_"
 - Extinderea cu funcționalități de analytics avansate
 - Suport multilingv extins
 - Implementarea PWA features complete
+- Extinderea sistemului valutar cu crypto monede
+- Grafice interactive pentru istoricul cursurilor
+- Predicții cursuri valutare folosind Machine Learning
 
 **Această aplicație poate servi** ca bază pentru un business real de e-commerce, template pentru alte proiecte similare, sau demonstrație a competențelor în dezvoltarea web modernă.
 
@@ -200,7 +211,7 @@ Mulțumesc pentru atenție și sunt pregătit să răspund la întrebările dumn
 
 ### 3. "Care au fost cele mai mari provocări tehnice?"
 
-**Răspuns:** "Principalele provocări au fost: implementarea sistemului de cantități fixe pentru produse - rezolvată prin validare strictă pe backend și frontend, gestionarea stocului automat la schimbarea statusului comenzilor - implementată prin evenimente și actualizări tranzacționale, editarea live a paginilor cu preview în timp real - realizată prin WebSocket și sincronizare instantanee, și performanța cu actualizări în timp real - optimizată prin debouncing și batching de evenimente."
+**Răspuns:** "Principalele provocări au fost: implementarea sistemului de cantități fixe pentru produse - rezolvată prin validare strictă pe backend și frontend, gestionarea stocului automat la schimbarea statusului comenzilor - implementată prin evenimente și actualizări tranzacționale, editarea live a paginilor cu preview în timp real - realizată prin WebSocket și sincronizare instantanee, sistemul de conversie valutară cu actualizare automată - implementat prin integrare cu API-ul BNR și servicii externe, și performanța cu actualizări în timp real - optimizată prin debouncing și batching de evenimente."
 
 ### 4. "Cum ați testat aplicația?"
 
@@ -208,7 +219,11 @@ Mulțumesc pentru atenție și sunt pregătit să răspund la întrebările dumn
 
 ### 5. "Aplicația este pregătită pentru producție?"
 
-**Răspuns:** "Da, aplicația este complet pregătită pentru producție. Are performanțe excelente (Lighthouse 94/100), securitate robustă (OWASP compliant), este scalabilă prin arhitectura modulară, include funcționalități avansate precum editor live de conținut, gestionare stoc automată, actualizări în timp real cu WebSocket, și poate fi folosită ca bază pentru un business real de e-commerce. Rulează perfect local și poate fi deployată pe platforme cloud."
+**Răspuns:** "Da, aplicația este complet pregătită pentru producție. Are performanțe excelente (Lighthouse 94/100), securitate robustă (OWASP compliant), este scalabilă prin arhitectura modulară, include funcționalități avansate precum editor live de conținut, gestionare stoc automată, sistem complet de conversie valutară cu actualizare automată zilnică, actualizări în timp real cu WebSocket, și poate fi folosită ca bază pentru un business real de e-commerce. Rulează perfect local și poate fi deployată pe platforme cloud."
+
+### 6. "Cum funcționează sistemul de conversie valutară?"
+
+**Răspuns:** "Sistemul de conversie valutară este complet automatizat și flexibil. Am implementat integrare cu API-ul Băncii Naționale a României pentru cursuri oficiale RON și cu API-uri externe pentru cursuri internaționale. Cursurile se actualizează automat zilnic la ora 10:00 și la pornirea serverului. Administratorii pot adăuga, edita sau șterge monede, pot seta moneda de bază, și pot actualiza manual cursurile când este necesar. Toate cursurile sunt salvate în istoric pentru tracking și analiză. Sistemul suportă 160+ monede și permite conversii în timp real pentru toate prețurile din aplicație."
 
 ---
 
