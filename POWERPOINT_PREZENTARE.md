@@ -2,7 +2,7 @@
 
 ---
 
-## 📊 PREZENTAREA POWERPOINT (17 SLIDE-URI)
+## 📊 PREZENTAREA POWERPOINT (19 SLIDE-URI)
 
 ### Slide 1: TITLU
 
@@ -135,8 +135,11 @@ DEVOPS & TOOLS
 
 📊 Dashboard cu statistici în timp real
 🛍️ Gestionare produse avansată
+   • Sistem dual de prețuri:
+     - Preț FIX per produs/ambalaj
+     - Preț per UNITATE de măsură
    • Cantități fixe (0.5kg, 1kg, 2kg)
-   • Unități de măsură (kg, litru, bucată)
+   • Unități de măsură (kg, litru, bucată, metru)
    • Produse perisabile cu comandă în avans
 👥 Gestionare utilizatori și roluri
 📦 Gestionare comenzi cu actualizare stoc
@@ -145,6 +148,11 @@ DEVOPS & TOOLS
 📍 Locații de livrare cu program
 💰 Rapoarte financiare (venituri/cheltuieli)
 📊 Inventar cu alerte stoc scăzut
+💱 Sistem complet conversie valutară:
+   • 15+ monede (EUR, RON, USD, GBP, etc.)
+   • Actualizare automată zilnică (BNR + API)
+   • Gestionare completă monede și cursuri
+   • Istoric cursuri valutare
 🔄 Actualizări LIVE în timp real:
    • Metode de livrare și plată configurabile
    • Informații contact actualizate automat
@@ -286,6 +294,19 @@ FUNCȚIONALITĂȚI PLANIFICATE
 ```
 📦 GESTIONARE PRODUSE AVANSATĂ
 
+💰 SISTEM DUAL DE PREȚURI
+• Preț FIX per produs/ambalaj:
+  - Ex: "Lapte 2L" = 1 leu/sticlă (NU per litru)
+  - Afișare: "1.00 lei/buc" + "2 litri/produs"
+  - Stoc: număr ambalaje (3 sticle = 6L total)
+  - Client alege număr produse, nu cantitate
+
+• Preț per UNITATE de măsură:
+  - Ex: "Lapte" = 5 lei/litru
+  - Afișare: "5.00 lei/litru"
+  - Client alege cantitatea (0.5L, 1L, 2L)
+  - Preț calculat automat (2L × 5 = 10 lei)
+
 🎯 CANTITĂȚI FIXE
 • Admin setează cantități (0.5kg, 1kg, 2kg)
 • Client alege doar din opțiunile disponibile
@@ -307,7 +328,46 @@ FUNCȚIONALITĂȚI PLANIFICATE
 • Alerte pentru stoc scăzut
 ```
 
-### Slide 16: VALOAREA PROIECTULUI
+### Slide 16: SISTEM CONVERSIE VALUTARĂ
+
+```
+💱 SISTEM COMPLET DE CONVERSIE VALUTARĂ
+
+🌍 SUPORT MULTIPLE MONEDE
+• 15+ monede disponibile:
+  RON, EUR, USD, GBP, CHF, JPY, CAD, AUD,
+  CNY, SEK, NOK, DKK, PLN, CZK, HUF
+• Selector în header cu scroll
+• Persistență în localStorage
+• Actualizare instant la schimbare
+
+🔄 ACTUALIZARE AUTOMATĂ
+• Job programat zilnic la 10:00 AM
+• Integrare cu API BNR (cursuri oficiale RON)
+• Integrare cu ExchangeRate-API (cursuri internaționale)
+• Actualizare la pornirea serverului
+
+📊 ISTORIC ȘI TRACKING
+• Salvare toate cursurile în baza de date
+• Istoric complet pentru analiză
+• Tracking modificări cursuri
+• Rapoarte și statistici
+
+👨‍💼 GESTIONARE ADMIN
+• Adăugare/editare/ștergere monede
+• Actualizare manuală cursuri
+• Setare monedă de bază
+• Vizualizare istoric cursuri
+• Configurare completă sistem
+
+⚡ CONVERSIE ÎN TIMP REAL
+• Toate prețurile convertite instant
+• Afișare în moneda selectată
+• Calcul automat în coș și comenzi
+• Performanță optimizată cu cache
+```
+
+### Slide 17: VALOAREA PROIECTULUI
 
 ```
 💎 VALOAREA ȘI IMPACTUL
@@ -327,7 +387,7 @@ APLICABILITATE PRACTICĂ
 📚 Referință best practices
 ```
 
-### Slide 16: CONCLUZII
+### Slide 18: CONCLUZII
 
 ```
 🎯 CONCLUZII FINALE
@@ -352,7 +412,7 @@ LECȚII ÎNVĂȚATE
 • Beneficiile tehnologiilor moderne
 ```
 
-### Slide 18: MULȚUMIRI
+### Slide 19: MULȚUMIRI
 
 ```
 🙏 MULȚUMIRI

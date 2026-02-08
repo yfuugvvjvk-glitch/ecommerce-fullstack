@@ -73,10 +73,14 @@ Am implementat o **arhitectură în trei niveluri**:
 
 - Dashboard cu statistici în timp real
 - Gestionarea produselor avansată:
+  - **Sistem dual de prețuri**:
+    - **Preț FIX**: Preț per produs/ambalaj (ex: "Lapte 2L" = 1 leu/sticlă, NU per litru)
+    - **Preț per UNITATE**: Preț per unitate de măsură (ex: "Lapte" = 5 lei/litru)
   - Cantități fixe stabilite de admin (0.5kg, 1kg, 2kg)
-  - Unități de măsură flexibile (kg, litru, bucată)
+  - Unități de măsură flexibile (kg, litru, bucată, metru)
   - Produse perisabile cu comandă în avans
   - Stoc rezervat vs stoc disponibil
+  - Afișare automată cantitate per ambalaj pentru preț fix
 - Gestionarea utilizatorilor, inclusiv vizualizarea parolelor pentru suport
 - Gestionarea comenzilor cu actualizare automată stoc
 - Sistem complet de voucher-uri și oferte
@@ -85,7 +89,7 @@ Am implementat o **arhitectură în trei niveluri**:
 - Rapoarte financiare (venituri/cheltuieli)
 - Inventar avansat cu alerte stoc scăzut
 - **Sistem complet de conversie valutară**:
-  - Suport pentru multiple monede (EUR, RON, USD, GBP, etc.)
+  - Suport pentru 15+ monede (EUR, RON, USD, GBP, CHF, JPY, CAD, AUD, CNY, SEK, NOK, DKK, PLN, CZK, HUF)
   - Actualizare automată zilnică a cursurilor de la BNR și API-uri externe
   - Setare monedă de bază configurabilă
   - Adăugare/editare/ștergere monede
@@ -223,7 +227,11 @@ Mulțumesc pentru atenție și sunt pregătit să răspund la întrebările dumn
 
 ### 6. "Cum funcționează sistemul de conversie valutară?"
 
-**Răspuns:** "Sistemul de conversie valutară este complet automatizat și flexibil. Am implementat integrare cu API-ul Băncii Naționale a României pentru cursuri oficiale RON și cu API-uri externe pentru cursuri internaționale. Cursurile se actualizează automat zilnic la ora 10:00 și la pornirea serverului. Administratorii pot adăuga, edita sau șterge monede, pot seta moneda de bază, și pot actualiza manual cursurile când este necesar. Toate cursurile sunt salvate în istoric pentru tracking și analiză. Sistemul suportă 160+ monede și permite conversii în timp real pentru toate prețurile din aplicație."
+**Răspuns:** "Sistemul de conversie valutară este complet automatizat și flexibil. Am implementat integrare cu API-ul Băncii Naționale a României pentru cursuri oficiale RON și cu ExchangeRate-API pentru cursuri internaționale. Cursurile se actualizează automat zilnic la ora 10:00 AM prin job-uri programate cu node-cron și la pornirea serverului. Administratorii pot adăuga, edita sau șterge monede, pot seta moneda de bază, și pot actualiza manual cursurile când este necesar. Toate cursurile sunt salvate în istoric pentru tracking și analiză. Sistemul suportă 15+ monede (RON, EUR, USD, GBP, CHF, JPY, CAD, AUD, CNY, SEK, NOK, DKK, PLN, CZK, HUF) și permite conversii în timp real pentru toate prețurile din aplicație. Am creat 3 modele Prisma (Currency, ExchangeRate, ExchangeRateHistory) și 12 endpoint-uri API (6 publice + 6 admin). Pe frontend, am implementat CurrencySelector.tsx în header cu scroll și CurrencyPrice.tsx pentru conversie automată în toate componentele."
+
+### 7. "Cum funcționează sistemul dual de prețuri?"
+
+**Răspuns:** "Am implementat un sistem flexibil cu două tipuri de prețuri prin câmpul `priceType` în schema Prisma. Primul tip este preț FIX per produs/ambalaj - de exemplu 'Lapte 2L' costă 1 leu per sticlă, NU per litru. Stocul reprezintă numărul de ambalaje (3 sticle = 6 litri total), iar clientul alege număr de produse. Al doilea tip este preț per UNITATE de măsură - de exemplu 'Lapte' costă 5 lei per litru, clientul alege cantitatea (0.5L, 1L, 2L), iar prețul se calculează automat (2L × 5 = 10 lei). Această logică se aplică pentru TOATE unitățile de măsură (kg, litri, metri). Am implementat logica de afișare în toate componentele frontend (ProductGrid, ShoppingCart, pagina de detalii, dashboard, favorite) și am creat un UI intuitiv în admin cu butoane mari pentru selecția tipului de preț. Migrația aplicată este `20260208203201_add_price_type_field`."
 
 ---
 

@@ -104,7 +104,7 @@ VERIFICARE CERINȚE - TOATE ÎNDEPLINITE 100%
 - Analytics și internaționalizare ✅
 
 ===================================================================
-FUNCȚIONALITĂȚI IMPLEMENTATE (31 TOTAL)
+FUNCȚIONALITĂȚI IMPLEMENTATE (33 TOTAL)
 ===================================================================
 
 👥 PENTRU UTILIZATORI (funcționalități complete):
@@ -123,12 +123,15 @@ FUNCȚIONALITĂȚI IMPLEMENTATE (31 TOTAL)
 ✅ Design complet responsive
 ✅ Notificări în timp real
 ✅ Actualizare automată stoc
+✅ **Selector monedă în header cu 15+ monede**
+✅ **Conversie automată prețuri în timp real**
 
 👨‍💼 PENTRU ADMINISTRATORI (funcționalități complete):
 ✅ Dashboard cu statistici în timp real
 ✅ Gestionare produse avansată:
+   - **Sistem dual de prețuri (FIX vs per UNITATE)**
    - Cantități fixe (0.5kg, 1kg, 2kg)
-   - Unități de măsură (kg, litru, bucată)
+   - Unități de măsură (kg, litru, bucată, metru)
    - Produse perisabile cu comandă în avans
    - Upload imagini și gestionare stoc
 ✅ Gestionare utilizatori (roluri + parole vizibile)
@@ -138,6 +141,12 @@ FUNCȚIONALITĂȚI IMPLEMENTATE (31 TOTAL)
 ✅ Locații de livrare cu program și rază acoperire
 ✅ Rapoarte financiare (venituri/cheltuieli)
 ✅ Inventar avansat cu alerte stoc scăzut
+✅ **Sistem complet conversie valutară**:
+   - Adăugare/editare/ștergere monede
+   - Actualizare automată zilnică cursuri (BNR + API)
+   - Setare monedă de bază
+   - Istoric complet cursuri valutare
+   - Actualizare manuală cursuri
 ✅ Actualizări LIVE în timp real:
    - Metode de livrare și plată configurabile
    - Informații contact actualizate automat
@@ -151,10 +160,11 @@ DOCUMENTAȚIA COMPLETĂ PENTRU PROFESOR
 
 📚 DOCUMENTELE DE TRIMIS:
 1. **LUCRARE_DIPLOMA.md** - Lucrarea de licență completă (format academic)
-2. **POWERPOINT_PREZENTARE.md** - Prezentarea PowerPoint (17 slide-uri)
+2. **POWERPOINT_PREZENTARE.md** - Prezentarea PowerPoint (19 slide-uri)
 3. **DISCURS_SUSTINERE.md** - Discursul pentru susținere (15-20 min)
 4. **TRIMITERE_PROFESOR.txt** - Acest fișier cu toate instrucțiunile
-5. **Link GitHub**: https://github.com/yfuugvvjvk-glitch/ecommerce-fullstack
+5. **CHANGELOG.md** - Istoric complet al modificărilor (versiunea 2.0.0)
+6. **Link GitHub**: https://github.com/yfuugvvjvk-glitch/ecommerce-fullstack
 
 📊 METRICI DE CALITATE:
 - Code Coverage: > 85%
@@ -164,8 +174,50 @@ DOCUMENTAȚIA COMPLETĂ PENTRU PROFESOR
 - TypeScript: 100% coverage
 
 ===================================================================
-FUNCȚIONALITĂȚI AVANSATE IMPLEMENTATE
+FUNCȚIONALITĂȚI AVANSATE IMPLEMENTATE (VERSIUNEA 2.0.0)
 ===================================================================
+
+💱 **SISTEM COMPLET DE CONVERSIE VALUTARĂ**:
+- Suport pentru 15+ monede (RON, EUR, USD, GBP, CHF, JPY, CAD, AUD, CNY, SEK, NOK, DKK, PLN, CZK, HUF)
+- Actualizare automată zilnică a cursurilor la ora 10:00 AM
+- Integrare cu API BNR (Banca Națională a României) pentru cursuri oficiale RON
+- Integrare cu ExchangeRate-API pentru cursuri internaționale
+- Selector monedă în header cu scroll pentru toate monedele
+- Conversie automată în timp real pentru toate prețurile
+- Persistență selecție monedă în localStorage
+- Panou admin complet pentru gestionare monede:
+  - Adăugare/editare/ștergere monede
+  - Actualizare manuală cursuri
+  - Setare monedă de bază configurabilă
+  - Vizualizare istoric complet cursuri valutare
+- Istoric complet salvat în baza de date pentru tracking și analiză
+- Job programat cu node-cron pentru actualizare automată
+
+💰 **SISTEM DUAL DE PREȚURI (Fixed vs Per Unit)**:
+- Două tipuri de prețuri pentru produse:
+  1. **Preț FIX (`priceType: "fixed"`)**: Preț per produs/ambalaj
+     - Exemplu: "Lapte 2L" = 1 leu/sticlă (NU per litru)
+     - Afișare: "1.00 lei/buc" + "2 litri/produs"
+     - Stoc: număr de ambalaje (ex: 3 sticle = 6 litri total)
+     - Client alege număr de produse, nu cantitate în litri
+     - Aplicabil pentru TOATE unitățile (kg, litri, metri, etc.)
+  
+  2. **Preț per UNITATE (`priceType: "per_unit"`)**: Preț per unitate de măsură
+     - Exemplu: "Lapte" = 5 lei/litru
+     - Afișare: "5.00 lei/litru"
+     - Client alege cantitatea (0.5L, 1L, 2L)
+     - Preț calculat automat (2L × 5.00 = 10.00 lei)
+
+- Implementare completă în toate componentele:
+  - ProductGrid.tsx - Afișare în grid
+  - ShoppingCart.tsx - Calcul subtotal corect
+  - products/[id]/page.tsx - Pagină detalii produs
+  - dashboard/page.tsx - Recomandări
+  - favorites/page.tsx - Lista favorite
+- UI îmbunătățit în admin cu butoane mari pentru selecție tip preț
+- Explicații clare și info box pentru fiecare opțiune
+- Câmp `priceType` adăugat în schema Prisma
+- Migrație aplicată: `20260208203201_add_price_type_field`
 
 📦 **SISTEM AVANSAT DE PRODUSE**:
 - Cantități fixe stabilite de admin (ex: 0.5kg, 1kg, 2kg)
@@ -174,6 +226,7 @@ FUNCȚIONALITĂȚI AVANSATE IMPLEMENTATE
 - Ora limită pentru comenzi (ex: 20:00 ziua precedentă)
 - Afișare clară preț per unitate (RON/kg, RON/litru)
 - Calcul automat valoare totală stoc
+- Afișare automată cantitate per ambalaj pentru preț fix
 
 🔄 **GESTIONARE STOC AUTOMATĂ**:
 - Stoc rezervat la plasarea comenzii
