@@ -164,24 +164,34 @@ export class DataService {
       isPerishable?: boolean;
       expirationDate?: string | null;
       productionDate?: string | null;
+      requiresAdvanceOrder?: boolean;
       advanceOrderDays?: number;
-      orderCutoffTime?: string;
       deliveryTimeHours?: number | null;
       deliveryTimeDays?: number | null;
-      paymentMethods?: string[];
       isActive?: boolean;
       unitType?: string;
       unitName?: string;
+      priceType?: string;
       minQuantity?: number;
       quantityStep?: number;
       allowFractional?: boolean;
       availableQuantities?: number[];
+      showInCarousel?: boolean;
+      carouselOrder?: number;
     },
     userId: string
   ): Promise<DataItem> {
     return prisma.dataItem.create({
       data: {
-        ...data,
+        title: data.title,
+        description: data.description,
+        content: data.content,
+        price: data.price,
+        oldPrice: data.oldPrice,
+        stock: data.stock,
+        image: data.image,
+        categoryId: data.categoryId,
+        status: data.status || 'published',
         userId,
         // Convert date strings to Date objects if provided - use correct field names from schema
         expiryDate: data.expirationDate ? new Date(data.expirationDate) : null,
@@ -197,14 +207,18 @@ export class DataService {
         lastRestockDate: new Date(),
         // Set default values for advanced fields
         isPerishable: data.isPerishable || false,
+        requiresAdvanceOrder: data.requiresAdvanceOrder || false,
         advanceOrderDays: data.advanceOrderDays || 0,
-        deliveryTimeHours: data.deliveryTimeHours || 0,
-        deliveryTimeDays: data.deliveryTimeDays || 0,
+        deliveryTimeHours: data.deliveryTimeHours || null,
+        deliveryTimeDays: data.deliveryTimeDays || null,
         unitType: data.unitType || 'piece',
         unitName: data.unitName || 'bucată',
+        priceType: data.priceType || 'per_unit',
         minQuantity: data.minQuantity || 1,
         quantityStep: data.quantityStep || 1,
         allowFractional: false, // Întotdeauna false pentru cantități fixe
+        showInCarousel: data.showInCarousel || false,
+        carouselOrder: data.carouselOrder || 0,
         // Salvează cantitățile disponibile ca JSON
         availableQuantities: data.availableQuantities ? JSON.stringify(data.availableQuantities) : JSON.stringify([1])
       },
@@ -230,14 +244,14 @@ export class DataService {
       isPerishable?: boolean;
       expirationDate?: string | null;
       productionDate?: string | null;
+      requiresAdvanceOrder?: boolean;
       advanceOrderDays?: number;
-      orderCutoffTime?: string;
       deliveryTimeHours?: number | null;
       deliveryTimeDays?: number | null;
-      paymentMethods?: string[];
       isActive?: boolean;
       unitType?: string;
       unitName?: string;
+      priceType?: string;
       availableQuantities?: number[];
       allowFractional?: boolean;
       minQuantity?: number;
@@ -270,11 +284,13 @@ export class DataService {
     if (data.showInCarousel !== undefined) updateData.showInCarousel = data.showInCarousel;
     if (data.carouselOrder !== undefined) updateData.carouselOrder = data.carouselOrder;
     if (data.isPerishable !== undefined) updateData.isPerishable = data.isPerishable;
+    if (data.requiresAdvanceOrder !== undefined) updateData.requiresAdvanceOrder = data.requiresAdvanceOrder;
     if (data.advanceOrderDays !== undefined) updateData.advanceOrderDays = data.advanceOrderDays;
     if (data.deliveryTimeHours !== undefined) updateData.deliveryTimeHours = data.deliveryTimeHours;
     if (data.deliveryTimeDays !== undefined) updateData.deliveryTimeDays = data.deliveryTimeDays;
     if (data.unitType !== undefined) updateData.unitType = data.unitType;
     if (data.unitName !== undefined) updateData.unitName = data.unitName;
+    if (data.priceType !== undefined) updateData.priceType = data.priceType;
     if (data.allowFractional !== undefined) updateData.allowFractional = data.allowFractional;
     if (data.minQuantity !== undefined) updateData.minQuantity = data.minQuantity;
     if (data.quantityStep !== undefined) updateData.quantityStep = data.quantityStep;
