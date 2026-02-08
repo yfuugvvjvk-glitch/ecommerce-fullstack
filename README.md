@@ -23,16 +23,20 @@ Aplicație modernă de comerț electronic dezvoltată cu tehnologii web de ultim
 ### Pentru Administratori
 
 - 📊 Dashboard cu statistici live
-- � Gestionare produse avansată:
+- 📦 Gestionare produse avansată:
+  - **Două tipuri de prețuri**:
+    - **Preț FIX**: Preț per produs (ex: "Lapte 2L" = 1 leu/sticlă)
+    - **Preț per UNITATE**: Preț per unitate de măsură (ex: "Lapte" = 5 lei/litru)
   - Cantități fixe configurabile
-  - Unități de măsură flexibile
+  - Unități de măsură flexibile (kg, litri, metri, etc.)
   - Produse perisabile
   - Stoc rezervat/disponibil
+  - Afișare automată cantitate per ambalaj
 - 👥 Gestionare utilizatori
 - 📋 Gestionare comenzi cu actualizare automată stoc
-- � Sistem voucher-uri și oferte
+- 🎟️ Sistem voucher-uri și oferte
 - ✏️ Editor LIVE pentru pagini
-- � Locații de livrare cu program
+- 📍 Locații de livrare cu program
 - 💰 Rapoarte financiare
 - 📦 Inventar cu alerte
 - 💱 **Sistem complet de conversie valutară**:
