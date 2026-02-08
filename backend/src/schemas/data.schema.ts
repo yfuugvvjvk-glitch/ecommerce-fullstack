@@ -7,7 +7,7 @@ export const CreateDataSchema = z.object({
   price: z.number().positive('Price must be positive'),
   oldPrice: z.number().positive('Old price must be positive').nullable().optional(),
   stock: z.number().int().min(0, 'Stock cannot be negative'),
-  image: z.string().min(1, 'Image is required'),
+  image: z.string().optional().default('/images/placeholder.jpg'),
   categoryId: z.string().min(1, 'Category is required'),
   status: z.enum(['draft', 'published', 'archived']).default('draft'),
   
