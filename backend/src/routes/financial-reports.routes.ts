@@ -1,9 +1,7 @@
 import { FastifyInstance } from 'fastify';
 import { authMiddleware } from '../middleware/auth.middleware';
 import { adminMiddleware } from '../middleware/admin.middleware';
-import { FinancialReportService } from '../services/financial-report.service';
-
-const financialReportService = new FinancialReportService();
+import { financialReportService } from '../services/financial-report.service';
 
 export async function financialReportsRoutes(fastify: FastifyInstance) {
   // GET /api/admin/financial-reports - Get financial reports
@@ -15,7 +13,7 @@ export async function financialReportsRoutes(fastify: FastifyInstance) {
     async (request, reply) => {
       try {
         const { period } = request.query as { period?: 'week' | 'month' | 'year' };
-        const data = await financialReportService.getFinancialReport(period || 'month');
+        const data = await financialReportService.getFinancialReport({ period: period || 'month' });
         reply.send(data);
       } catch (error: any) {
         reply.code(500).send({ error: error.message });
