@@ -76,7 +76,7 @@ class CarouselService {
           currentItem: {
             id: existingItem.id,
             type: existingItem.type,
-            title
+            title: title || undefined
           }
         });
       } else {
