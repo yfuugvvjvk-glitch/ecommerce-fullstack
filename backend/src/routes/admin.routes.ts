@@ -5,6 +5,7 @@ import { advancedProductService } from '../services/advanced-product.service';
 import { pageService } from '../services/page.service';
 import { deliveryLocationService } from '../services/delivery-location.service';
 import { siteConfigService } from '../services/site-config.service';
+import { financialReportService } from '../services/financial-report.service';
 
 // Middleware pentru verificarea rolului de admin
 const adminMiddleware = async (request: any, reply: any) => {
@@ -32,8 +33,25 @@ export async function adminRoutes(fastify: FastifyInstance) {
   // === GESTIONARE UTILIZATORI ===
   fastify.get('/users', async (request, reply) => {
     try {
-      const users = await adminSettingsService.getAllUsers();
-      reply.send({ users });
+      const { page = 1, limit = 10 } = request.query as any;
+      const pageNum = parseInt(page);
+      const limitNum = parseInt(limit);
+      const skip = (pageNum - 1) * limitNum;
+
+      const [users, total] = await Promise.all([
+        adminSettingsService.getAllUsers(skip, limitNum),
+        adminSettingsService.getUsersCount()
+      ]);
+
+      reply.send({
+        users,
+        pagination: {
+          page: pageNum,
+          limit: limitNum,
+          total,
+          totalPages: Math.ceil(total / limitNum)
+        }
+      });
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Unknown error';
       reply.code(500).send({ error: errorMessage });
@@ -89,9 +107,25 @@ export async function adminRoutes(fastify: FastifyInstance) {
   // === GESTIONARE COMENZI ===
   fastify.get('/orders', async (request, reply) => {
     try {
-      const { status } = request.query as any;
-      const orders = await adminSettingsService.getAllOrders(status);
-      reply.send({ orders });
+      const { status, page = 1, limit = 10 } = request.query as any;
+      const pageNum = parseInt(page);
+      const limitNum = parseInt(limit);
+      const skip = (pageNum - 1) * limitNum;
+
+      const [orders, total] = await Promise.all([
+        adminSettingsService.getAllOrders(status, skip, limitNum),
+        adminSettingsService.getOrdersCount(status)
+      ]);
+
+      reply.send({
+        orders,
+        pagination: {
+          page: pageNum,
+          limit: limitNum,
+          total,
+          totalPages: Math.ceil(total / limitNum)
+        }
+      });
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Unknown error';
       reply.code(500).send({ error: errorMessage });
@@ -149,8 +183,25 @@ export async function adminRoutes(fastify: FastifyInstance) {
   // === GESTIONARE VOUCHERE ===
   fastify.get('/vouchers', async (request, reply) => {
     try {
-      const vouchers = await adminSettingsService.getAllVouchers();
-      reply.send(vouchers);
+      const { page = 1, limit = 10 } = request.query as any;
+      const pageNum = parseInt(page);
+      const limitNum = parseInt(limit);
+      const skip = (pageNum - 1) * limitNum;
+
+      const [vouchers, total] = await Promise.all([
+        adminSettingsService.getAllVouchers(skip, limitNum),
+        adminSettingsService.getVouchersCount()
+      ]);
+
+      reply.send({
+        vouchers,
+        pagination: {
+          page: pageNum,
+          limit: limitNum,
+          total,
+          totalPages: Math.ceil(total / limitNum)
+        }
+      });
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Unknown error';
       reply.code(500).send({ error: errorMessage });
@@ -1144,6 +1195,72 @@ export async function adminRoutes(fastify: FastifyInstance) {
     try {
       const locations = await deliveryLocationService.getLocationsOpenToday();
       reply.send(locations);
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      reply.code(500).send({ error: errorMessage });
+    }
+  });
+
+  // === RAPOARTE FINANCIARE ===
+
+  // Obține raportul financiar complet
+  fastify.get('/reports/financial', async (request, reply) => {
+    try {
+      const filters = request.query as any;
+      const report = await financialReportService.getFinancialReport(filters);
+      reply.send(report);
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      reply.code(500).send({ error: errorMessage });
+    }
+  });
+
+  // Obține statistici pentru produse
+  fastify.get('/reports/products', async (request, reply) => {
+    try {
+      const filters = request.query as any;
+      const statistics = await financialReportService.getProductStatistics(filters);
+      reply.send(statistics);
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      reply.code(500).send({ error: errorMessage });
+    }
+  });
+
+  // Obține statistici pentru clienți
+  fastify.get('/reports/customers', async (request, reply) => {
+    try {
+      const filters = request.query as any;
+      const statistics = await financialReportService.getCustomerStatistics(filters);
+      reply.send(statistics);
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      reply.code(500).send({ error: errorMessage });
+    }
+  });
+
+  // Obține raport de vânzări pe categorii
+  fastify.get('/reports/sales-by-category', async (request, reply) => {
+    try {
+      const filters = request.query as any;
+      const report = await financialReportService.getSalesByCategory(filters);
+      reply.send(report);
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      reply.code(500).send({ error: errorMessage });
+    }
+  });
+
+  // Exportă raportul în CSV
+  fastify.get('/reports/export/csv', async (request, reply) => {
+    try {
+      const filters = request.query as any;
+      const csv = await financialReportService.exportReportToCSV(filters);
+      
+      reply
+        .header('Content-Type', 'text/csv; charset=utf-8')
+        .header('Content-Disposition', `attachment; filename="raport-financiar-${new Date().toISOString().split('T')[0]}.csv"`)
+        .send(csv);
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Unknown error';
       reply.code(500).send({ error: errorMessage });

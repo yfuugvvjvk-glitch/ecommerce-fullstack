@@ -161,6 +161,7 @@ model DataItem {
   productOffers     ProductOffer[]
   navigationHistory NavigationHistory[]
   stockMovements    StockMovement[]
+  carouselItems     CarouselItem[]
 
   @@index([userId])
   @@index([status])
@@ -485,6 +486,7 @@ model StockMovement {
 model DeliverySettings {
   id                    String   @id @default(cuid())
   name                  String   @unique
+  type                  String   @default("courier") // courier, pickup
   isActive              Boolean  @default(true)
   deliveryTimeHours     Int?     // Timp standard de livrare în ore
   deliveryTimeDays      Int?     // Timp standard de livrare în zile
@@ -497,6 +499,7 @@ model DeliverySettings {
   updatedAt             DateTime @updatedAt
 
   @@index([isActive])
+  @@index([type])
 }
 
 // Model pentru metodele de plată disponibile
@@ -638,6 +641,7 @@ model User {
   // Noi relații pentru pagini și configurații
   createdPages      Page[]            @relation("PageCreator")
   configUpdates     SiteConfig[]      @relation("ConfigUpdater")
+  carouselItems     CarouselItem[]    @relation("CarouselCreator")
 
   @@index([email])
 }
@@ -711,6 +715,8 @@ model Media {
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
 
+  carouselItems   CarouselItem[]
+
   @@index([category])
   @@index([uploadedById])
   @@index([createdAt])
@@ -770,3 +776,42 @@ model ExchangeRateHistory {
   @@index([recordedAt])
 }
 
+
+// Model pentru gestionarea carousel-ului
+model CarouselItem {
+  id          String   @id @default(cuid())
+  type        String   // "product", "media", "custom"
+  position    Int      @unique // Poziția în carousel (1, 2, 3, etc.)
+  
+  // Pentru produse
+  productId   String?
+  product     DataItem? @relation(fields: [productId], references: [id], onDelete: Cascade)
+  
+  // Pentru media
+  mediaId     String?
+  media       Media?    @relation(fields: [mediaId], references: [id], onDelete: SetNull)
+  
+  // Pentru custom content
+  title       String?
+  description String?   @db.Text
+  imageUrl    String?
+  linkUrl     String?
+  
+  // Setări afișare
+  isActive    Boolean  @default(true)
+  startDate   DateTime? // Data de început afișare (opțional)
+  endDate     DateTime? // Data de sfârșit afișare (opțional)
+  
+  // Metadata
+  createdById String
+  createdBy   User     @relation("CarouselCreator", fields: [createdById], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([position])
+  @@index([isActive])
+  @@index([type])
+  @@index([productId])
+  @@index([mediaId])
+  @@index([createdById])
+}
