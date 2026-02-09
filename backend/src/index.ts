@@ -22,8 +22,7 @@ import { chatRoutes } from './routes/chat.routes';
 import { publicRoutes } from './routes/public.routes';
 import { initializeRealtimeService } from './services/realtime.service';
 import { scheduleCurrencyUpdate, updateCurrenciesOnStartup } from './jobs/currency-update.job';
-// Comentez noile routes care pot cauza probleme
-// import { inventoryRoutes } from './routes/inventory.routes';
+import { inventoryRoutes } from './routes/inventory.routes';
 
 
 const fastify = Fastify({
@@ -173,6 +172,13 @@ async function start() {
     // Register currency routes
     const { currencyRoutes } = await import('./routes/currency.routes');
     await fastify.register(currencyRoutes, { prefix: '/api' });
+
+    // Register inventory routes
+    await fastify.register(inventoryRoutes, { prefix: '/api' });
+
+    // Register carousel routes
+    const { carouselRoutes } = await import('./routes/carousel.routes');
+    await fastify.register(carouselRoutes, { prefix: '/api/carousel' });
 
     // Add Socket.IO to fastify instance for use in routes BEFORE starting server
     const io = new SocketIOServer(fastify.server, {

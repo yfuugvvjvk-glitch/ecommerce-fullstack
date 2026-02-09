@@ -43,9 +43,11 @@ export class AdminSettingsService {
   }
 
   // Gestionare utilizatori
-  async getAllUsers() {
+  async getAllUsers(skip: number = 0, limit: number = 10) {
     try {
       return await prisma.user.findMany({
+        skip,
+        take: limit,
         select: {
           id: true,
           email: true,
@@ -68,6 +70,15 @@ export class AdminSettingsService {
     } catch (error) {
       console.error('Error fetching users:', error);
       throw new Error('Failed to fetch users');
+    }
+  }
+
+  async getUsersCount() {
+    try {
+      return await prisma.user.count();
+    } catch (error) {
+      console.error('Error counting users:', error);
+      throw new Error('Failed to count users');
     }
   }
 
@@ -188,11 +199,13 @@ export class AdminSettingsService {
   }
 
   // Gestionare comenzi
-  async getAllOrders(status?: string) {
+  async getAllOrders(status?: string, skip: number = 0, limit: number = 10) {
     try {
       const where = status ? { status } : {};
       return await prisma.order.findMany({
         where,
+        skip,
+        take: limit,
         include: {
           user: {
             select: { name: true, email: true }
@@ -210,6 +223,16 @@ export class AdminSettingsService {
     } catch (error) {
       console.error('Error fetching orders:', error);
       throw new Error('Failed to fetch orders');
+    }
+  }
+
+  async getOrdersCount(status?: string) {
+    try {
+      const where = status ? { status } : {};
+      return await prisma.order.count({ where });
+    } catch (error) {
+      console.error('Error counting orders:', error);
+      throw new Error('Failed to count orders');
     }
   }
 
@@ -250,9 +273,11 @@ export class AdminSettingsService {
   }
 
   // Gestionare vouchere
-  async getAllVouchers() {
+  async getAllVouchers(skip: number = 0, limit: number = 10) {
     try {
       return await prisma.voucher.findMany({
+        skip,
+        take: limit,
         include: {
           createdBy: {
             select: { name: true, email: true }
@@ -266,6 +291,15 @@ export class AdminSettingsService {
     } catch (error) {
       console.error('Error fetching vouchers:', error);
       throw new Error('Failed to fetch vouchers');
+    }
+  }
+
+  async getVouchersCount() {
+    try {
+      return await prisma.voucher.count();
+    } catch (error) {
+      console.error('Error counting vouchers:', error);
+      throw new Error('Failed to count vouchers');
     }
   }
 
