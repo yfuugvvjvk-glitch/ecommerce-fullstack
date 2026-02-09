@@ -180,6 +180,10 @@ async function start() {
     const { carouselRoutes } = await import('./routes/carousel.routes');
     await fastify.register(carouselRoutes, { prefix: '/api/carousel' });
 
+    // Register financial reports routes
+    const { financialReportsRoutes } = await import('./routes/financial-reports.routes');
+    await fastify.register(financialReportsRoutes, { prefix: '/api' });
+
     // Add Socket.IO to fastify instance for use in routes BEFORE starting server
     const io = new SocketIOServer(fastify.server, {
       cors: {
