@@ -278,4 +278,50 @@ export async function publicRoutes(fastify: FastifyInstance) {
       reply.code(500).send({ error: errorMessage });
     }
   });
+
+  // Verifică dacă comenzile sunt blocate
+  fastify.get('/order-blocking-status', async (request, reply) => {
+    try {
+      const config = await siteConfigService.getConfig('block_rules');
+      const rules = config && config.value ? JSON.parse(config.value as string) : [];
+      
+      // Filtrează doar regulile active
+      const activeRules = rules.filter((rule: any) => rule.isActive);
+      
+      // Verifică dacă există reguli care blochează toate comenzile
+      const blockingRule = activeRules.find((rule: any) => {
+        if (rule.blockNewOrders) {
+          // Dacă există blockUntil, verifică dacă suntem încă în perioada de blocare
+          if (rule.blockUntil) {
+            const blockUntilDate = new Date(rule.blockUntil);
+            const now = new Date();
+            return now < blockUntilDate;
+          }
+          // Dacă nu există blockUntil, blocare permanentă
+          return true;
+        }
+        return false;
+      });
+      
+      if (blockingRule) {
+        return reply.send({
+          blocked: true,
+          reason: blockingRule.blockReason || 'Comenzile sunt temporar blocate',
+          blockUntil: blockingRule.blockUntil || null,
+          ruleId: blockingRule.id,
+          ruleName: blockingRule.name
+        });
+      }
+      
+      // Nu există blocare activă
+      reply.send({
+        blocked: false,
+        reason: null,
+        blockUntil: null
+      });
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      reply.code(500).send({ error: errorMessage });
+    }
+  });
 }
