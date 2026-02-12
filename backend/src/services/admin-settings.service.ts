@@ -568,10 +568,34 @@ export class AdminSettingsService {
       updateData.deliveryAreas = JSON.stringify(data.deliveryAreas);
     }
 
-    return await prisma.deliverySettings.update({
+    const updated = await prisma.deliverySettings.update({
       where: { id },
       data: updateData
     });
+
+    // Sincronizează locațiile asociate cu această metodă de livrare
+    if (data.isActive !== undefined || data.deliveryCost !== undefined || data.freeDeliveryThreshold !== undefined) {
+      const locationUpdates: any = {};
+      
+      if (data.isActive !== undefined) {
+        locationUpdates.isActive = data.isActive;
+      }
+      if (data.deliveryCost !== undefined) {
+        locationUpdates.deliveryFee = data.deliveryCost;
+      }
+      if (data.freeDeliveryThreshold !== undefined) {
+        locationUpdates.freeDeliveryThreshold = data.freeDeliveryThreshold;
+      }
+
+      if (Object.keys(locationUpdates).length > 0) {
+        await prisma.deliveryLocation.updateMany({
+          where: { deliveryMethodId: id },
+          data: locationUpdates
+        });
+      }
+    }
+
+    return updated;
   }
 
   async getDeliverySettings(activeOnly: boolean = false) {
