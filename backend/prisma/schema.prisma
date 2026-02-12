@@ -72,17 +72,28 @@ model CardTransaction {
 }
 
 model Category {
-  id        String     @id @default(cuid())
-  name      String     @unique
-  slug      String     @unique
-  nameRo    String?
-  nameEn    String?
-  icon      String?
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-  dataItems DataItem[]
+  id          String     @id @default(cuid())
+  name        String     @unique
+  slug        String     @unique
+  nameRo      String?
+  nameEn      String?
+  description String?    @db.Text // Descrierea categoriei
+  icon        String?
+  parentId    String?    // ID-ul categoriei părinte (null pentru categorii principale)
+  position    Int        @default(0) // Ordinea de afișare
+  isActive    Boolean    @default(true) // Dacă categoria este activă
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  
+  // Relații
+  parent       Category?  @relation("CategoryHierarchy", fields: [parentId], references: [id], onDelete: Cascade)
+  subcategories Category[] @relation("CategoryHierarchy")
+  dataItems    DataItem[]
 
   @@index([slug])
+  @@index([parentId])
+  @@index([isActive])
+  @@index([position])
 }
 
 model DataItem {
@@ -90,6 +101,7 @@ model DataItem {
   title           String
   description     String?
   content         String   @db.Text
+  importantInfo   String?  @db.Text // Informații importante cu formatare HTML
   price           Float
   oldPrice        Float?
   stock           Int      @default(0)
@@ -136,6 +148,7 @@ model DataItem {
   totalSold            Int      @default(0) // Total vândut
   restockAlert         Boolean  @default(false) // Alertă pentru restocarea
   lastRestockDate      DateTime? // Ultima dată când s-a restocat
+  stockDisplayMode     String   @default("visible") // visible, hidden, status_only
 
   // Setări de livrare specifice produsului
   customDeliveryRules  Boolean  @default(false)
@@ -613,7 +626,12 @@ model User {
   password  String
   name      String
   phone     String?
-  address   String?
+  address   String?  // Adresa completă (legacy)
+  city      String?  // Oraș
+  county    String?  // Județ
+  street    String?  // Strada
+  streetNumber String? // Număr
+  addressDetails String? // Detalii adresă (bloc, scară, apartament, etc.)
   avatar    String?
   role      String   @default("user")
   locale    String   @default("ro")
@@ -781,7 +799,7 @@ model ExchangeRateHistory {
 model CarouselItem {
   id          String   @id @default(cuid())
   type        String   // "product", "media", "custom"
-  position    Int      @unique // Poziția în carousel (1, 2, 3, etc.)
+  position    Int      // Poziția în carousel (1, 2, 3, etc.) - nu mai e unique
   
   // Pentru produse
   productId   String?
@@ -791,11 +809,18 @@ model CarouselItem {
   mediaId     String?
   media       Media?    @relation(fields: [mediaId], references: [id], onDelete: SetNull)
   
-  // Pentru custom content
+  // Pentru custom content și media
   title       String?
   description String?   @db.Text
   imageUrl    String?
-  linkUrl     String?
+  linkUrl     String?   // Link pentru media items
+  
+  // Stilizare text personalizată (JSON)
+  textStyle   Json?     // { color, fontSize, fontFamily, fontWeight, textAlign, lineHeight, letterSpacing, backgroundColor }
+  
+  // Override text pentru produse în carusel (nu modifică produsul original)
+  customTitle       String?  // Titlu personalizat pentru carusel
+  customDescription String?  @db.Text // Descriere personalizată pentru carusel
   
   // Setări afișare
   isActive    Boolean  @default(true)

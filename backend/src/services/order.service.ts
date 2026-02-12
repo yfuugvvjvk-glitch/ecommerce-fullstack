@@ -3,7 +3,59 @@ import { realtimeService } from './realtime.service';
 
 const prisma = new PrismaClient();
 
+// Mock storage pentru setările de blocare (în producție ar fi în baza de date)
+let orderBlockSettings = {
+  blockNewOrders: false,
+  blockReason: '',
+  blockUntil: undefined as string | undefined,
+  allowedPaymentMethods: ['cash', 'card', 'transfer', 'crypto'],
+  minimumOrderValue: 0,
+  maximumOrderValue: undefined as number | undefined
+};
+
 export class OrderService {
+  // Obține setările de blocare comenzi
+  async getOrderBlockSettings() {
+    try {
+      // Încearcă să obții din baza de date
+      const config = await prisma.siteConfig.findUnique({
+        where: { key: 'order_block_settings' }
+      });
+      
+      if (config && config.value) {
+        return JSON.parse(config.value as string);
+      }
+    } catch (error) {
+      console.error('Error loading order block settings from DB:', error);
+    }
+    
+    // Returnează valorile implicite dacă nu există în DB
+    return orderBlockSettings;
+  }
+
+  // Actualizează setările de blocare comenzi
+  async updateOrderBlockSettings(settings: typeof orderBlockSettings) {
+    try {
+      // Salvează în baza de date
+      await prisma.siteConfig.upsert({
+        where: { key: 'order_block_settings' },
+        update: { value: JSON.stringify(settings) },
+        create: { 
+          key: 'order_block_settings', 
+          value: JSON.stringify(settings),
+          description: 'Order blocking settings'
+        }
+      });
+      
+      // Actualizează și în memorie pentru performanță
+      orderBlockSettings = { ...settings };
+      return orderBlockSettings;
+    } catch (error) {
+      console.error('Error saving order block settings to DB:', error);
+      throw error;
+    }
+  }
+
   async createOrder(userId: string, data: {
     items: Array<{ dataItemId: string; quantity: number; price: number }>;
     total: number;
@@ -17,6 +69,47 @@ export class OrderService {
     orderLocation?: string;
     orderTimezone?: string;
   }) {
+    // === VERIFICARE BLOCARE COMENZI ===
+    // Verifică dacă comenzile sunt blocate
+    const blockSettings = await this.getOrderBlockSettings();
+    
+    if (blockSettings.blockNewOrders) {
+      // Verifică dacă blocarea este temporară și a expirat
+      if (blockSettings.blockUntil) {
+        const blockUntilDate = new Date(blockSettings.blockUntil);
+        if (new Date() < blockUntilDate) {
+          throw new Error(`Comenzile sunt blocate temporar. Motiv: ${blockSettings.blockReason || 'Indisponibil temporar'}. Comenzile vor fi disponibile după ${blockUntilDate.toLocaleString('ro-RO')}`);
+        }
+      } else {
+        // Blocare permanentă
+        throw new Error(`Comenzile sunt blocate momentan. Motiv: ${blockSettings.blockReason || 'Indisponibil temporar'}`);
+      }
+    }
+
+    // Verifică valoarea minimă a comenzii
+    if (data.total < blockSettings.minimumOrderValue) {
+      throw new Error(`Valoarea minimă a comenzii este ${blockSettings.minimumOrderValue} RON. Valoarea ta: ${data.total} RON`);
+    }
+
+    // Verifică valoarea maximă a comenzii (dacă este setată)
+    if (blockSettings.maximumOrderValue && data.total > blockSettings.maximumOrderValue) {
+      throw new Error(`Valoarea maximă a comenzii este ${blockSettings.maximumOrderValue} RON. Valoarea ta: ${data.total} RON`);
+    }
+
+    // Verifică metoda de plată
+    if (data.paymentMethod && !blockSettings.allowedPaymentMethods.includes(data.paymentMethod)) {
+      const allowedMethods = blockSettings.allowedPaymentMethods.map((m: string) => {
+        switch(m) {
+          case 'cash': return 'Numerar';
+          case 'card': return 'Card';
+          case 'transfer': return 'Transfer';
+          case 'crypto': return 'Crypto';
+          default: return m;
+        }
+      }).join(', ');
+      throw new Error(`Metoda de plată "${data.paymentMethod}" nu este disponibilă. Metode permise: ${allowedMethods}`);
+    }
+
     // Use transaction to ensure stock is updated atomically
     return await prisma.$transaction(async (tx) => {
       // Verificare și rezervare stoc pentru fiecare produs

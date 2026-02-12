@@ -305,11 +305,27 @@ export class AdminSettingsService {
 
   async createVoucher(voucherData: any) {
     try {
+      // Convert empty strings to null for optional fields
+      // Convert datetime-local format to ISO-8601 for validUntil
+      let validUntil = voucherData.validUntil;
+      if (validUntil === '') {
+        validUntil = null;
+      } else if (validUntil && !validUntil.includes('Z') && !validUntil.includes('+')) {
+        // If it's a datetime-local format (YYYY-MM-DDTHH:mm), convert to ISO-8601
+        validUntil = new Date(validUntil).toISOString();
+      }
+      
+      const cleanedData = {
+        ...voucherData,
+        validUntil,
+        minPurchase: voucherData.minPurchase === '' || voucherData.minPurchase === 0 ? null : voucherData.minPurchase,
+        maxDiscount: voucherData.maxDiscount === '' || voucherData.maxDiscount === 0 ? null : voucherData.maxDiscount,
+        maxUsage: voucherData.maxUsage === '' || voucherData.maxUsage === 0 ? null : voucherData.maxUsage,
+        createdById: voucherData.createdById || voucherData.userId
+      };
+      
       return await prisma.voucher.create({
-        data: {
-          ...voucherData,
-          createdById: voucherData.createdById || voucherData.userId
-        }
+        data: cleanedData
       });
     } catch (error) {
       console.error('Error creating voucher:', error);
@@ -319,9 +335,27 @@ export class AdminSettingsService {
 
   async updateVoucher(voucherId: string, updateData: any) {
     try {
+      // Convert empty strings to null for optional fields
+      // Convert datetime-local format to ISO-8601 for validUntil
+      let validUntil = updateData.validUntil;
+      if (validUntil === '') {
+        validUntil = null;
+      } else if (validUntil && !validUntil.includes('Z') && !validUntil.includes('+')) {
+        // If it's a datetime-local format (YYYY-MM-DDTHH:mm), convert to ISO-8601
+        validUntil = new Date(validUntil).toISOString();
+      }
+      
+      const cleanedData = {
+        ...updateData,
+        validUntil,
+        minPurchase: updateData.minPurchase === '' || updateData.minPurchase === 0 ? null : updateData.minPurchase,
+        maxDiscount: updateData.maxDiscount === '' || updateData.maxDiscount === 0 ? null : updateData.maxDiscount,
+        maxUsage: updateData.maxUsage === '' || updateData.maxUsage === 0 ? null : updateData.maxUsage
+      };
+      
       return await prisma.voucher.update({
         where: { id: voucherId },
-        data: updateData
+        data: cleanedData
       });
     } catch (error) {
       console.error('Error updating voucher:', error);
@@ -398,9 +432,25 @@ export class AdminSettingsService {
 
   async updateVoucherRequestData(requestId: string, updateData: any) {
     try {
+      // Convert empty strings to null for optional fields
+      // Convert datetime-local format to ISO-8601 for validUntil
+      let validUntil = updateData.validUntil;
+      if (validUntil === '') {
+        validUntil = null;
+      } else if (validUntil && !validUntil.includes('Z') && !validUntil.includes('+')) {
+        // If it's a datetime-local format (YYYY-MM-DDTHH:mm), convert to ISO-8601
+        validUntil = new Date(validUntil).toISOString();
+      }
+      
+      const cleanedData = {
+        ...updateData,
+        validUntil,
+        minPurchase: updateData.minPurchase === '' || updateData.minPurchase === 0 ? null : updateData.minPurchase
+      };
+      
       return await prisma.voucherRequest.update({
         where: { id: requestId },
-        data: updateData,
+        data: cleanedData,
         include: {
           user: {
             select: { name: true, email: true }

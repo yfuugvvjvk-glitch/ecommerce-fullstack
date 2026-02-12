@@ -15,9 +15,21 @@ export async function dataRoutes(fastify: FastifyInstance) {
   fastify.get('/', async (request, reply) => {
     try {
       const query = QueryParamsSchema.parse(request.query);
-      // For public access, we don't require userId
-      const userId = request.user?.userId || null;
-      const userRole = request.user?.role || 'user';
+      
+      // Try to get user info from token if available
+      let userId = null;
+      let userRole = 'user';
+      
+      try {
+        // Attempt to verify JWT token if present
+        await request.jwtVerify();
+        userId = request.user?.userId || null;
+        userRole = request.user?.role || 'user';
+      } catch (error) {
+        // No valid token, continue as guest
+        userId = null;
+        userRole = 'user';
+      }
 
       const result = await dataService.findAll(userId, userRole, query);
 
@@ -35,8 +47,21 @@ export async function dataRoutes(fastify: FastifyInstance) {
   fastify.get('/:id', async (request, reply) => {
     try {
       const { id } = request.params as { id: string };
-      const userId = request.user?.userId || null;
-      const userRole = request.user?.role || 'user';
+      
+      // Try to get user info from token if available
+      let userId = null;
+      let userRole = 'user';
+      
+      try {
+        // Attempt to verify JWT token if present
+        await request.jwtVerify();
+        userId = request.user?.userId || null;
+        userRole = request.user?.role || 'user';
+      } catch (error) {
+        // No valid token, continue as guest
+        userId = null;
+        userRole = 'user';
+      }
 
       const item = await dataService.findById(id, userId, userRole);
 

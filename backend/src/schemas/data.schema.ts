@@ -4,12 +4,14 @@ export const CreateDataSchema = z.object({
   title: z.string().min(1, 'Title is required').max(200, 'Title too long'),
   description: z.string().max(500, 'Description too long').optional(),
   content: z.string().min(1, 'Content is required'),
+  importantInfo: z.string().optional(), // HTML formatat pentru informații importante
   price: z.number().positive('Price must be positive'),
   oldPrice: z.number().positive('Old price must be positive').nullable().optional(),
   stock: z.number().int().min(0, 'Stock cannot be negative'),
   image: z.string().optional().default('/images/placeholder.jpg'),
   categoryId: z.string().min(1, 'Category is required'),
-  status: z.enum(['draft', 'published', 'archived']).default('draft'),
+  status: z.enum(['draft', 'published', 'archived']).optional(),
+  stockDisplayMode: z.enum(['visible', 'status_only', 'hidden']).optional(),
   
   // Carousel settings
   showInCarousel: z.boolean().optional(),
@@ -41,6 +43,7 @@ export const QueryParamsSchema = z.object({
   search: z.string().optional(),
   category: z.string().optional(),
   status: z.string().optional(),
+  showAll: z.string().optional(), // Pentru admin panel
 });
 
 export type CreateDataInput = z.infer<typeof CreateDataSchema>;
