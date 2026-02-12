@@ -31,6 +31,18 @@ Toate modificările importante ale proiectului vor fi documentate în acest fiș
 - **Documente create**:
   - `backend/check-block-rules.js` - script verificare reguli în DB
   - `backend/check-all-configs.js` - script verificare toate configurările
+  - `backend/check-payment-delivery-methods.js` - script verificare metode plată/livrare
+  - `backend/test-block-rules-api.js` - script testare completă API
+
+### Fixed - 2026-02-13
+
+#### Block Rules Checkbox Selection
+
+- **Corectat** problema de selecție automată a checkbox-urilor
+  - Folosește câmpul `type` în loc de `code` pentru metode de plată și livrare
+  - Checkbox-urile se selectează/deselectează individual corect
+  - Regulile se salvează corect în baza de date
+- **Adăugat** date mock pentru metode de plată și livrare în caz de eroare API
 
 ### Added - 2026-02-12
 
