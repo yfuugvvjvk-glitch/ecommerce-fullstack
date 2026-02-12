@@ -497,19 +497,22 @@ model StockMovement {
 
 // Model pentru setările de livrare globale
 model DeliverySettings {
-  id                    String   @id @default(cuid())
-  name                  String   @unique
-  type                  String   @default("courier") // courier, pickup
-  isActive              Boolean  @default(true)
-  deliveryTimeHours     Int?     // Timp standard de livrare în ore
-  deliveryTimeDays      Int?     // Timp standard de livrare în zile
-  availableDeliveryDays String?  // Zilele săptămânii disponibile (JSON)
-  deliveryAreas         String?  // Zonele de livrare disponibile (JSON)
-  minimumOrderValue     Float?   // Valoarea minimă a comenzii
-  deliveryCost          Float    @default(0)
-  freeDeliveryThreshold Float?   // Pragul pentru livrare gratuită
-  createdAt             DateTime @default(now())
-  updatedAt             DateTime @updatedAt
+  id                    String             @id @default(cuid())
+  name                  String             @unique
+  type                  String             @default("courier") // courier, pickup
+  isActive              Boolean            @default(true)
+  deliveryTimeHours     Int?               // Timp standard de livrare în ore
+  deliveryTimeDays      Int?               // Timp standard de livrare în zile
+  availableDeliveryDays String?            // Zilele săptămânii disponibile (JSON)
+  deliveryAreas         String?            // Zonele de livrare disponibile (JSON)
+  minimumOrderValue     Float?             // Valoarea minimă a comenzii
+  deliveryCost          Float              @default(0)
+  freeDeliveryThreshold Float?             // Pragul pentru livrare gratuită
+  createdAt             DateTime           @default(now())
+  updatedAt             DateTime           @updatedAt
+
+  // Relație cu locațiile de livrare
+  locations DeliveryLocation[] @relation("LocationDeliveryMethod")
 
   @@index([isActive])
   @@index([type])
@@ -575,31 +578,37 @@ model PageSection {
 
 // Model pentru locațiile de livrare reale
 model DeliveryLocation {
-  id                    String   @id @default(cuid())
+  id                    String            @id @default(cuid())
   name                  String
-  address               String   @db.Text
+  address               String            @db.Text
   city                  String
   postalCode            String?
-  country               String   @default("România")
-  coordinates           String?  // JSON cu lat/lng
+  country               String            @default("România")
+  coordinates           String?           // JSON cu lat/lng
   phone                 String?
   email                 String?
-  isActive              Boolean  @default(true)
-  deliveryRadius        Float?   // Raza de livrare în km
-  deliveryFee           Float    @default(0)
-  freeDeliveryThreshold Float?   // Pragul pentru livrare gratuită
-  workingHours          String?  // JSON cu programul de lucru
-  specialInstructions   String?  @db.Text
+  isActive              Boolean           @default(true)
+  deliveryRadius        Float?            // Raza de livrare în km
+  deliveryFee           Float             @default(0)
+  freeDeliveryThreshold Float?            // Pragul pentru livrare gratuită
+  workingHours          String?           // JSON cu programul de lucru
+  specialInstructions   String?           @db.Text
   contactPerson         String?
-  isMainLocation        Boolean  @default(false)
-  createdAt             DateTime @default(now())
-  updatedAt             DateTime @updatedAt
+  isMainLocation        Boolean           @default(false)
+  
+  // Relație cu DeliverySettings (metoda de livrare)
+  deliveryMethodId      String?
+  deliveryMethod        DeliverySettings? @relation("LocationDeliveryMethod", fields: [deliveryMethodId], references: [id], onDelete: SetNull)
+  
+  createdAt             DateTime          @default(now())
+  updatedAt             DateTime          @updatedAt
 
   orders Order[] @relation("DeliveryLocationOrders")
 
   @@index([isActive])
   @@index([city])
   @@index([isMainLocation])
+  @@index([deliveryMethodId])
 }
 
 // Model pentru configurația site-ului
