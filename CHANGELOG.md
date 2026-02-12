@@ -4,6 +4,34 @@ Toate modificările importante ale proiectului vor fi documentate în acest fiș
 
 ## [Unreleased]
 
+### Added - 2026-02-13
+
+#### Sistem Reguli Multiple de Blocare Comenzi (Multiple Block Rules System)
+
+- **Reguli multiple de blocare** - înlocuiește setarea globală unică cu sistem de reguli multiple
+  - Creare, editare, ștergere reguli independente
+  - Fiecare regulă poate fi activată/dezactivată individual
+  - Nume descriptiv pentru fiecare regulă (ex: "Blocare Weekend", "Restricții Plată Cash")
+- **Funcționalități per regulă**:
+  - Blocare completă comenzi noi cu motiv și dată limită opțională
+  - Blocare metode de plată specifice (cash, card, transfer, crypto)
+  - Blocare metode de livrare specifice
+  - Restricții valoare comandă (minimă și maximă)
+- **Interfață admin îmbunătățită**:
+  - Listă de reguli cu carduri vizuale colorate
+  - Modal pentru creare/editare cu toate opțiunile
+  - Afișare vizuală a restricțiilor active per regulă
+  - Confirmare înainte de ștergere
+- **Backend API**:
+  - `GET /api/admin/block-rules` - obține toate regulile
+  - `POST /api/admin/block-rules` - creează regulă nouă
+  - `PUT /api/admin/block-rules/:ruleId` - actualizează regulă
+  - `DELETE /api/admin/block-rules/:ruleId` - șterge regulă
+  - Stocare în `SiteConfig` cu key `block_rules` ca JSON array
+- **Documente create**:
+  - `backend/check-block-rules.js` - script verificare reguli în DB
+  - `backend/check-all-configs.js` - script verificare toate configurările
+
 ### Added - 2026-02-12
 
 #### Sistem Produse Cadou (Gift Products System)
