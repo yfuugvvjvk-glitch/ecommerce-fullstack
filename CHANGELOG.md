@@ -1,4 +1,4 @@
-# Changelog
+Si# Changelog
 
 Toate modificările importante ale proiectului vor fi documentate în acest fișier.
 
