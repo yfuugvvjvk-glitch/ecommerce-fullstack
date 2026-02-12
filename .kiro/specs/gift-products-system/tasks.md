@@ -1,0 +1,322 @@
+# Implementation Plan: Sistem Produse Cadou
+
+## Overview
+
+This implementation plan breaks down the gift products system into discrete, incremental tasks. Each task builds on previous work and includes testing to validate functionality early. The system will be implemented in TypeScript using Fastify (backend), Prisma (ORM), and React (frontend).
+
+## Tasks
+
+- [ ] 1. Database schema and migrations
+  - Create Prisma schema for GiftRule, GiftCondition, GiftProduct, GiftRuleUsage models
+  - Extend OrderItem and CartItem models with gift-related fields
+  - Generate and run migrations
+  - Verify all tables and indexes are created correctly
+  - _Requirements: 2.1.1, 2.1.2, 2.1.3, 2.1.4, 2.1.5, 2.1.6, 2.3.1, 2.3.2_
+
+- [ ] 2. Core backend services - GiftRuleService
+  - [ ] 2.1 Implement GiftRuleService with CRUD operations
+    - Create methods: createRule, updateRule, deleteRule, getRule, getAllRules, getActiveRules
+    - Implement toggleRuleStatus method
+    - Add input validation using Zod schemas
+    - _Requirements: 2.1.1, 2.1.2, 2.1.3, 2.1.4, 2.1.5, 2.1.6_
+  - [ ]\* 2.2 Write property test for rule creation persistence
+    - **Property 1: Rule Creation Persistence**
+    - **Validates: Requirements 2.1.1**
+  - [ ]\* 2.3 Write property test for rule update preservation
+    - **Property 2: Rule Update Preservation**
+    - **Validates: Requirements 2.1.2**
+  - [ ]\* 2.4 Write property test for rule deletion completeness
+    - **Property 3: Rule Deletion Completeness**
+    - **Validates: Requirements 2.1.3**
+  - [ ]\* 2.5 Write property test for status toggle idempotence
+    - **Property 4: Rule Status Toggle Idempotence**
+    - **Validates: Requirements 2.1.4**
+  - [ ]\* 2.6 Write unit tests for validation
+    - Test name requirement validation
+    - Test priority bounds validation
+    - Test invalid data rejection
+    - _Requirements: 2.1.5, 2.1.6_
+
+- [ ] 3. Condition evaluation engine
+  - [ ] 3.1 Implement ConditionEvaluator service
+    - Create evaluateRule method with temporal and limit checks
+    - Implement evaluateConditions with recursive AND/OR logic
+    - Implement evaluateSingleCondition dispatcher
+    - Create specific evaluators: evaluateMinAmount, evaluateSpecificProduct, evaluateProductCategory
+    - _Requirements: 2.2.1, 2.2.2, 2.2.3, 2.2.4, 2.2.5, 2.2.6, 2.2.7, 2.2.8_
+  - [ ]\* 3.2 Write property test for minimum amount condition
+    - **Property 7: Minimum Amount Condition Correctness**
+    - **Validates: Requirements 2.2.1**
+  - [ ]\* 3.3 Write property test for specific product condition
+    - **Property 8: Specific Product Condition Correctness**
+    - **Validates: Requirements 2.2.2**
+  - [ ]\* 3.4 Write property test for category condition
+    - **Property 9: Product Category Condition Correctness**
+    - **Validates: Requirements 2.2.4**
+  - [ ]\* 3.5 Write property test for AND logic
+    - **Property 10: AND Logic Correctness**
+    - **Validates: Requirements 2.2.6, 2.2.7**
+  - [ ]\* 3.6 Write property test for OR logic
+    - **Property 11: OR Logic Correctness**
+    - **Validates: Requirements 2.2.3, 2.2.5, 2.2.7**
+  - [ ]\* 3.7 Write property test for minimum quantity enforcement
+    - **Property 12: Minimum Quantity Enforcement**
+    - **Validates: Requirements 2.2.8**
+
+- [ ] 4. Gift validation service
+  - [ ] 4.1 Implement GiftValidator service
+    - Create validateGiftSelection method with all checks
+    - Implement validateGiftStock method
+    - Create validateGiftsInOrder method for pre-order validation
+    - _Requirements: 2.3.2, 2.3.3, 2.4.3, 2.6.1, 2.6.2, 2.6.3_
+  - [ ]\* 4.2 Write property test for gift product validity
+    - **Property 13: Gift Product Validity**
+    - **Validates: Requirements 2.3.2**
+  - [ ]\* 4.3 Write property test for gift stock validation
+    - **Property 14: Gift Stock Validation**
+    - **Validates: Requirements 2.3.3, 2.6.1**
+  - [ ]\* 4.4 Write property test for stock validation on selection
+    - **Property 23: Gift Stock Validation on Selection**
+    - **Validates: Requirements 2.6.3**
+
+- [ ] 5. Checkpoint - Core services complete
+  - Ensure all tests pass, ask the user if questions arise.
+
+- [ ] 6. Admin API endpoints
+  - [ ] 6.1 Implement admin gift rule endpoints
+    - POST /api/admin/gift-rules (create)
+    - GET /api/admin/gift-rules (list with pagination)
+    - GET /api/admin/gift-rules/:id (get single)
+    - PUT /api/admin/gift-rules/:id (update)
+    - DELETE /api/admin/gift-rules/:id (delete)
+    - PATCH /api/admin/gift-rules/:id/toggle (activate/deactivate)
+    - Add authentication and authorization middleware
+    - _Requirements: 2.1.1, 2.1.2, 2.1.3, 2.1.4_
+  - [ ] 6.2 Implement statistics endpoint
+    - GET /api/admin/gift-rules/:id/statistics
+    - Calculate total uses, unique users, value given, usage by product
+    - _Requirements: 2.7.5_
+  - [ ]\* 6.3 Write integration tests for admin endpoints
+    - Test CRUD operations end-to-end
+    - Test authorization (non-admin rejection)
+    - Test validation errors
+    - _Requirements: 2.1.1, 2.1.2, 2.1.3, 2.1.4_
+
+- [ ] 7. Cart service extensions
+  - [ ] 7.1 Extend CartService with gift methods
+    - Implement addGiftProduct method
+    - Implement removeGiftProduct method
+    - Implement reevaluateGifts method
+    - Implement getEligibleGifts method
+    - Hook reevaluateGifts into existing updateQuantity and removeItem methods
+    - _Requirements: 2.4.1, 2.4.3, 2.4.6, 2.4.7, 2.5.1, 2.5.2, 2.5.4_
+  - [ ]\* 7.2 Write property test for one gift per rule constraint
+    - **Property 16: One Gift Per Rule Constraint**
+    - **Validates: Requirements 2.4.3, 2.4.4, 2.8.1**
+  - [ ]\* 7.3 Write property test for multiple rules multiple gifts
+    - **Property 17: Multiple Rules Multiple Gifts**
+    - **Validates: Requirements 2.4.5**
+  - [ ]\* 7.4 Write property test for gift price zero
+    - **Property 18: Gift Price Zero**
+    - **Validates: Requirements 2.4.6, 2.7.1**
+  - [ ]\* 7.5 Write property test for gift flag marking
+    - **Property 19: Gift Flag Marking**
+    - **Validates: Requirements 2.4.7, 2.7.2**
+  - [ ]\* 7.6 Write property test for automatic gift removal
+    - **Property 21: Automatic Gift Removal**
+    - **Validates: Requirements 2.5.2, 2.5.3**
+  - [ ]\* 7.7 Write property test for gift exclusion from conditions
+    - **Property 25: Gift Exclusion from Conditions**
+    - **Validates: Requirements 2.8.3**
+
+- [ ] 8. Client API endpoints
+  - [ ] 8.1 Implement client gift endpoints
+    - GET /api/gift-rules/active (public list)
+    - POST /api/cart/evaluate-gift-rules (evaluate for current user)
+    - POST /api/cart/add-gift-product (add gift to cart)
+    - DELETE /api/cart/gift-product/:cartItemId (remove gift)
+    - POST /api/cart/reevaluate-gifts (manual reevaluation)
+    - Add rate limiting for evaluation endpoint
+    - _Requirements: 2.4.1, 2.4.3, 2.5.1, 2.5.2_
+  - [ ]\* 8.2 Write integration tests for client endpoints
+    - Test evaluation returns correct eligible rules
+    - Test adding gift succeeds when conditions met
+    - Test adding gift fails when conditions not met
+    - Test reevaluation removes invalid gifts
+    - _Requirements: 2.4.1, 2.4.3, 2.5.2_
+
+- [ ] 9. Order service integration
+  - [ ] 9.1 Extend OrderService for gift handling
+    - Add gift validation before order creation
+    - Create OrderItems with isGift flag and giftRuleId
+    - Create GiftRuleUsage records for each gift
+    - Increment currentTotalUses for used rules
+    - Ensure stock decrement includes gifts
+    - _Requirements: 2.6.4, 2.7.1, 2.7.2, 2.7.3_
+  - [ ]\* 9.2 Write property test for gift stock decrement
+    - **Property 24: Gift Stock Decrement on Order**
+    - **Validates: Requirements 2.6.4, 2.7.3**
+  - [ ]\* 9.3 Write integration test for order with gifts
+    - Test complete flow: add products → add gift → place order
+    - Verify gift appears in order with price 0
+    - Verify stock decrements for both regular and gift products
+    - Verify usage tracking is recorded
+    - _Requirements: 2.6.4, 2.7.1, 2.7.2, 2.7.3_
+
+- [ ] 10. Checkpoint - Backend complete
+  - Ensure all tests pass, ask the user if questions arise.
+
+- [ ] 11. Frontend - Admin panel for gift rules
+  - [ ] 11.1 Create gift rules list page
+    - Create /admin/gift-rules route
+    - Display table with all rules (active/inactive)
+    - Add filters and pagination
+    - Add "Create New Rule" button
+    - Add edit, delete, and toggle actions
+    - _Requirements: 2.1.1, 2.1.2, 2.1.3, 2.1.4_
+  - [ ] 11.2 Create gift rule form component
+    - Build form for basic info (name, description, priority, active status)
+    - Add condition builder with type selection and parameters
+    - Add support for AND/OR logic between conditions
+    - Add gift product selector with search
+    - Add limits section (usage limits, validity dates)
+    - Implement form validation
+    - _Requirements: 2.1.1, 2.1.2, 2.1.5, 2.1.6, 2.2.1, 2.2.2, 2.2.3, 2.2.4, 2.2.5, 2.2.6, 2.2.7, 2.2.8, 2.3.1_
+  - [ ] 11.3 Create statistics view component
+    - Display usage statistics for a rule
+    - Show charts for usage over time
+    - Show breakdown by product
+    - _Requirements: 2.7.5_
+
+- [ ] 12. Frontend - Gift system context and hooks
+  - [ ] 12.1 Create GiftContext and provider
+    - Define GiftContext interface with state and actions
+    - Implement GiftProvider component
+    - Create useGiftSystem hook
+    - Implement evaluateGifts action
+    - Implement selectGift action
+    - Implement removeGift action
+    - Add error handling and loading states
+    - _Requirements: 2.4.1, 2.4.3, 2.5.1_
+  - [ ] 12.2 Integrate with CartContext
+    - Hook gift reevaluation into cart updates
+    - Ensure cart modifications trigger gift evaluation
+    - Handle removed gifts notifications
+    - _Requirements: 2.5.1, 2.5.2, 2.5.4_
+
+- [ ] 13. Frontend - Checkout gift selection
+  - [ ] 13.1 Create GiftSection component
+    - Display "Produse Cadou Disponibile" section
+    - Show eligible rules with descriptions
+    - Render gift products for each rule
+    - _Requirements: 2.4.1, 2.4.2_
+  - [ ] 13.2 Create GiftRuleSection component
+    - Display rule name and description
+    - Show condition status (met/not met)
+    - Render available gift products with radio buttons
+    - Add "Adaugă Cadou Selectat" button
+    - Handle selection and addition
+    - _Requirements: 2.4.3, 2.4.4, 2.4.5_
+  - [ ] 13.3 Create GiftProductCard component
+    - Display product image, name, and original price
+    - Show stock availability
+    - Indicate if product is selected
+    - _Requirements: 2.3.5_
+
+- [ ] 14. Frontend - Cart gift display
+  - [ ] 14.1 Create GiftCartItem component
+    - Display gift product with "CADOU" badge
+    - Show price as 0 RON
+    - Display explanation text (which rule provided it)
+    - Add remove button
+    - _Requirements: 2.4.6, 2.4.7_
+  - [ ] 14.2 Update Cart component
+    - Separate regular items from gift items
+    - Display gift items in dedicated section
+    - Show notifications when gifts are removed
+    - Trigger gift evaluation on cart changes
+    - _Requirements: 2.4.6, 2.4.7, 2.5.1, 2.5.2_
+  - [ ] 14.3 Add gift removal notifications
+    - Show toast/alert when gift is auto-removed
+    - Display reason for removal (conditions not met)
+    - _Requirements: 2.5.2, 2.5.3_
+
+- [ ] 15. Caching and performance optimization
+  - [ ] 15.1 Implement rules caching
+    - Add NodeCache for active rules
+    - Implement cache invalidation on rule updates
+    - Add cache warming on server start
+    - _Requirements: Performance (< 200ms evaluation)_
+  - [ ] 15.2 Optimize database queries
+    - Add proper includes to reduce N+1 queries
+    - Implement batch stock checking
+    - Add query result caching where appropriate
+    - _Requirements: Performance (< 300ms cart update)_
+
+- [ ] 16. Error handling and logging
+  - [ ] 16.1 Implement error handling system
+    - Create GiftSystemError class with error codes
+    - Add error mapping to HTTP status codes
+    - Implement user-friendly error messages
+    - Add error handling to all API endpoints
+    - _Requirements: All error scenarios_
+  - [ ] 16.2 Add logging and monitoring
+    - Implement Winston logger for gift system
+    - Log all evaluations and selections
+    - Add metrics collection (Prometheus counters/histograms)
+    - Create health check endpoint
+    - _Requirements: Monitoring and debugging_
+
+- [ ] 17. Testing - Property-based test arbitraries
+  - [ ] 17.1 Create test data generators
+    - Implement arbitraryGiftRuleData generator
+    - Implement arbitraryCondition generator
+    - Implement arbitraryCart generator
+    - Implement arbitraryCartItem generator
+    - Configure fast-check with 100+ iterations
+    - _Requirements: All property tests_
+
+- [ ] 18. Testing - Integration tests
+  - [ ]\* 18.1 Write end-to-end gift flow test
+    - Test complete flow: create rule → add to cart → evaluate → select gift → place order
+    - Verify all data is correctly persisted
+    - Verify stock is decremented
+    - _Requirements: All requirements_
+  - [ ]\* 18.2 Write concurrent usage test
+    - Test multiple users using same gift rule simultaneously
+    - Verify stock management under concurrency
+    - Verify usage limits are enforced
+    - _Requirements: 2.6.3, 2.6.4_
+
+- [ ] 19. Documentation and deployment
+  - [ ] 19.1 Update API documentation
+    - Document all new endpoints with request/response examples
+    - Add authentication requirements
+    - Document error codes and messages
+  - [ ] 19.2 Create admin user guide
+    - Write guide for creating gift rules
+    - Document condition types and examples
+    - Explain priority and conflict resolution
+  - [ ] 19.3 Prepare deployment
+    - Create database backup
+    - Test migration on staging
+    - Prepare rollback script
+    - Update environment variables if needed
+
+- [ ] 20. Final checkpoint - Complete system validation
+  - Run all tests (unit, property, integration)
+  - Verify all requirements are met
+  - Test on staging environment
+  - Perform manual QA testing
+  - Ensure all tests pass, ask the user if questions arise.
+
+## Notes
+
+- Tasks marked with `*` are optional testing tasks and can be skipped for faster MVP
+- Each task references specific requirements for traceability
+- Checkpoints ensure incremental validation throughout implementation
+- Property tests validate universal correctness properties with 100+ iterations
+- Unit tests validate specific examples and edge cases
+- Integration tests validate end-to-end flows and component interactions
+- The implementation follows a bottom-up approach: database → services → API → frontend
+- Testing is integrated throughout to catch issues early

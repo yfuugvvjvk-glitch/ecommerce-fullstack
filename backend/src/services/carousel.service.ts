@@ -4,13 +4,16 @@ const prisma = new PrismaClient();
 
 export interface CarouselItemData {
   type: 'product' | 'media' | 'custom';
-  position: number;
+  position?: number; // Opțional - dacă nu e specificat, se alege automat
   productId?: string;
   mediaId?: string;
   title?: string;
   description?: string;
   imageUrl?: string;
   linkUrl?: string;
+  textStyle?: any; // JSON object with styling
+  customTitle?: string; // Custom title for products in carousel
+  customDescription?: string; // Custom description for products in carousel
   isActive?: boolean;
   startDate?: Date;
   endDate?: Date;
@@ -27,10 +30,8 @@ export interface AvailablePosition {
 }
 
 class CarouselService {
-  // Obține toate pozițiile disponibile (1-10)
+  // Obține toate pozițiile disponibile (infinite)
   async getAvailablePositions(): Promise<AvailablePosition[]> {
-    const maxPositions = 10; // Numărul maxim de poziții în carousel
-    
     const existingItems = await prisma.carouselItem.findMany({
       where: {
         isActive: true
@@ -40,6 +41,7 @@ class CarouselService {
         position: true,
         type: true,
         title: true,
+        customTitle: true,
         product: {
           select: {
             title: true
@@ -59,11 +61,17 @@ class CarouselService {
 
     const positions: AvailablePosition[] = [];
     
-    for (let i = 1; i <= maxPositions; i++) {
+    // Găsește cea mai mare poziție existentă
+    const maxPosition = existingItems.length > 0 
+      ? Math.max(...existingItems.map(item => item.position))
+      : 0;
+    
+    // Creează lista de poziții până la maxPosition + 5 (pentru a avea întotdeauna poziții libere)
+    for (let i = 1; i <= maxPosition + 5; i++) {
       const existingItem = existingItems.find(item => item.position === i);
       
       if (existingItem) {
-        let title = existingItem.title;
+        let title = existingItem.customTitle || existingItem.title;
         if (!title && existingItem.type === 'product' && existingItem.product) {
           title = existingItem.product.title;
         } else if (!title && existingItem.type === 'media' && existingItem.media) {
@@ -88,6 +96,35 @@ class CarouselService {
     }
 
     return positions;
+  }
+
+  // Găsește următoarea poziție disponibilă
+  async getNextAvailablePosition(): Promise<number> {
+    const existingItems = await prisma.carouselItem.findMany({
+      where: {
+        isActive: true
+      },
+      select: {
+        position: true
+      },
+      orderBy: {
+        position: 'asc'
+      }
+    });
+
+    if (existingItems.length === 0) {
+      return 1;
+    }
+
+    // Găsește prima gaură în secvență
+    for (let i = 1; i <= existingItems.length + 1; i++) {
+      if (!existingItems.find(item => item.position === i)) {
+        return i;
+      }
+    }
+
+    // Dacă nu există găuri, returnează următoarea poziție
+    return existingItems.length + 1;
   }
 
   // Obține toate item-urile din carousel
@@ -178,10 +215,16 @@ class CarouselService {
 
   // Creează un nou item în carousel
   async createCarouselItem(data: CarouselItemData, userId: string) {
-    // Verifică dacă poziția este disponibilă
-    const isAvailable = await this.isPositionAvailable(data.position);
-    if (!isAvailable) {
-      throw new Error(`Position ${data.position} is already occupied. Please choose another position.`);
+    // Dacă nu e specificată poziția, găsește automat următoarea disponibilă
+    let position = data.position;
+    if (!position) {
+      position = await this.getNextAvailablePosition();
+    } else {
+      // Verifică dacă poziția specificată este disponibilă
+      const isAvailable = await this.isPositionAvailable(position);
+      if (!isAvailable) {
+        throw new Error(`Position ${position} is already occupied. Please choose another position.`);
+      }
     }
 
     // Validări specifice tipului
@@ -219,13 +262,16 @@ class CarouselService {
     const carouselItem = await prisma.carouselItem.create({
       data: {
         type: data.type,
-        position: data.position,
+        position: position,
         productId: data.productId,
         mediaId: data.mediaId,
         title: data.title,
         description: data.description,
         imageUrl: data.imageUrl,
         linkUrl: data.linkUrl,
+        textStyle: data.textStyle,
+        customTitle: data.customTitle,
+        customDescription: data.customDescription,
         isActive: data.isActive !== undefined ? data.isActive : true,
         startDate: data.startDate,
         endDate: data.endDate,
@@ -269,6 +315,9 @@ class CarouselService {
         ...(data.description !== undefined && { description: data.description }),
         ...(data.imageUrl !== undefined && { imageUrl: data.imageUrl }),
         ...(data.linkUrl !== undefined && { linkUrl: data.linkUrl }),
+        ...(data.textStyle !== undefined && { textStyle: data.textStyle }),
+        ...(data.customTitle !== undefined && { customTitle: data.customTitle }),
+        ...(data.customDescription !== undefined && { customDescription: data.customDescription }),
         ...(data.isActive !== undefined && { isActive: data.isActive }),
         ...(data.startDate !== undefined && { startDate: data.startDate }),
         ...(data.endDate !== undefined && { endDate: data.endDate })
@@ -469,7 +518,7 @@ class CarouselService {
       })),
       availablePositions,
       occupiedPositions,
-      maxPositions: 10
+      nextAvailablePosition: await this.getNextAvailablePosition()
     };
   }
 }

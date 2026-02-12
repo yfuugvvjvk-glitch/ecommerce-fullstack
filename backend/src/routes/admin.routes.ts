@@ -6,6 +6,59 @@ import { pageService } from '../services/page.service';
 import { deliveryLocationService } from '../services/delivery-location.service';
 import { siteConfigService } from '../services/site-config.service';
 import { financialReportService } from '../services/financial-report.service';
+import { OrderService } from '../services/order.service';
+
+const orderService = new OrderService();
+
+// Tipuri pentru programe de livrare
+interface DeliveryTimeSlot {
+  startTime: string;
+  endTime: string;
+  maxOrders: number;
+}
+
+interface SpecialDate {
+  date: string;
+  isBlocked: boolean;
+  reason?: string;
+}
+
+interface DeliverySchedule {
+  id: string;
+  name: string;
+  deliveryDays: number[];
+  deliveryTimeSlots: DeliveryTimeSlot[];
+  isActive: boolean;
+  blockOrdersAfter: string;
+  advanceOrderDays: number;
+  specialDates: SpecialDate[];
+}
+
+// Mock storage pentru programe de livrare (în producție ar fi în baza de date)
+let deliverySchedules: DeliverySchedule[] = [
+  {
+    id: '1',
+    name: 'Program Standard',
+    deliveryDays: [1, 2, 3, 4, 5], // Luni-Vineri
+    deliveryTimeSlots: [
+      { startTime: '09:00', endTime: '12:00', maxOrders: 5 },
+      { startTime: '14:00', endTime: '18:00', maxOrders: 8 }
+    ],
+    isActive: true,
+    blockOrdersAfter: '20:00',
+    advanceOrderDays: 1,
+    specialDates: []
+  }
+];
+
+// Helper function to get user ID from request
+const getUserId = (request: any): string => {
+  const userId = request.user?.id;
+  if (!userId) {
+    throw new Error('User not authenticated');
+  }
+  return userId;
+};
 
 // Middleware pentru verificarea rolului de admin
 const adminMiddleware = async (request: any, reply: any) => {
@@ -211,7 +264,15 @@ export async function adminRoutes(fastify: FastifyInstance) {
   fastify.post('/vouchers', async (request, reply) => {
     try {
       const voucherData = request.body as any;
-      const voucher = await adminSettingsService.createVoucher(voucherData);
+      // Add the user ID from the authenticated request
+      const userId = (request as any).user?.id;
+      if (!userId) {
+        return reply.code(401).send({ error: 'User not authenticated' });
+      }
+      const voucher = await adminSettingsService.createVoucher({
+        ...voucherData,
+        createdById: userId
+      });
       reply.code(201).send(voucher);
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Unknown error';
@@ -322,7 +383,11 @@ export async function adminRoutes(fastify: FastifyInstance) {
   fastify.post('/offers', async (request, reply) => {
     try {
       const offerData = request.body as any;
-      const offer = await adminSettingsService.createOffer(offerData);
+      const userId = getUserId(request);
+      const offer = await adminSettingsService.createOffer({
+        ...offerData,
+        createdById: userId
+      });
       reply.code(201).send(offer);
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Unknown error';
@@ -648,9 +713,10 @@ export async function adminRoutes(fastify: FastifyInstance) {
   fastify.post('/content/pages', async (request, reply) => {
     try {
       const pageData = request.body as any;
+      const userId = getUserId(request);
       const page = await pageService.createPage({
         ...pageData,
-        createdById: request.user!.userId
+        createdById: userId
       });
       
       reply.code(201).send(page);
@@ -857,30 +923,41 @@ export async function adminRoutes(fastify: FastifyInstance) {
   });
 
   // === PROGRAME DE LIVRARE ===
+  
+  // In-memory storage pentru programe de livrare (persistent în timpul rulării serverului)
+  let deliverySchedules = [
+    {
+      id: '1',
+      name: 'Program Standard',
+      deliveryDays: [1, 2, 3, 4, 5], // Luni-Vineri
+      deliveryTimeSlots: [
+        { startTime: '09:00', endTime: '12:00', maxOrders: 5 },
+        { startTime: '14:00', endTime: '18:00', maxOrders: 8 }
+      ],
+      isActive: true,
+      blockOrdersAfter: '20:00',
+      advanceOrderDays: 1,
+      specialDates: []
+    }
+  ];
 
   // Obține toate programele de livrare
   fastify.get('/delivery-schedules', async (request, reply) => {
     try {
-      // Mock data pentru moment - în producție ar fi din baza de date
-      const mockSchedules = [
-        {
-          id: '1',
-          name: 'Program Standard',
-          deliveryDays: [1, 2, 3, 4, 5], // Luni-Vineri
-          deliveryTimeSlots: [
-            { startTime: '09:00', endTime: '12:00', maxOrders: 5 },
-            { startTime: '14:00', endTime: '18:00', maxOrders: 8 }
-          ],
-          isActive: true,
-          blockOrdersAfter: '20:00',
-          advanceOrderDays: 1,
-          specialDates: []
-        }
-      ];
-      reply.send(mockSchedules);
+      // Încearcă să obții din baza de date
+      const config = await siteConfigService.getConfig('delivery_schedules');
+      
+      if (config && config.value) {
+        const schedules = JSON.parse(config.value as string);
+        reply.send(schedules);
+      } else {
+        // Returnează și salvează valorile implicite
+        await siteConfigService.setConfig('delivery_schedules', JSON.stringify(deliverySchedules), { description: 'Delivery schedules configuration' });
+        reply.send(deliverySchedules);
+      }
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-      reply.code(500).send({ error: errorMessage });
+      console.error('Error loading delivery schedules:', error);
+      reply.send(deliverySchedules);
     }
   });
 
@@ -889,14 +966,55 @@ export async function adminRoutes(fastify: FastifyInstance) {
     try {
       const scheduleData = request.body as any;
       
-      // Mock response - în producție ar fi salvat în baza de date
       const newSchedule = {
         id: Date.now().toString(),
         ...scheduleData,
-        specialDates: []
+        specialDates: scheduleData.specialDates || []
       };
 
+      // Obține schedules curente din DB
+      const config = await siteConfigService.getConfig('delivery_schedules');
+      let schedules = config && config.value ? JSON.parse(config.value as string) : deliverySchedules;
+      
+      schedules.push(newSchedule);
+      
+      // Salvează în DB
+      await siteConfigService.setConfig('delivery_schedules', JSON.stringify(schedules), { description: 'Delivery schedules configuration' });
+      
       reply.code(201).send(newSchedule);
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      reply.code(400).send({ error: errorMessage });
+    }
+  });
+
+  // Actualizează program de livrare
+  fastify.put('/delivery-schedules/:scheduleId', async (request, reply) => {
+    try {
+      const { scheduleId } = request.params as any;
+      const scheduleData = request.body as any;
+      
+      // Obține schedules curente din DB
+      const config = await siteConfigService.getConfig('delivery_schedules');
+      let schedules = config && config.value ? JSON.parse(config.value as string) : deliverySchedules;
+      
+      const scheduleIndex = schedules.findIndex((s: any) => s.id === scheduleId);
+      if (scheduleIndex === -1) {
+        reply.code(404).send({ error: 'Schedule not found' });
+        return;
+      }
+
+      const updatedSchedule = {
+        id: scheduleId,
+        ...scheduleData
+      };
+
+      schedules[scheduleIndex] = updatedSchedule;
+      
+      // Salvează în DB
+      await siteConfigService.setConfig('delivery_schedules', JSON.stringify(schedules), { description: 'Delivery schedules configuration' });
+      
+      reply.send(updatedSchedule);
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Unknown error';
       reply.code(400).send({ error: errorMessage });
@@ -907,10 +1025,84 @@ export async function adminRoutes(fastify: FastifyInstance) {
   fastify.post('/delivery-schedules/:scheduleId/special-dates', async (request, reply) => {
     try {
       const { scheduleId } = request.params as any;
-      const specialDateData = request.body as any;
+      const specialDateData = request.body as SpecialDate;
       
-      // Mock response - în producție ar fi salvat în baza de date
-      reply.send({ success: true, message: 'Special date added successfully' });
+      // Obține schedules din DB
+      const config = await siteConfigService.getConfig('delivery_schedules');
+      let schedules = config && config.value ? JSON.parse(config.value as string) : deliverySchedules;
+      
+      const schedule = schedules.find((s: any) => s.id === scheduleId);
+      if (!schedule) {
+        reply.code(404).send({ error: 'Schedule not found' });
+        return;
+      }
+
+      schedule.specialDates.push(specialDateData);
+      
+      // Salvează în DB
+      await siteConfigService.setConfig('delivery_schedules', JSON.stringify(schedules), { description: 'Delivery schedules configuration' });
+      
+      reply.send({ success: true, message: 'Special date added successfully', schedule });
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      reply.code(400).send({ error: errorMessage });
+    }
+  });
+
+  // Șterge dată specială din program
+  fastify.delete('/delivery-schedules/:scheduleId/special-dates/:dateIndex', async (request, reply) => {
+    try {
+      const { scheduleId, dateIndex } = request.params as any;
+      
+      // Obține schedules din DB
+      const config = await siteConfigService.getConfig('delivery_schedules');
+      let schedules = config && config.value ? JSON.parse(config.value as string) : deliverySchedules;
+      
+      const schedule = schedules.find((s: any) => s.id === scheduleId);
+      if (!schedule) {
+        reply.code(404).send({ error: 'Schedule not found' });
+        return;
+      }
+
+      const index = parseInt(dateIndex);
+      if (index < 0 || index >= schedule.specialDates.length) {
+        reply.code(404).send({ error: 'Special date not found' });
+        return;
+      }
+
+      schedule.specialDates.splice(index, 1);
+      
+      // Salvează în DB
+      await siteConfigService.setConfig('delivery_schedules', JSON.stringify(schedules), { description: 'Delivery schedules configuration' });
+      
+      reply.send({ success: true, message: 'Special date deleted successfully', schedule });
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      reply.code(400).send({ error: errorMessage });
+    }
+  });
+
+  // Șterge program de livrare
+  fastify.delete('/delivery-schedules/:scheduleId', async (request, reply) => {
+    try {
+      const { scheduleId } = request.params as any;
+      
+      // Obține schedules din DB
+      const config = await siteConfigService.getConfig('delivery_schedules');
+      let schedules = config && config.value ? JSON.parse(config.value as string) : deliverySchedules;
+      
+      const scheduleIndex = schedules.findIndex((s: any) => s.id === scheduleId);
+      if (scheduleIndex === -1) {
+        reply.code(404).send({ error: 'Schedule not found' });
+        return;
+      }
+
+      schedules.splice(scheduleIndex, 1);
+      
+      // Salvează în DB
+      await siteConfigService.setConfig('delivery_schedules', JSON.stringify(schedules), { description: 'Delivery schedules configuration' });
+      
+      reply.send({ success: true, message: 'Schedule deleted successfully' });
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Unknown error';
       reply.code(400).send({ error: errorMessage });
@@ -920,15 +1112,8 @@ export async function adminRoutes(fastify: FastifyInstance) {
   // Obține setările de blocare comenzi
   fastify.get('/order-block-settings', async (request, reply) => {
     try {
-      // Mock data pentru moment
-      const mockSettings = {
-        blockNewOrders: false,
-        blockReason: '',
-        allowedPaymentMethods: ['cash', 'card'],
-        minimumOrderValue: 50,
-        maximumOrderValue: null
-      };
-      reply.send(mockSettings);
+      const settings = await orderService.getOrderBlockSettings();
+      reply.send(settings);
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Unknown error';
       reply.code(500).send({ error: errorMessage });
@@ -939,10 +1124,17 @@ export async function adminRoutes(fastify: FastifyInstance) {
   fastify.put('/order-block-settings', async (request, reply) => {
     try {
       const blockSettings = request.body as any;
+      console.log('Received block settings:', blockSettings);
       
-      // Mock response - în producție ar fi salvat în baza de date
-      reply.send({ success: true, message: 'Block settings updated successfully' });
+      if (!blockSettings) {
+        return reply.code(400).send({ error: 'Block settings are required' });
+      }
+      
+      const updatedSettings = await orderService.updateOrderBlockSettings(blockSettings);
+      console.log('Updated settings:', updatedSettings);
+      reply.send(updatedSettings);
     } catch (error) {
+      console.error('Error updating block settings:', error);
       const errorMessage = error instanceof Error ? error.message : 'Unknown error';
       reply.code(400).send({ error: errorMessage });
     }
@@ -999,11 +1191,13 @@ export async function adminRoutes(fastify: FastifyInstance) {
   fastify.post('/transactions', async (request, reply) => {
     try {
       const transactionData = request.body as any;
+      const userId = getUserId(request);
       
       // Mock response - în producție ar fi salvat în baza de date
       const newTransaction = {
         id: Date.now().toString(),
         ...transactionData,
+        createdById: userId,
         createdAt: new Date().toISOString()
       };
 

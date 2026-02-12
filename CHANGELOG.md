@@ -1,121 +1,174 @@
 # Changelog
 
-Toate schimbările notabile ale proiectului vor fi documentate în acest fișier.
+Toate modificările importante ale proiectului vor fi documentate în acest fișier.
 
-## [2.0.0] - 2025-02-08
+## [Unreleased]
 
-### ✨ Funcționalități Majore Adăugate
+### Added - 2026-02-12
 
-#### 💱 Sistem Complet de Conversie Valutară
+#### Sistem Produse Cadou (Gift Products System)
 
-- **Suport pentru 15+ monede**: RON, EUR, USD, GBP, CHF, JPY, CAD, AUD, CNY, SEK, NOK, DKK, PLN, CZK, HUF
-- **Actualizare automată zilnică** a cursurilor la ora 10:00 AM
-- **Integrare cu API-uri externe**:
-  - Banca Națională a României (BNR) pentru cursuri oficiale RON
-  - ExchangeRate-API pentru cursuri internaționale
-- **Conversie în timp real** pentru toate prețurile din aplicație
-- **Istoric complet** al cursurilor valutare pentru tracking
-- **Panou admin complet** pentru gestionare monede:
-  - Adăugare/editare/ștergere monede
-  - Actualizare manuală cursuri
-  - Setare monedă de bază
-  - Vizualizare istoric cursuri
+- **Specificație completă** pentru sistem de produse cadou cu condiții complexe
+  - Creare reguli de cadou cu condiții AND/OR
+  - Suport pentru condiții: sumă minimă, produse specifice, categorii, combinații
+  - Validare dinamică în timp real
+  - Gestionare stoc real pentru produse cadou
+  - Multiple cadouri per comandă când sunt îndeplinite multiple reguli
+- **Documente create**:
+  - `.kiro/specs/gift-products-system/requirements.md` - 27 criterii de acceptare
+  - `.kiro/specs/gift-products-system/design.md` - Design tehnic complet cu 31 proprietăți de corectitudine
+  - `.kiro/specs/gift-products-system/tasks.md` - Plan de implementare cu 20 task-uri principale
 
-**Componente Frontend:**
+#### Banner Anunțuri Importante (Announcement Banner)
 
-- `CurrencySelector.tsx` - Dropdown în header cu scroll pentru selecție monedă
-- `CurrencyPrice.tsx` - Component pentru conversie automată prețuri
-- `admin/currencies/page.tsx` - Pagină admin pentru gestionare monede
+- **Specificație completă** pentru banner personalizabil deasupra caruselului
+  - Editare completă din panoul admin (titlu, descriere, stiluri)
+  - Personalizare separată pentru titlu și descriere (culori, fonturi, mărimi, aliniere)
+  - Preview live în timp real
+  - Afișare condiționată (doar când are conținut)
+  - Persistență în baza de date
+- **Documente create**:
+  - `.kiro/specs/announcement-banner/requirements.md` - 27 criterii de acceptare
+  - `.kiro/specs/announcement-banner/design.md` - Design tehnic complet cu 8 proprietăți de corectitudine
+  - `.kiro/specs/announcement-banner/tasks.md` - Plan de implementare cu 12 task-uri principale
 
-**Backend:**
+#### Îmbunătățiri Carousel
 
-- `currency.service.ts` - Serviciu complet CRUD pentru monede
-- `currency.routes.ts` - 12 endpoint-uri (6 publice + 6 admin)
-- `currency-update.job.ts` - Job programat pentru actualizare automată
+- **Poziții infinite** pentru items în carousel (eliminată limita de 10)
+- **Auto-assign poziții** - produsele se adaugă automat pe următoarea poziție disponibilă
+- **Text styling individual** pentru fiecare item din carousel
+  - Stiluri separate pentru titlu, descriere și link
+  - Overlay background configurat separat
+  - Poziționare text la bottom-center cu word-wrap
+- **Filtre pentru management**:
+  - Filtrare după tip (Toate, Produse, Media, Custom)
+  - Filtrare după status (Toate, Active, Inactive)
+  - Căutare în titlu și descriere
 
-**Modele Prisma:**
+#### Adrese Detaliate Utilizatori
 
-- `Currency` - Informații despre monede
-- `ExchangeRate` - Cursuri de schimb curente
-- `ExchangeRateHistory` - Istoric cursuri
+- **Câmpuri noi** în profilul utilizatorului și formular de înregistrare:
+  - Oraș (city)
+  - Județ (county)
+  - Stradă (street)
+  - Număr stradă (streetNumber)
+  - Detalii adresă (addressDetails) - bloc, apartament, casă, etc.
+- **Validare** pe frontend și backend pentru toate câmpurile noi
+- **Migrare bază de date**: `20260212202719_add_detailed_address_fields`
 
-#### 💰 Sistem Dual de Prețuri (Fixed vs Per Unit)
+#### Sistem Blocare Comenzi Extins
 
-- **Două tipuri de prețuri pentru produse**:
-  1. **Preț FIX (`priceType: "fixed"`)**: Preț per produs/ambalaj
-     - Exemplu: "Lapte 2L" = 1 leu/sticlă (NU per litru)
-     - Afișare: "1.00 lei/buc" + "2 litri/produs"
-     - Stoc: număr de ambalaje (3 sticle = 6 litri total)
-     - Client alege număr de produse, nu cantitate în litri
-  2. **Preț per UNITATE (`priceType: "per_unit"`)**: Preț per unitate de măsură
-     - Exemplu: "Lapte" = 5 lei/litru
-     - Afișare: "5.00 lei/litru"
-     - Client alege cantitatea (0.5L, 1L, 2L)
-     - Preț calculat automat (2L × 5.00 = 10.00 lei)
+- **Blocare avansată** cu multiple opțiuni:
+  - Blocare permanentă/temporară
+  - Blocare pe metode de plată specifice
+  - Blocare pe metode de livrare specifice
+  - Validare sumă minimă/maximă comandă
+  - Blocare programată (zi, oră, săptămână)
+- **Persistență** completă în PostgreSQL prin SiteConfig
+- **Validare backend** la crearea comenzii
 
-**Implementare:**
+#### Programare Livrări
 
-- Câmp `priceType` adăugat în schema Prisma
-- Logică de afișare implementată în toate componentele:
-  - `ProductGrid.tsx`
-  - `ShoppingCart.tsx`
-  - `products/[id]/page.tsx`
-  - `dashboard/page.tsx`
-  - `favorites/page.tsx`
-- UI îmbunătățit cu butoane mari pentru selecție tip preț în admin
-- Explicații clare pentru fiecare opțiune
+- **CRUD complet** pentru programe de livrare:
+  - Creare, editare, ștergere programe
+  - Zile de livrare configurabile
+  - Intervale orare cu limite de comenzi
+  - Date speciale (sărbători, excepții)
+- **Persistență** în baza de date (nu mai sunt doar în memorie)
+- **Validare** comenzi pe baza programelor active
 
-### 🔧 Îmbunătățiri Tehnice
+### Fixed - 2026-02-12
 
-- **Migrație Prisma**: `20260208192046_add_currency_system`
-- **Migrație Prisma**: `20260208203201_add_price_type_field`
-- **API URLs corectate**: Adăugat prefix `/api` la toate endpoint-urile currency
-- **Prisma regenerat**: Client actualizat cu noile modele
-- **Backend restartat**: Process 11 cu toate funcționalitățile noi
+#### Backend TypeScript Errors
 
-### 📝 Documentație Actualizată
+- **Corectat** apelurile `siteConfigService.setConfig()` în `admin.routes.ts`
+  - Parametrul `description` trebuie trecut în obiectul `options`, nu ca string direct
+  - Toate cele 6 apeluri au fost corectate
+  - Backend se compilează fără erori TypeScript
 
-- `README.md` - Adăugate secțiuni pentru sistem valutar și prețuri duale
-- `CHANGELOG.md` - Creat cu versiunea 2.0.0
-- `LUCRARE_DIPLOMA.md` - În curs de actualizare
-- `DISCURS_SUSTINERE.md` - În curs de actualizare
-- `POWERPOINT_PREZENTARE.md` - În curs de actualizare
-- `TRIMITERE_PROFESOR.txt` - În curs de actualizare
+#### Carousel Text Display
 
-### 🐛 Bug Fixes
+- **Corectat** afișarea textului în carousel:
+  - Text poziționat la bottom-center (nu mai este centrat)
+  - Word-wrap global pentru tot site-ul (nu mai sunt cuvinte tăiate)
+  - Overlay apare doar dacă există titlu sau descriere (nu pentru spații goale)
 
-- Rezolvată eroarea 400 la adăugare produse (câmpuri inexistente `orderCutoffTime`, `paymentMethods`)
-- Câmpul `image` făcut opțional cu placeholder default
-- Câmpul `priceType` inclus în toate request-urile de produse
-- RON făcut vizibil în dropdown currency (adăugat scroll)
+#### Delivery Schedule Updates
 
-### 🗃️ Commits
+- **Corectat** funcționalitatea de actualizare programe livrare
+  - Adăugat endpoint `PUT /api/admin/delivery-schedules/:scheduleId`
+  - Modificările se salvează și persistă în baza de date
+  - Mesaje diferite pentru CREATE vs UPDATE
 
-- **Backend**: "Complete currency system and fixed pricing implementation - Backend updates with Prisma regeneration" (147 files)
-- **Frontend**: "Apply fixed vs per-unit pricing display logic across all components" (12 files)
-- **Root**: "Complete implementation: Currency system + Fixed vs Per-Unit pricing" (3 files)
+### Changed - 2026-02-12
+
+#### Carousel Management
+
+- **Eliminat** statistica "Poziții Libere" (nu mai este relevantă cu poziții infinite)
+- **Schimbat** heading de la "Items în Carousel (Poziții 1-10)" la "Items în Carousel"
+- **Îmbunătățit** afișarea titlului - folosește `displayTitle` în loc de `originalName`
+
+#### Global Styling
+
+- **Adăugat** reguli CSS globale pentru word-wrap în `frontend/app/globals.css`
+  - Aplicate pe toate elementele text (p, h1-h6, span, div, a, li, td, th, input, textarea)
+  - `word-wrap: break-word`, `overflow-wrap: break-word`, `hyphens: auto`
+
+### Database Migrations
+
+#### 20260212202719_add_detailed_address_fields
+
+- Adăugat câmpuri noi în tabelul `User`:
+  - `city` (String, optional)
+  - `county` (String, optional)
+  - `street` (String, optional)
+  - `streetNumber` (String, optional)
+  - `addressDetails` (Text, optional)
+
+#### 20260212203401_remove_position_unique_constraint
+
+- Eliminat constraint `@unique` de pe câmpul `position` din `CarouselItem`
+- Permite poziții duplicate (multiple items pe aceeași poziție)
+
+#### 20260212201958_add_carousel_text_styling
+
+- Adăugat câmpuri noi în `CarouselItem`:
+  - `textStyle` (Json, optional) - stiluri pentru text overlay
+  - `customTitle` (String, optional) - titlu personalizat pentru carousel
+  - `customDescription` (Text, optional) - descriere personalizată
+  - `linkUrl` (String, optional) - URL pentru link
+
+## [Previous Changes]
+
+### 2026-02-11 și anterior
+
+- Implementare inițială sistem de comerț electronic
+- Autentificare și autorizare utilizatori
+- Gestionare produse și categorii
+- Sistem de coș și comenzi
+- Integrare plăți
+- Panoul de administrare
+- Sistem de chat în timp real
+- Gestionare facturi
+- Sistem de vouchere
+- Gestionare valute
+- Carousel produse pe homepage
+- Sistem de review-uri
+- Gestionare stoc
+- Rapoarte financiare
 
 ---
 
-## [1.0.0] - 2025-01-05
+## Format
 
-### ✨ Release Inițial
+Acest changelog urmează formatul [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+și proiectul respectă [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-- Aplicație e-commerce completă cu React 19 și Next.js 16
-- Backend Fastify cu Prisma și PostgreSQL
-- Autentificare JWT
-- Sistem complet de produse, comenzi, coș
-- Panou admin funcțional
-- Design responsive cu Tailwind CSS 4
-- Testare automată (Jest + Cypress)
-- Deployment cu Docker
+### Tipuri de modificări:
 
----
-
-**Legendă:**
-
-- ✨ Funcționalități noi
-- 🔧 Îmbunătățiri tehnice
-- 🐛 Bug fixes
-- 📝 Documentație
-- 🗃️ Commits
+- `Added` - funcționalități noi
+- `Changed` - modificări la funcționalități existente
+- `Deprecated` - funcționalități care vor fi eliminate
+- `Removed` - funcționalități eliminate
+- `Fixed` - bug fixes
+- `Security` - vulnerabilități de securitate
