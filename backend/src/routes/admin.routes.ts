@@ -1140,6 +1140,108 @@ export async function adminRoutes(fastify: FastifyInstance) {
     }
   });
 
+  // === GESTIONARE REGULI DE BLOCARE (MULTIPLE) ===
+
+  // Obține toate regulile de blocare
+  fastify.get('/block-rules', async (request, reply) => {
+    try {
+      const config = await siteConfigService.getConfig('block_rules');
+      const rules = config && config.value ? JSON.parse(config.value as string) : [];
+      reply.send(rules);
+    } catch (error) {
+      console.error('Error loading block rules:', error);
+      reply.send([]);
+    }
+  });
+
+  // Creează regulă de blocare
+  fastify.post('/block-rules', async (request, reply) => {
+    try {
+      const ruleData = request.body as any;
+      
+      const newRule = {
+        id: Date.now().toString(),
+        ...ruleData,
+        createdAt: new Date().toISOString()
+      };
+
+      // Obține reguli curente
+      const config = await siteConfigService.getConfig('block_rules');
+      let rules = config && config.value ? JSON.parse(config.value as string) : [];
+      
+      rules.push(newRule);
+      
+      // Salvează în DB
+      await siteConfigService.setConfig('block_rules', JSON.stringify(rules), { description: 'Block rules configuration' });
+      
+      reply.code(201).send(newRule);
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      reply.code(400).send({ error: errorMessage });
+    }
+  });
+
+  // Actualizează regulă de blocare
+  fastify.put('/block-rules/:ruleId', async (request, reply) => {
+    try {
+      const { ruleId } = request.params as any;
+      const ruleData = request.body as any;
+      
+      // Obține reguli curente
+      const config = await siteConfigService.getConfig('block_rules');
+      let rules = config && config.value ? JSON.parse(config.value as string) : [];
+      
+      const ruleIndex = rules.findIndex((r: any) => r.id === ruleId);
+      if (ruleIndex === -1) {
+        reply.code(404).send({ error: 'Rule not found' });
+        return;
+      }
+
+      const updatedRule = {
+        ...rules[ruleIndex],
+        ...ruleData,
+        id: ruleId
+      };
+
+      rules[ruleIndex] = updatedRule;
+      
+      // Salvează în DB
+      await siteConfigService.setConfig('block_rules', JSON.stringify(rules), { description: 'Block rules configuration' });
+      
+      reply.send(updatedRule);
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      reply.code(400).send({ error: errorMessage });
+    }
+  });
+
+  // Șterge regulă de blocare
+  fastify.delete('/block-rules/:ruleId', async (request, reply) => {
+    try {
+      const { ruleId } = request.params as any;
+      
+      // Obține reguli curente
+      const config = await siteConfigService.getConfig('block_rules');
+      let rules = config && config.value ? JSON.parse(config.value as string) : [];
+      
+      const ruleIndex = rules.findIndex((r: any) => r.id === ruleId);
+      if (ruleIndex === -1) {
+        reply.code(404).send({ error: 'Rule not found' });
+        return;
+      }
+
+      rules.splice(ruleIndex, 1);
+      
+      // Salvează în DB
+      await siteConfigService.setConfig('block_rules', JSON.stringify(rules), { description: 'Block rules configuration' });
+      
+      reply.send({ success: true, message: 'Rule deleted successfully' });
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      reply.code(400).send({ error: errorMessage });
+    }
+  });
+
   // === GESTIONARE FINANCIARĂ ===
 
   // Obține toate tranzacțiile financiare
