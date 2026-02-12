@@ -6,6 +6,18 @@ Toate modificările importante ale proiectului vor fi documentate în acest fiș
 
 ### Added - 2026-02-13
 
+#### Endpoint Verificare Blocare Comenzi
+
+- **Nou endpoint public** `/api/public/order-blocking-status`
+  - Verifică dacă comenzile sunt blocate de reguli active
+  - Validează timestamp-ul `blockUntil` pentru blocări temporare
+  - Returnează motiv blocare și informații despre regulă
+  - Pregătit pentru integrare în frontend (checkout, cart)
+- **Documentație** logică de blocare comenzi (`check-order-blocking-logic.md`)
+  - Explică reguli de blocare manuale
+  - Explică program de livrare și intervale
+  - Exemple de calcul pentru zile de livrare
+
 #### Sincronizare Locații de Livrare cu Metode de Livrare
 
 - **Relație între DeliveryLocation și DeliverySettings**
