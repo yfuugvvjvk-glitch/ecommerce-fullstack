@@ -6,6 +6,22 @@ Toate modificările importante ale proiectului vor fi documentate în acest fiș
 
 ### Added - 2026-02-13
 
+#### Sincronizare Locații de Livrare cu Metode de Livrare
+
+- **Relație între DeliveryLocation și DeliverySettings**
+  - Fiecare locație de livrare poate fi asociată cu o metodă de livrare
+  - Câmp nou `deliveryMethodId` în `DeliveryLocation`
+  - Relație bidirectională: `DeliverySettings.locations` și `DeliveryLocation.deliveryMethod`
+- **Sincronizare automată**:
+  - Când modifici `isActive` în DeliverySettings, toate locațiile asociate se actualizează automat
+  - Când modifici `deliveryCost`, se actualizează `deliveryFee` în toate locațiile
+  - Când modifici `freeDeliveryThreshold`, se actualizează în toate locațiile
+- **Migrare bază de date**: `20260212222724_add_delivery_method_to_location`
+- **API îmbunătățit**:
+  - GET `/api/admin/delivery-locations` include acum `deliveryMethod`
+  - GET `/api/admin/delivery-locations/:id` include `deliveryMethod`
+  - GET `/api/admin/delivery-locations/active` include `deliveryMethod`
+
 #### Sistem Reguli Multiple de Blocare Comenzi (Multiple Block Rules System)
 
 - **Reguli multiple de blocare** - înlocuiește setarea globală unică cu sistem de reguli multiple
