@@ -52,12 +52,17 @@ Toate modificările importante ale proiectului vor fi documentate în acest fiș
 
 ### Fixed - 2026-02-13
 
-#### Block Rules Checkbox Selection
+#### Block Rules Checkbox Selection and Display
 
 - **Corectat** problema de selecție automată a checkbox-urilor
-  - Folosește câmpul `type` în loc de `code` pentru metode de plată și livrare
+  - Folosește câmpul `id` unic în loc de `type` pentru metode de plată și livrare
+  - Rezolvă problema când "Livrare la domiciliu" și "Livrare Standard" se selectau ambele (aveau același type: 'courier')
   - Checkbox-urile se selectează/deselectează individual corect
   - Regulile se salvează corect în baza de date
+- **Adăugat** funcții helper pentru afișarea numelor metodelor în loc de ID-uri
+  - `getPaymentMethodNames()` - convertește ID-uri în nume pentru metode de plată
+  - `getDeliveryMethodNames()` - convertește ID-uri în nume pentru metode de livrare
+- **Verificat** că câmpul `blockUntil` (perioada de blocare) se afișează corect în lista de reguli
 - **Adăugat** date mock pentru metode de plată și livrare în caz de eroare API
 
 ### Added - 2026-02-12
