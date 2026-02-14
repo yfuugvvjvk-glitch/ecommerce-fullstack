@@ -201,7 +201,7 @@ Editează `backend/.env` și setează un JWT_SECRET de minim 32 caractere.
 
 ### Funcționalități Avansate
 
-- ✅ Real-time chat (Socket.IO)
+- ✅ Real-time chat (Socket.IO) cu butoane configurabile
 - ✅ Sistem de voucher-uri
 - ✅ Multiple metode de plată
 - ✅ Gestionare livrări cu programe configurabile
@@ -209,27 +209,11 @@ Editează `backend/.env` și setează un JWT_SECRET de minim 32 caractere.
 - ✅ Media management
 - ✅ Conversie valutară automată
 - ✅ Blocare comenzi cu condiții complexe (sumă, metode plată/livrare, programare)
+- ✅ Sistem UI Elements pentru gestionare dinamică butoane chat (backend API complet)
 
 ### 🎁 În Dezvoltare (Specificații Complete)
 
-#### Banner Anunțuri Importante
-
-- 📋 Specificație completă în `.kiro/specs/announcement-banner/`
-- Banner personalizabil deasupra caruselului
-- Editare completă din admin (titlu, descriere, stiluri separate)
-- Preview live în timp real
-- Afișare condiționată (doar când are conținut)
-- **Status:** Gata de implementare (12 task-uri, ~12 ore)
-
-#### Sistem Produse Cadou
-
-- 📋 Specificație completă în `.kiro/specs/gift-products-system/`
-- Reguli de cadou cu condiții complexe (AND/OR)
-- Condiții: sumă minimă, produse specifice, categorii, combinații
-- Validare dinamică în timp real
-- Gestionare stoc real pentru cadouri
-- Multiple cadouri per comandă
-- **Status:** Gata de implementare (20 task-uri, ~33 ore)
+_Notă: Specificațiile pentru Banner Anunțuri și Sistem Produse Cadou au fost finalizate și implementate. Funcționalitățile sunt acum disponibile în aplicație._
 
 ---
 
