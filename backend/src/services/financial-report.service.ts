@@ -12,6 +12,7 @@ export interface RevenueBreakdown {
   totalRevenue: number;
   orderRevenue: number;
   cardTransactions: number;
+  manualIncome: number;
   averageOrderValue: number;
   totalOrders: number;
 }
@@ -37,6 +38,7 @@ export interface FinancialSummary {
   topProducts: ProductPerformance[];
   ordersByStatus: { status: string; count: number; total: number }[];
   revenueByDay: { date: string; revenue: number; orders: number }[];
+  transactions?: { id: string; type: string; category: string; amount: number; description: string; date: string }[];
 }
 
 class FinancialReportService {
@@ -44,12 +46,13 @@ class FinancialReportService {
   async getFinancialReport(filters: FinancialReportFilters): Promise<FinancialSummary> {
     const { startDate, endDate } = this.getDateRange(filters);
 
-    const [revenue, expenses, topProducts, ordersByStatus, revenueByDay] = await Promise.all([
+    const [revenue, expenses, topProducts, ordersByStatus, revenueByDay, transactions] = await Promise.all([
       this.getRevenueBreakdown(startDate, endDate),
       this.getExpenseBreakdown(startDate, endDate),
       this.getTopProducts(startDate, endDate, 10),
       this.getOrdersByStatus(startDate, endDate),
-      this.getRevenueByDay(startDate, endDate)
+      this.getRevenueByDay(startDate, endDate),
+      this.getRecentTransactions(startDate, endDate, 20)
     ]);
 
     const profit = revenue.totalRevenue - expenses.totalExpenses;
@@ -62,7 +65,8 @@ class FinancialReportService {
       profitMargin,
       topProducts,
       ordersByStatus,
-      revenueByDay
+      revenueByDay,
+      transactions
     };
   }
 
@@ -105,29 +109,66 @@ class FinancialReportService {
 
     const cardTransactionTotal = cardTransactions.reduce((sum, tx) => sum + tx.amount, 0);
 
+    // Tranzacții manuale de tip INCOME
+    const manualIncomeTransactions = await prisma.transaction.findMany({
+      where: {
+        type: 'INCOME',
+        date: {
+          gte: startDate,
+          lte: endDate
+        }
+      },
+      select: {
+        amount: true
+      }
+    });
+
+    const manualIncomeTotal = manualIncomeTransactions.reduce((sum, tx) => sum + Math.abs(tx.amount), 0);
+
     return {
-      totalRevenue: orderRevenue,
+      totalRevenue: orderRevenue + manualIncomeTotal,
       orderRevenue,
       cardTransactions: cardTransactionTotal,
+      manualIncome: manualIncomeTotal,
       averageOrderValue,
       totalOrders
     };
   }
 
-  // Obține breakdown-ul cheltuielilor (mock data pentru moment)
+  // Obține breakdown-ul cheltuielilor
   async getExpenseBreakdown(startDate: Date, endDate: Date): Promise<ExpenseBreakdown> {
-    // Mock data - în producție ar fi din tabelul de tranzacții financiare
-    const mockExpenses = [
-      { category: 'Utilități', amount: 250.50, count: 1 },
-      { category: 'Marketing', amount: 500.00, count: 3 },
-      { category: 'Materii Prime', amount: 1200.00, count: 5 }
-    ];
+    // Obține cheltuielile din tranzacții
+    const expenses = await prisma.transaction.findMany({
+      where: {
+        type: 'EXPENSE',
+        date: {
+          gte: startDate,
+          lte: endDate
+        }
+      }
+    });
 
-    const totalExpenses = mockExpenses.reduce((sum, exp) => sum + exp.amount, 0);
+    // Grupează după categorie
+    const categoryMap = new Map<string, { amount: number; count: number }>();
+
+    expenses.forEach(expense => {
+      const existing = categoryMap.get(expense.category) || { amount: 0, count: 0 };
+      existing.amount += Math.abs(expense.amount); // Convertim la pozitiv pentru afișare
+      existing.count += 1;
+      categoryMap.set(expense.category, existing);
+    });
+
+    const byCategory = Array.from(categoryMap.entries()).map(([category, data]) => ({
+      category,
+      amount: data.amount,
+      count: data.count
+    }));
+
+    const totalExpenses = byCategory.reduce((sum, cat) => sum + cat.amount, 0);
 
     return {
       totalExpenses,
-      byCategory: mockExpenses
+      byCategory
     };
   }
 
@@ -465,6 +506,31 @@ class FinancialReportService {
     });
 
     return csv;
+  }
+
+  // Obține tranzacțiile recente
+  async getRecentTransactions(startDate: Date, endDate: Date, limit: number = 20) {
+    const transactions = await prisma.transaction.findMany({
+      where: {
+        date: {
+          gte: startDate,
+          lte: endDate
+        }
+      },
+      orderBy: {
+        date: 'desc'
+      },
+      take: limit
+    });
+
+    return transactions.map(tx => ({
+      id: tx.id,
+      type: tx.type,
+      category: tx.category,
+      amount: tx.amount,
+      description: tx.name + (tx.description ? ` - ${tx.description}` : ''),
+      date: tx.date.toISOString()
+    }));
   }
 }
 

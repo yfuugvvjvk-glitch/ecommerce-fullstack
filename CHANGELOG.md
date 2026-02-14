@@ -4,6 +4,67 @@ Toate modificările importante ale proiectului vor fi documentate în acest fiș
 
 ## [Unreleased]
 
+### Added - 2026-02-14
+
+#### Sistem Gestionare Elemente UI (UI Elements Management System)
+
+- **Model UIElement** în baza de date pentru gestionare dinamică a elementelor UI
+  - Tipuri suportate: button, banner, widget, section
+  - Poziții: header, footer, sidebar, floating, custom
+  - Control vizibilitate per pagină (all, dashboard, products, shop, cart, etc.)
+  - Ordine de afișare configurabilă
+  - Stilizare personalizată (culoare, mărime, CSS custom)
+- **Backend API complet**:
+  - `GET /api/admin/ui-elements` - listă toate elementele
+  - `POST /api/admin/ui-elements` - creare element nou
+  - `PUT /api/admin/ui-elements/:id` - actualizare element
+  - `DELETE /api/admin/ui-elements/:id` - ștergere element
+  - `PATCH /api/admin/ui-elements/:id/toggle-visibility` - toggle vizibilitate
+  - `PATCH /api/admin/ui-elements/:id/reorder` - reordonare
+  - `GET /api/public/ui-elements` - endpoint public pentru frontend
+- **Integrare butoane chat**:
+  - Chat AI (albastru) - controlat prin UI Elements
+  - Chat Utilizatori (verde) - controlat prin UI Elements
+  - Verificare vizibilitate în timp real
+  - Filtrare pe pagini specifice
+  - Actualizare instantanee prin Custom Events și localStorage
+- **Scripts utilitare**:
+  - `backend/seed-ui-elements.js` - seed inițial pentru elemente UI
+  - `backend/seed-chat-normal-ui-element.js` - seed pentru Chat Utilizatori
+  - `backend/reset-ui-elements.js` - resetare completă elemente UI
+  - `backend/hide-chat-ai.js` - ascundere Chat AI
+  - `backend/fix-chat-buttons.js` - fix statusuri butoane chat
+  - `backend/add-admin-page.js` - adăugare pagină admin la Chat Utilizatori
+
+### Fixed - 2026-02-14
+
+#### React Hooks Errors în Componente Chat
+
+- **Corectat** eroarea "Rendered more hooks than during the previous render"
+  - Mutat toate `useState` hooks la începutul componentelor
+  - Mutat toate `useEffect` hooks ÎNAINTE de orice return condiționat
+  - Respectă React's Rules of Hooks în `AIChatbot.tsx` și `ChatSystem.tsx`
+- **Corectat** eroarea CORS pentru header `Cache-Control`
+  - Eliminat header-ul `Cache-Control: no-cache` care cauza erori CORS
+  - Folosit timestamp în URL pentru a evita cache-ul: `?_t=${timestamp}`
+  - Fetch-urile funcționează fără erori CORS
+
+#### Erori 404 pentru Pagini Inexistente
+
+- **Eliminat** apelurile către `/api/public/pages/about` și `/api/public/pages/contact`
+  - Aceste endpoint-uri nu există în backend
+  - Paginile folosesc acum doar conținut implicit (hardcodat)
+  - Nu mai apar erori 404 în consolă
+
+### Changed - 2026-02-14
+
+#### Panoul Admin - Eliminare Tab UI Elements
+
+- **Eliminat** tab-ul "🎨 Elemente UI" din panoul admin
+  - Funcționalitatea nu era stabilă
+  - Butoanele de chat funcționează normal fără gestionare din admin
+  - Statusurile se gestionează direct din baza de date prin scripts
+
 ### Added - 2026-02-13
 
 #### Endpoint Verificare Blocare Comenzi

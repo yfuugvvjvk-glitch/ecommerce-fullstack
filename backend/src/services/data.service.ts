@@ -411,14 +411,19 @@ export class DataService {
     });
   }
 
-  async delete(id: string, userId: string): Promise<void> {
-    // Check ownership - verify the item belongs to the user
-    const existing = await prisma.dataItem.findFirst({
-      where: { id, userId },
+  async delete(id: string, userId: string, userRole?: string): Promise<void> {
+    // Check if item exists
+    const existing = await prisma.dataItem.findUnique({
+      where: { id },
     });
     
     if (!existing) {
       throw new NotFoundError('DataItem');
+    }
+
+    // Check ownership - admins can delete any item, regular users can only delete their own
+    if (userRole !== 'admin' && existing.userId !== userId) {
+      throw new Error('Unauthorized: You can only delete your own items');
     }
 
     await prisma.dataItem.delete({

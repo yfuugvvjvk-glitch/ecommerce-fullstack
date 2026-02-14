@@ -16,10 +16,28 @@ export async function categoryRoutes(fastify: FastifyInstance) {
       if (includeSubcategories === 'true') {
         const categories = await prisma.category.findMany({
           where: { parentId: null, ...activeFilter }, // Doar categoriile principale
-          include: {
+          select: {
+            id: true,
+            name: true,
+            slug: true,
+            icon: true,
+            description: true,
+            position: true,
+            isActive: true,
+            parentId: true,
+            createdAt: true,
+            updatedAt: true,
             subcategories: {
               where: activeFilter,
-              include: {
+              select: {
+                id: true,
+                name: true,
+                slug: true,
+                icon: true,
+                description: true,
+                position: true,
+                isActive: true,
+                parentId: true,
                 _count: {
                   select: { 
                     dataItems: {

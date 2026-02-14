@@ -158,14 +158,17 @@ export async function dataRoutes(fastify: FastifyInstance) {
     try {
       const { id } = request.params as { id: string };
       const userId = request.user!.userId;
+      const userRole = request.user!.role;
 
-      await dataService.delete(id, userId);
+      await dataService.delete(id, userId, userRole);
 
       reply.send({ message: 'Data item deleted successfully' });
     } catch (error) {
       if (error instanceof Error) {
         if (error.name === 'NotFoundError') {
           reply.code(404).send({ error: error.message });
+        } else if (error.message.includes('Unauthorized')) {
+          reply.code(403).send({ error: error.message });
         } else {
           reply.code(400).send({ error: error.message });
         }

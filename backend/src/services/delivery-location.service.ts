@@ -59,7 +59,10 @@ export class DeliveryLocationService {
   async createLocation(data: {
     name: string;
     address: string;
+    street?: string; // ADĂUGAT
+    streetNumber?: string; // ADĂUGAT
     city: string;
+    county?: string; // ADĂUGAT
     postalCode?: string;
     country?: string;
     coordinates?: { lat: number; lng: number };
@@ -99,7 +102,10 @@ export class DeliveryLocationService {
   async updateLocation(id: string, data: {
     name?: string;
     address?: string;
+    street?: string; // ADĂUGAT
+    streetNumber?: string; // ADĂUGAT
     city?: string;
+    county?: string; // ADĂUGAT
     postalCode?: string;
     country?: string;
     coordinates?: { lat: number; lng: number };

@@ -28,7 +28,8 @@ export async function inventoryRoutes(fastify: FastifyInstance) {
           reservedStock: true,
           trackInventory: true,
           isInStock: true,
-          unitName: true
+          unitName: true,
+          stockDisplayMode: true
         }
       });
 
@@ -51,7 +52,8 @@ export async function inventoryRoutes(fastify: FastifyInstance) {
         availableStock,
         requestedQuantity: requestedQty,
         unitName: product.unitName || 'buc',
-        trackInventory: product.trackInventory
+        trackInventory: product.trackInventory,
+        stockDisplayMode: product.stockDisplayMode || 'visible'
       });
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Unknown error';

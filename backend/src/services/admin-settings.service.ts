@@ -93,6 +93,7 @@ export class AdminSettingsService {
           phone: true,
           address: true,
           role: true,
+          password: true, // Include password hash for admin password recovery assistance
           createdAt: true,
           updatedAt: true,
           orders: {
@@ -195,6 +196,49 @@ export class AdminSettingsService {
     } catch (error) {
       console.error('Error deleting user:', error);
       throw new Error(error instanceof Error ? error.message : 'Failed to delete user');
+    }
+  }
+
+  // Generate temporary password for user (for admin password recovery assistance)
+  async generateTemporaryPassword(userId: string) {
+    try {
+      const user = await prisma.user.findUnique({
+        where: { id: userId },
+        select: { id: true, email: true, name: true }
+      });
+
+      if (!user) {
+        throw new Error('User not found');
+      }
+
+      // Generate a random temporary password (8 characters: letters + numbers)
+      const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789';
+      let tempPassword = '';
+      for (let i = 0; i < 8; i++) {
+        tempPassword += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+
+      // Hash the temporary password
+      const bcrypt = require('bcrypt');
+      const hashedPassword = await bcrypt.hash(tempPassword, 10);
+
+      // Update user's password
+      await prisma.user.update({
+        where: { id: userId },
+        data: { password: hashedPassword }
+      });
+
+      // Return the plain text temporary password (to be shown to admin)
+      return {
+        userId: user.id,
+        email: user.email,
+        name: user.name,
+        temporaryPassword: tempPassword,
+        message: 'Parolă temporară generată cu succes. Utilizatorul poate folosi această parolă pentru autentificare.'
+      };
+    } catch (error) {
+      console.error('Error generating temporary password:', error);
+      throw new Error('Failed to generate temporary password');
     }
   }
 
@@ -498,9 +542,24 @@ export class AdminSettingsService {
 
   async createOffer(offerData: any) {
     try {
-      return await prisma.offer.create({
-        data: offerData
+      const { productIds, ...offerFields } = offerData;
+      
+      // Create offer
+      const offer = await prisma.offer.create({
+        data: offerFields
       });
+
+      // If productIds provided, create ProductOffer relations
+      if (productIds && Array.isArray(productIds) && productIds.length > 0) {
+        await prisma.productOffer.createMany({
+          data: productIds.map((productId: string) => ({
+            offerId: offer.id,
+            dataItemId: productId
+          }))
+        });
+      }
+
+      return offer;
     } catch (error) {
       console.error('Error creating offer:', error);
       throw new Error('Failed to create offer');
@@ -509,10 +568,33 @@ export class AdminSettingsService {
 
   async updateOffer(offerId: string, updateData: any) {
     try {
-      return await prisma.offer.update({
+      const { productIds, ...offerFields } = updateData;
+      
+      // Update offer
+      const offer = await prisma.offer.update({
         where: { id: offerId },
-        data: updateData
+        data: offerFields
       });
+
+      // If productIds provided, update ProductOffer relations
+      if (productIds !== undefined) {
+        // Delete existing relations
+        await prisma.productOffer.deleteMany({
+          where: { offerId }
+        });
+
+        // Create new relations if any
+        if (Array.isArray(productIds) && productIds.length > 0) {
+          await prisma.productOffer.createMany({
+            data: productIds.map((productId: string) => ({
+              offerId: offer.id,
+              dataItemId: productId
+            }))
+          });
+        }
+      }
+
+      return offer;
     } catch (error) {
       console.error('Error updating offer:', error);
       throw new Error('Failed to update offer');
@@ -898,21 +980,43 @@ export class AdminSettingsService {
 
       // Actualizează stocul pentru fiecare produs din comandă
       for (const item of order.orderItems) {
-        await prisma.dataItem.update({
+        // Verificăm stocul rezervat înainte de decrement
+        const currentProduct = await prisma.dataItem.findUnique({
           where: { id: item.dataItemId },
-          data: {
-            // Scade din stocul total
-            stock: { decrement: item.quantity },
-            // Scade din stocul rezervat
-            reservedStock: { decrement: item.quantity },
-            // Adaugă la totalul vândut
-            totalSold: { increment: item.quantity },
-            // Actualizează disponibilitatea
-            isInStock: {
-              set: await this.checkIfInStock(item.dataItemId, item.quantity)
-            }
-          }
+          select: { reservedStock: true, stock: true, title: true }
         });
+        
+        if (currentProduct && currentProduct.reservedStock < item.quantity) {
+          console.warn(`⚠️  Warning: Reserved stock (${currentProduct.reservedStock}) is less than quantity (${item.quantity}) for ${currentProduct.title}`);
+          // Corectăm: setăm reservedStock la 0
+          await prisma.dataItem.update({
+            where: { id: item.dataItemId },
+            data: {
+              stock: { decrement: item.quantity },
+              reservedStock: 0,
+              totalSold: { increment: item.quantity },
+              isInStock: {
+                set: await this.checkIfInStock(item.dataItemId, item.quantity)
+              }
+            }
+          });
+        } else {
+          await prisma.dataItem.update({
+            where: { id: item.dataItemId },
+            data: {
+              // Scade din stocul total
+              stock: { decrement: item.quantity },
+              // Scade din stocul rezervat
+              reservedStock: { decrement: item.quantity },
+              // Adaugă la totalul vândut
+              totalSold: { increment: item.quantity },
+              // Actualizează disponibilitatea
+              isInStock: {
+                set: await this.checkIfInStock(item.dataItemId, item.quantity)
+              }
+            }
+          });
+        }
 
         // Înregistrează mișcarea de stoc
         await prisma.stockMovement.create({
@@ -953,17 +1057,36 @@ export class AdminSettingsService {
 
       // Eliberează stocul rezervat pentru fiecare produs
       for (const item of order.orderItems) {
-        await prisma.dataItem.update({
+        // Verificăm stocul rezervat înainte de decrement
+        const currentProduct = await prisma.dataItem.findUnique({
           where: { id: item.dataItemId },
-          data: {
-            // Scade din stocul rezervat
-            reservedStock: { decrement: item.quantity },
-            // Crește stocul disponibil
-            availableStock: { increment: item.quantity },
-            // Actualizează disponibilitatea
-            isInStock: true
-          }
+          select: { reservedStock: true, availableStock: true, title: true }
         });
+        
+        if (currentProduct && currentProduct.reservedStock < item.quantity) {
+          console.warn(`⚠️  Warning: Reserved stock (${currentProduct.reservedStock}) is less than quantity (${item.quantity}) for ${currentProduct.title}`);
+          // Corectăm: setăm reservedStock la 0 și ajustăm availableStock
+          await prisma.dataItem.update({
+            where: { id: item.dataItemId },
+            data: {
+              reservedStock: 0,
+              availableStock: { increment: currentProduct.reservedStock },
+              isInStock: true
+            }
+          });
+        } else {
+          await prisma.dataItem.update({
+            where: { id: item.dataItemId },
+            data: {
+              // Scade din stocul rezervat
+              reservedStock: { decrement: item.quantity },
+              // Crește stocul disponibil
+              availableStock: { increment: item.quantity },
+              // Actualizează disponibilitatea
+              isInStock: true
+            }
+          });
+        }
 
         // Înregistrează mișcarea de stoc
         await prisma.stockMovement.create({

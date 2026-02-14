@@ -1,5 +1,6 @@
 import { FastifyInstance } from 'fastify';
 import { authMiddleware } from '../middleware/auth.middleware';
+import { adminMiddleware } from '../middleware/admin.middleware';
 import { adminSettingsService } from '../services/admin-settings.service';
 import { advancedProductService } from '../services/advanced-product.service';
 import { pageService } from '../services/page.service';
@@ -7,6 +8,7 @@ import { deliveryLocationService } from '../services/delivery-location.service';
 import { siteConfigService } from '../services/site-config.service';
 import { financialReportService } from '../services/financial-report.service';
 import { OrderService } from '../services/order.service';
+import { uiElementService } from '../services/ui-element.service';
 
 const orderService = new OrderService();
 
@@ -53,18 +55,11 @@ let deliverySchedules: DeliverySchedule[] = [
 
 // Helper function to get user ID from request
 const getUserId = (request: any): string => {
-  const userId = request.user?.id;
+  const userId = request.user?.userId || request.user?.id;
   if (!userId) {
     throw new Error('User not authenticated');
   }
   return userId;
-};
-
-// Middleware pentru verificarea rolului de admin
-const adminMiddleware = async (request: any, reply: any) => {
-  if (request.user?.role !== 'admin') {
-    return reply.code(403).send({ error: 'Access denied. Admin role required.' });
-  }
 };
 
 export async function adminRoutes(fastify: FastifyInstance) {
@@ -151,6 +146,18 @@ export async function adminRoutes(fastify: FastifyInstance) {
       const { userId } = request.params as any;
       await adminSettingsService.deleteUser(userId);
       reply.send({ success: true, message: 'User deleted successfully' });
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      reply.code(400).send({ error: errorMessage });
+    }
+  });
+
+  // Generate temporary password for user
+  fastify.post('/users/:userId/generate-temp-password', async (request, reply) => {
+    try {
+      const { userId } = request.params as any;
+      const result = await adminSettingsService.generateTemporaryPassword(userId);
+      reply.send(result);
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Unknown error';
       reply.code(400).send({ error: errorMessage });
@@ -265,7 +272,7 @@ export async function adminRoutes(fastify: FastifyInstance) {
     try {
       const voucherData = request.body as any;
       // Add the user ID from the authenticated request
-      const userId = (request as any).user?.id;
+      const userId = (request as any).user?.userId;
       if (!userId) {
         return reply.code(401).send({ error: 'User not authenticated' });
       }
@@ -922,6 +929,166 @@ export async function adminRoutes(fastify: FastifyInstance) {
     }
   });
 
+  // === ANNOUNCEMENT BANNER ===
+
+  // Obține configurația banner-ului de anunțuri
+  fastify.get('/announcement-banner', async (request, reply) => {
+    try {
+      const config = await siteConfigService.getConfig('announcement_banner');
+      
+      // Dacă nu există configurație, returnează valorile implicite
+      if (!config) {
+        const defaultConfig = {
+          isActive: false,
+          title: '',
+          description: '',
+          titleStyle: {
+            color: '#000000',
+            backgroundColor: '#FFFFFF',
+            fontSize: 24,
+            fontFamily: 'Arial',
+            fontWeight: 'bold',
+            textAlign: 'center'
+          },
+          descriptionStyle: {
+            color: '#333333',
+            backgroundColor: '#F9FAFB',
+            fontSize: 16,
+            fontFamily: 'Arial',
+            fontWeight: 'normal',
+            textAlign: 'left'
+          }
+        };
+        
+        reply.send({ success: true, data: defaultConfig });
+        return;
+      }
+      
+      reply.send({ success: true, data: config.value });
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      reply.code(500).send({ success: false, error: { code: 'SERVER_ERROR', message: errorMessage } });
+    }
+  });
+
+  // Actualizează configurația banner-ului de anunțuri
+  fastify.put('/announcement-banner', async (request, reply) => {
+    try {
+      const config = request.body as any;
+      
+      // Validare server-side
+      const errors: string[] = [];
+      
+      // Validare titlu
+      if (typeof config.title !== 'string') {
+        errors.push('Title must be a string');
+      } else if (config.title.length > 200) {
+        errors.push('Title cannot exceed 200 characters');
+      }
+      
+      // Validare descriere
+      if (typeof config.description !== 'string') {
+        errors.push('Description must be a string');
+      } else if (config.description.length > 1000) {
+        errors.push('Description cannot exceed 1000 characters');
+      }
+      
+      // Validare culori (format hex)
+      const hexColorRegex = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{8})$/;
+      
+      if (!config.titleStyle?.color || !hexColorRegex.test(config.titleStyle.color)) {
+        errors.push('Invalid title color format (must be #RRGGBB or #RRGGBBAA)');
+      }
+      if (!config.titleStyle?.backgroundColor || !hexColorRegex.test(config.titleStyle.backgroundColor)) {
+        errors.push('Invalid title background color format (must be #RRGGBB or #RRGGBBAA)');
+      }
+      if (!config.descriptionStyle?.color || !hexColorRegex.test(config.descriptionStyle.color)) {
+        errors.push('Invalid description color format (must be #RRGGBB or #RRGGBBAA)');
+      }
+      if (!config.descriptionStyle?.backgroundColor || !hexColorRegex.test(config.descriptionStyle.backgroundColor)) {
+        errors.push('Invalid description background color format (must be #RRGGBB or #RRGGBBAA)');
+      }
+      
+      // Validare mărime font titlu (12-48px)
+      if (typeof config.titleStyle?.fontSize !== 'number' || 
+          config.titleStyle.fontSize < 12 || 
+          config.titleStyle.fontSize > 48) {
+        errors.push('Title font size must be between 12 and 48 pixels');
+      }
+      
+      // Validare mărime font descriere (12-32px)
+      if (typeof config.descriptionStyle?.fontSize !== 'number' || 
+          config.descriptionStyle.fontSize < 12 || 
+          config.descriptionStyle.fontSize > 32) {
+        errors.push('Description font size must be between 12 and 32 pixels');
+      }
+      
+      // Validare font family
+      const validFontFamilies = ['Arial', 'Times New Roman', 'Courier', 'Georgia', 'Verdana', 'Helvetica', 'Comic Sans MS', 'Impact', 'Trebuchet MS'];
+      if (!validFontFamilies.includes(config.titleStyle?.fontFamily)) {
+        errors.push('Invalid title font family');
+      }
+      if (!validFontFamilies.includes(config.descriptionStyle?.fontFamily)) {
+        errors.push('Invalid description font family');
+      }
+      
+      // Validare font weight
+      const validFontWeights = ['normal', 'bold', 'light'];
+      if (!validFontWeights.includes(config.titleStyle?.fontWeight)) {
+        errors.push('Invalid title font weight (must be normal, bold, or light)');
+      }
+      if (!validFontWeights.includes(config.descriptionStyle?.fontWeight)) {
+        errors.push('Invalid description font weight (must be normal, bold, or light)');
+      }
+      
+      // Validare text align
+      const validTextAligns = ['left', 'center', 'right'];
+      if (!validTextAligns.includes(config.titleStyle?.textAlign)) {
+        errors.push('Invalid title text alignment (must be left, center, or right)');
+      }
+      if (!validTextAligns.includes(config.descriptionStyle?.textAlign)) {
+        errors.push('Invalid description text alignment (must be left, center, or right)');
+      }
+      
+      // Validare isActive
+      if (typeof config.isActive !== 'boolean') {
+        errors.push('isActive must be a boolean');
+      }
+      
+      // Dacă există erori, returnează 400
+      if (errors.length > 0) {
+        return reply.code(400).send({ 
+          success: false, 
+          error: { 
+            code: 'VALIDATION_ERROR', 
+            message: 'Validation failed', 
+            details: errors 
+          } 
+        });
+      }
+      
+      // Salvează configurația
+      const userId = getUserId(request);
+      const updatedConfig = await siteConfigService.setConfig(
+        'announcement_banner',
+        config,
+        {
+          type: 'json',
+          description: 'Announcement banner configuration',
+          isPublic: true,
+          updatedById: userId
+        }
+      );
+      
+      // WebSocket broadcast este deja gestionat de siteConfigService.setConfig()
+      
+      reply.send({ success: true, data: updatedConfig.value });
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      reply.code(500).send({ success: false, error: { code: 'SERVER_ERROR', message: errorMessage } });
+    }
+  });
+
   // === PROGRAME DE LIVRARE ===
   
   // In-memory storage pentru programe de livrare (persistent în timpul rulării serverului)
@@ -1243,117 +1410,7 @@ export async function adminRoutes(fastify: FastifyInstance) {
   });
 
   // === GESTIONARE FINANCIARĂ ===
-
-  // Obține toate tranzacțiile financiare
-  fastify.get('/transactions', async (request, reply) => {
-    try {
-      const { startDate, endDate, type } = request.query as any;
-      
-      // Mock data pentru moment
-      const mockTransactions = [
-        {
-          id: '1',
-          type: 'EXPENSE',
-          category: 'Utilități',
-          amount: 250.50,
-          description: 'Factură electricitate',
-          date: '2026-02-01',
-          paymentMethod: 'transfer',
-          isRecurring: true,
-          recurringPeriod: 'MONTHLY',
-          createdAt: new Date().toISOString()
-        },
-        {
-          id: '2',
-          type: 'REVENUE',
-          category: 'Vânzări Online',
-          amount: 1500.00,
-          description: 'Vânzări produse februarie',
-          date: '2026-02-03',
-          paymentMethod: 'card',
-          isRecurring: false,
-          createdAt: new Date().toISOString()
-        }
-      ];
-
-      // Filtrează după tip dacă este specificat
-      let filteredTransactions = mockTransactions;
-      if (type && type !== 'all') {
-        filteredTransactions = mockTransactions.filter(t => t.type === type.toUpperCase());
-      }
-
-      reply.send(filteredTransactions);
-    } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-      reply.code(500).send({ error: errorMessage });
-    }
-  });
-
-  // Creează tranzacție financiară
-  fastify.post('/transactions', async (request, reply) => {
-    try {
-      const transactionData = request.body as any;
-      const userId = getUserId(request);
-      
-      // Mock response - în producție ar fi salvat în baza de date
-      const newTransaction = {
-        id: Date.now().toString(),
-        ...transactionData,
-        createdById: userId,
-        createdAt: new Date().toISOString()
-      };
-
-      // Broadcast real-time update
-      if (fastify.io) {
-        fastify.io.emit('financial_update', {
-          type: 'transaction_created',
-          transaction: newTransaction,
-          timestamp: new Date()
-        });
-      }
-
-      reply.code(201).send(newTransaction);
-    } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-      reply.code(400).send({ error: errorMessage });
-    }
-  });
-
-  // Obține categoriile de tranzacții
-  fastify.get('/transaction-categories', async (request, reply) => {
-    try {
-      // Mock data pentru moment
-      const mockCategories = [
-        { id: '1', name: 'Utilități', type: 'EXPENSE', color: '#EF4444', isActive: true },
-        { id: '2', name: 'Marketing', type: 'EXPENSE', color: '#F59E0B', isActive: true },
-        { id: '3', name: 'Materii Prime', type: 'EXPENSE', color: '#8B5CF6', isActive: true },
-        { id: '4', name: 'Vânzări Online', type: 'REVENUE', color: '#10B981', isActive: true },
-        { id: '5', name: 'Servicii', type: 'REVENUE', color: '#3B82F6', isActive: true }
-      ];
-      reply.send(mockCategories);
-    } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-      reply.code(500).send({ error: errorMessage });
-    }
-  });
-
-  // Creează categorie de tranzacții
-  fastify.post('/transaction-categories', async (request, reply) => {
-    try {
-      const categoryData = request.body as any;
-      
-      // Mock response - în producție ar fi salvat în baza de date
-      const newCategory = {
-        id: Date.now().toString(),
-        ...categoryData
-      };
-
-      reply.code(201).send(newCategory);
-    } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-      reply.code(400).send({ error: errorMessage });
-    }
-  });
+  // Rutele pentru tranzacții au fost mutate în financial-reports.routes.ts
 
   // === GESTIONARE LOCAȚII DE LIVRARE REALE ===
 
@@ -1560,6 +1617,169 @@ export async function adminRoutes(fastify: FastifyInstance) {
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Unknown error';
       reply.code(500).send({ error: errorMessage });
+    }
+  });
+
+  // === GESTIONARE ELEMENTE UI ===
+
+  // Obține toate elementele UI
+  fastify.get('/ui-elements', async (request, reply) => {
+    try {
+      const elements = await uiElementService.getAllElements();
+      reply.send(elements);
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      reply.code(500).send({ error: errorMessage });
+    }
+  });
+
+  // Obține elementele UI vizibile
+  fastify.get('/ui-elements/visible', async (request, reply) => {
+    try {
+      const elements = await uiElementService.getVisibleElements();
+      reply.send(elements);
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      reply.code(500).send({ error: errorMessage });
+    }
+  });
+
+  // Obține elementele UI pentru o pagină specifică
+  fastify.get('/ui-elements/page/:page', async (request, reply) => {
+    try {
+      const { page } = request.params as any;
+      const elements = await uiElementService.getElementsByPage(page);
+      reply.send(elements);
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      reply.code(500).send({ error: errorMessage });
+    }
+  });
+
+  // Obține un element UI specific
+  fastify.get('/ui-elements/:id', async (request, reply) => {
+    try {
+      const { id } = request.params as any;
+      const element = await uiElementService.getElementById(id);
+      
+      if (!element) {
+        return reply.code(404).send({ error: 'UI Element not found' });
+      }
+      
+      reply.send(element);
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      reply.code(500).send({ error: errorMessage });
+    }
+  });
+
+  // Creează element UI nou
+  fastify.post('/ui-elements', async (request, reply) => {
+    try {
+      const elementData = request.body as any;
+      const userId = getUserId(request);
+      
+      const element = await uiElementService.createElement({
+        ...elementData,
+        createdById: userId
+      });
+      
+      reply.code(201).send(element);
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      reply.code(400).send({ error: errorMessage });
+    }
+  });
+
+  // Actualizează element UI
+  fastify.put('/ui-elements/:id', async (request, reply) => {
+    try {
+      const { id } = request.params as any;
+      const updateData = request.body as any;
+      
+      const element = await uiElementService.updateElement(id, updateData);
+      reply.send(element);
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      reply.code(400).send({ error: errorMessage });
+    }
+  });
+
+  // Șterge element UI
+  fastify.delete('/ui-elements/:id', async (request, reply) => {
+    try {
+      const { id } = request.params as any;
+      await uiElementService.deleteElement(id);
+      reply.send({ success: true, message: 'UI Element deleted successfully' });
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      reply.code(400).send({ error: errorMessage });
+    }
+  });
+
+  // Toggle vizibilitate element UI
+  fastify.patch('/ui-elements/:id/toggle-visibility', async (request, reply) => {
+    try {
+      const { id } = request.params as any;
+      const element = await uiElementService.toggleVisibility(id);
+      reply.send(element);
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      reply.code(400).send({ error: errorMessage });
+    }
+  });
+
+  // Reordonează elemente UI
+  fastify.patch('/ui-elements/:id/reorder', async (request, reply) => {
+    try {
+      const { id } = request.params as any;
+      const { direction } = request.body as any;
+      
+      if (!direction || !['up', 'down'].includes(direction)) {
+        return reply.code(400).send({ error: 'Invalid direction. Must be "up" or "down"' });
+      }
+      
+      // Obține elementul curent
+      const currentElement = await uiElementService.getElementById(id);
+      if (!currentElement) {
+        return reply.code(404).send({ error: 'UI Element not found' });
+      }
+      
+      // Obține toate elementele sortate după order
+      const allElements = await uiElementService.getAllElements();
+      const sortedElements = allElements.sort((a, b) => a.order - b.order);
+      
+      // Găsește indexul elementului curent
+      const currentIndex = sortedElements.findIndex(el => el.id === id);
+      
+      if (currentIndex === -1) {
+        return reply.code(404).send({ error: 'Element not found in list' });
+      }
+      
+      // Verifică dacă mutarea este posibilă
+      if (direction === 'up' && currentIndex === 0) {
+        return reply.send({ success: true, message: 'Element is already at the top' });
+      }
+      
+      if (direction === 'down' && currentIndex === sortedElements.length - 1) {
+        return reply.send({ success: true, message: 'Element is already at the bottom' });
+      }
+      
+      // Calculează noul index
+      const newIndex = direction === 'up' ? currentIndex - 1 : currentIndex + 1;
+      
+      // Schimbă ordinea între elementul curent și cel cu care se schimbă
+      const targetElement = sortedElements[newIndex];
+      
+      await Promise.all([
+        uiElementService.updateElement(currentElement.id, { order: targetElement.order }),
+        uiElementService.updateElement(targetElement.id, { order: currentElement.order })
+      ]);
+      
+      reply.send({ success: true, message: 'Element reordered successfully' });
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      reply.code(400).send({ error: errorMessage });
     }
   });
 }
