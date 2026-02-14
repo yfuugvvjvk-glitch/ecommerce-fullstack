@@ -120,7 +120,7 @@ async function start() {
     });
 
     await fastify.register(rateLimit, {
-      max: 200,
+      max: 500,
       timeWindow: '1 minute',
     });
 
@@ -149,6 +149,12 @@ async function start() {
         socket.userId = decoded.userId;
         socket.userEmail = decoded.email;
         socket.userRole = decoded.role;
+        
+        // Blochează utilizatorii guest de la Socket.IO chat
+        if (decoded.role === 'guest') {
+          return next(new Error('Chat access denied for guest users'));
+        }
+        
         next();
       } catch (error) {
         next(new Error('Authentication error'));
@@ -281,6 +287,15 @@ async function start() {
 
       const { financialReportsRoutes } = await import('./routes/financial-reports.routes');
       await fastify.register(financialReportsRoutes, { prefix: '/api' });
+
+      const { announcementBannerRoutes } = await import('./routes/announcement-banner.routes');
+      await fastify.register(announcementBannerRoutes, { prefix: '/api' });
+
+      const { giftRuleRoutes } = await import('./routes/gift-rule.routes');
+      await fastify.register(giftRuleRoutes, { prefix: '/api/admin/gift-rules' });
+
+      const { giftPublicRoutes } = await import('./routes/gift-public.routes');
+      await fastify.register(giftPublicRoutes, { prefix: '/api/gift-rules' });
 
       console.log('✅ Toate rutele au fost înregistrate cu succes');
     } catch (error) {
