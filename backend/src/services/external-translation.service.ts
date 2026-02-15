@@ -55,6 +55,7 @@ export class GoogleTranslateAdapter implements ExternalTranslationService {
   private mockTranslate(text: string, sourceLocale: Locale, targetLocale: Locale): Promise<string> {
     // Simple dictionary for common Romanian -> English translations
     const mockDictionary: Record<string, string> = {
+      // Produse
       'Lapte de vacă': 'Cow Milk',
       'Lapte de capră': 'Goat Milk',
       'Brânză': 'Cheese',
@@ -66,6 +67,12 @@ export class GoogleTranslateAdapter implements ExternalTranslationService {
       'Pâine': 'Bread',
       'Legume': 'Vegetables',
       'Fructe': 'Fruits',
+      
+      // Locații de livrare
+      'Sediul Principal': 'Main Office',
+      'Localități limitrofe': 'Nearby Localities',
+      'Livrare la domiciliu': 'Home Delivery',
+      'Ridicare personală': 'Personal Pickup',
     };
 
     // If translating from Romanian to English, check dictionary
