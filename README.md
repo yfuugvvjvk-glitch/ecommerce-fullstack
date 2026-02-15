@@ -210,6 +210,12 @@ Editează `backend/.env` și setează un JWT_SECRET de minim 32 caractere.
 - ✅ Conversie valutară automată
 - ✅ Blocare comenzi cu condiții complexe (sumă, metode plată/livrare, programare)
 - ✅ Sistem UI Elements pentru gestionare dinamică butoane chat (backend API complet)
+- ✅ **Sistem Traduceri Live** - suport multilingv complet (6 limbi: ro, en, fr, de, es, it)
+  - Traduceri statice pentru UI și traduceri dinamice pentru conținut
+  - Cache inteligent și fallback hierarchy
+  - Formatare locale-aware pentru prețuri, date și numere
+  - API backend complet pentru gestionare traduceri
+  - Documentație: `frontend/TRANSLATIONS_README.md`
 
 ### 🎁 În Dezvoltare (Specificații Complete)
 

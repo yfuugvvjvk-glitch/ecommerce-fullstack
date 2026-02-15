@@ -95,6 +95,14 @@ async function start() {
       methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
       allowedHeaders: ['Content-Type', 'Authorization'],
     });
+
+    // Set UTF-8 charset for all JSON responses
+    fastify.addHook('onSend', async (request, reply, payload) => {
+      if (reply.getHeader('content-type')?.toString().includes('application/json')) {
+        reply.header('content-type', 'application/json; charset=utf-8');
+      }
+      return payload;
+    });
     
     await fastify.register(multipart, {
       limits: {
@@ -296,6 +304,9 @@ async function start() {
 
       const { giftPublicRoutes } = await import('./routes/gift-public.routes');
       await fastify.register(giftPublicRoutes, { prefix: '/api/gift-rules' });
+
+      const { translationRoutes } = await import('./routes/translation.routes');
+      await fastify.register(translationRoutes, { prefix: '/api' });
 
       console.log('✅ Toate rutele au fost înregistrate cu succes');
     } catch (error) {

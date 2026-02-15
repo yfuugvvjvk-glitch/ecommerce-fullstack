@@ -4,6 +4,68 @@ Toate modificările importante ale proiectului vor fi documentate în acest fiș
 
 ## [Unreleased]
 
+### Added - 2026-02-15
+
+#### Sistem Traduceri Live (Live Translations System)
+
+- **Infrastructură completă de traduceri multilingve**
+  - Traduceri statice pentru UI (butoane, etichete, mesaje)
+  - Traduceri dinamice pentru conținut (produse, categorii, mesaje chat)
+  - Suport pentru 6 limbi: Română (ro), Engleză (en), Franceză (fr), Germană (de), Spaniolă (es), Italiană (it)
+- **Backend API complet**:
+  - `GET /api/translations/:entityType/:entityId/:field?locale=:locale` - obține traducere unică
+  - `POST /api/translations/batch` - obține traduceri multiple
+  - `GET /api/translations/:entityType/:entityId?locale=:locale` - toate traducerile pentru o entitate
+  - `PUT /api/translations/:id` - actualizare traducere (admin only)
+  - `POST /api/translations/generate` - generare traduceri automate (admin only)
+  - `GET /api/translations/stats` - statistici traduceri (admin only)
+- **Model Translation în baza de date**:
+  - Stocare traduceri pentru produse, categorii, pagini, mesaje chat
+  - Status: automatic, manual, reviewed
+  - Integrare cu Google Translate API pentru traduceri automate
+  - Retry logic și error handling robust
+- **Frontend Context și Hooks**:
+  - `TranslationContext` - context global React pentru gestionare traduceri
+  - `useTranslation()` - hook pentru traduceri statice cu fallback hierarchy
+  - `useDynamicTranslation()` - hook pentru traduceri dinamice cu progressive rendering
+  - `TranslationCache` - cache în memorie + sessionStorage cu LRU eviction
+- **Fișiere de traduceri JSON**:
+  - Structură modulară: common.json, auth.json, products.json, cart.json, admin.json, errors.json
+  - Traduceri complete pentru Română și Engleză
+  - Suport pentru chei cu și fără prefix de modul
+  - Parametri dinamici în traduceri (ex: "Welcome, {{name}}!")
+- **Formatters locale-aware**:
+  - `formatCurrency()` - formatare prețuri conform locale
+  - `formatDate()`, `formatTime()`, `formatDateTime()` - formatare date și ore
+  - `formatNumber()` - formatare numere
+  - `formatRelativeTime()` - timp relativ (ex: "acum 2 ore")
+- **Componente actualizate**:
+  - `LanguageSwitcher` - selector limbă cu persistență în localStorage
+  - `ProductCard` - traduceri dinamice pentru titluri produse
+  - `ProductGrid` - integrare cu ProductCard
+  - `CurrencyPrice` - formatare locale-aware
+  - Toate componentele folosesc noul sistem de traduceri
+- **Documentație completă**:
+  - `frontend/TRANSLATIONS_README.md` - ghid complet de utilizare
+  - Exemple de cod pentru toate cazurile de utilizare
+  - Best practices și troubleshooting
+
+### Fixed - 2026-02-15
+
+#### TranslationContext - Căutare Chei Fără Prefix
+
+- **Corectat** logica de căutare pentru chei fără prefix de modul
+  - Adăugat căutare în toate modulele pentru limba curentă
+  - Adăugat căutare în toate modulele pentru limba română (fallback)
+  - Adăugat căutare specială pentru limba română când este limba curentă
+  - Eliminat warning-urile "Translation missing for key X in all locales"
+- **Îmbunătățit** fallback hierarchy:
+  1. Caută în limba curentă cu prefix complet (ex: "common.buttons.save")
+  2. Caută în toate modulele limbii curente fără prefix (ex: "save")
+  3. Caută în limba română cu prefix complet (fallback)
+  4. Caută în toate modulele limbii române fără prefix (fallback)
+  5. Returnează cheia ca text (ultimul fallback)
+
 ### Added - 2026-02-14
 
 #### Sistem Gestionare Elemente UI (UI Elements Management System)
