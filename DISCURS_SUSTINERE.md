@@ -68,6 +68,7 @@ Am implementat o **arhitectură în trei niveluri**:
 - Locații de livrare multiple cu program
 - Design complet responsive pentru toate dispozitivele
 - Notificări în timp real
+- **Sistem traduceri live** - suport multilingv complet (6 limbi: ro, en, fr, de, es, it)
 
 **Pentru administratori**, am dezvoltat un panou complet cu:
 
