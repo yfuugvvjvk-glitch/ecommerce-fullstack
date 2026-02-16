@@ -154,18 +154,21 @@ Am implementat o **arhitectură în trei niveluri**:
 
 Voi demonstra:
 
-1. **Navigarea** prin catalog și căutarea produselor
-2. **Adăugarea în coș** cu cantități fixe și actualizarea automată
-3. **Procesul de checkout** complet cu 3 metode de plată
-4. **Panoul administrativ** cu toate funcționalitățile:
-   - Gestionare produse cu unități de măsură
+1. **Homepage** cu carousel produse și categorii
+2. **Catalog produse** cu sistem dual de prețuri (fix vs per unitate)
+3. **Selector monedă** - conversie instant în 15+ valute (EUR, USD, GBP, etc.)
+4. **Selector limbă** - traduceri live în 6 limbi (ro, en, fr, de, es, it)
+5. **Adăugarea în coș** cu cantități fixe și actualizare automată
+6. **Procesul de checkout** complet cu 3 metode de plată
+7. **Panoul administrativ** cu toate funcționalitățile:
+   - Gestionare produse cu unități de măsură și sistem dual prețuri
+   - Sistem complet conversie valutară cu actualizare automată
    - Gestionare comenzi cu actualizare automată stoc
    - Editor live pentru pagini (About, Contact, Dashboard)
    - Locații de livrare cu program personalizat
    - Rapoarte financiare și inventar
-5. **Actualizări în timp real** cu WebSocket
-6. **Sistem de conversie valutară** cu actualizare automată
-7. **Responsivitatea** pe toate dispozitivele
+8. **Actualizări în timp real** cu WebSocket - modificările din admin apar instant
+9. **Responsivitatea** pe toate dispozitivele (mobile, tablet, desktop)
 
 _[Demonstrația practică - 2-3 minute de navigare prin aplicație]_"
 

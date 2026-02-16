@@ -235,16 +235,20 @@ CREDENȚIALE DEMO
 🎟️ Voucher: WELCOME10 (10% reducere)
 
 FUNCȚIONALITĂȚI DE DEMONSTRAT
-1. Navigare produse cu cantități fixe
-2. Adăugare în coș cu actualizare automată
-3. Checkout cu 3 metode de plată
-4. Panou admin complet:
+1. Homepage cu carousel produse
+2. Catalog cu sistem dual prețuri
+3. Selector monedă (15+ valute)
+4. Selector limbă (6 limbi)
+5. Adăugare în coș cu cantități fixe
+6. Checkout complet (3 metode plată)
+7. Panou admin:
    • Editor live pagini
-   • Gestionare stoc automată
-   • Locații de livrare
+   • Gestionare produse (fix/per unitate)
+   • Sistem conversie valutară
+   • Gestionare comenzi cu stoc automat
    • Rapoarte financiare
-5. Actualizări în timp real (WebSocket)
-6. Design responsive pe toate dispozitivele
+8. Actualizări în timp real (WebSocket)
+9. Design responsive (mobile/tablet/desktop)
 ```
 
 ### Slide 13: PROVOCĂRI
