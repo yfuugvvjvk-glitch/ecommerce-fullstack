@@ -248,8 +248,6 @@ MIT
 
 **Petrescu Cristian**
 Lucrare de Licență - 2026
-Facultatea de Științe Economice și Gestiunea Afacerilor
-
 ---
 
 ## 🎉 Status
@@ -258,5 +256,3 @@ Facultatea de Științe Economice și Gestiunea Afacerilor
 ✅ Toate testele trec cu succes
 ✅ Documentația este completă
 ✅ Codul este curat și optimizat
-
-**Mult succes la susținere! 🚀**
