@@ -135,7 +135,14 @@ export class VerificationService {
 
       if (!emailResult.success) {
         console.error('Failed to send verification email:', emailResult.error);
-        // Continue anyway - code is stored in database
+        // IMPORTANT: Display code in console for testing when SMTP is not configured
+        console.log('\n========================================');
+        console.log('📧 EMAIL VERIFICATION CODE (for testing)');
+        console.log('========================================');
+        console.log(`Email: ${email}`);
+        console.log(`Code: ${code}`);
+        console.log(`Expires in: ${this.EXPIRATION_MINUTES} minutes`);
+        console.log('========================================\n');
       }
 
       return {
@@ -360,7 +367,14 @@ export class VerificationService {
 
       if (!emailResult.success) {
         console.error('Failed to send verification email:', emailResult.error);
-        // Continue anyway - code is stored in database
+        // IMPORTANT: Display code in console for testing when SMTP is not configured
+        console.log('\n========================================');
+        console.log('📧 RESEND EMAIL VERIFICATION CODE (for testing)');
+        console.log('========================================');
+        console.log(`Email: ${email}`);
+        console.log(`Code: ${code}`);
+        console.log(`Expires in: ${this.EXPIRATION_MINUTES} minutes`);
+        console.log('========================================\n');
       }
 
       return {
