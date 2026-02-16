@@ -13,11 +13,14 @@ PROIECT E-COMMERCE - INFORMAȚII PENTRU TRIMITERE
    - ✅ STATUS: Toate funcționalitățile sunt operaționale
    - 📝 NOTĂ: Aplicația este demonstrativă pentru testarea competențelor tehnice
 
-3. Credențiale pentru testare:
-   - Admin: admin@example.com / Admin1234
-   - User: ion.popescu@example.com / User1234
-   - Alte conturi: maria.ionescu@example.com / User1234, andrei.popa@example.com / User1234
-   - Voucher: WELCOME10 (10% reducere), SUMMER50 (50 RON reducere)
+3. Credențiale pentru testare (4 conturi reale):
+   - Admin: admin@site.ro / admin123 (Cristi)
+   - User 1: ion.popescu@example.com / User1234 (Ion Popescu)
+   - User 2: crys.cristi@yahoo.com / [parola setată de utilizator] (dssd)
+   - Guest: guest@example.com / Guest1234 (Vizitator)
+   - Voucher activ: BUN VENIT (10% reducere)
+   - Metode plată: Card Bancar, Numerar la Livrare
+   - 18 categorii active, 26 produse în catalog
 
 4. Setup local RAPID (2 minute):
    - git clone https://github.com/yfuugvvjvk-glitch/ecommerce-fullstack
@@ -109,11 +112,11 @@ FUNCȚIONALITĂȚI IMPLEMENTATE (33 TOTAL)
 
 👥 PENTRU UTILIZATORI (funcționalități complete):
 ✅ Autentificare completă (Register/Login/JWT)
-✅ Catalog produse (12 produse, 6 categorii)
+✅ Catalog produse (26 produse, 18 categorii)
 ✅ Căutare și filtrare avansată
 ✅ Coș persistent cu cantități fixe
-✅ Checkout complet cu 3 metode plată
-✅ Sistem voucher-uri (WELCOME10, SUMMER50)
+✅ Checkout complet cu 2 metode plată (Card, Numerar)
+✅ Sistem voucher-uri (BUN VENIT - 10% reducere)
 ✅ Review-uri și rating produse
 ✅ Lista favorite persistentă
 ✅ Profil editabil cu avatar upload
@@ -279,10 +282,17 @@ https://github.com/yfuugvvjvk-glitch/ecommerce-fullstack
 3. ./start-full-app.bat
 4. Accesează: http://localhost:3000
 
-🔑 **Credențiale testare**:
-- Admin: admin@example.com / Admin1234
-- User: ion.popescu@example.com / User1234
-- Alte conturi: maria.ionescu@example.com / User1234, andrei.popa@example.com / User1234
+🔑 **Credențiale testare** (4 conturi reale):
+- Admin: admin@site.ro / admin123 (Cristi)
+- User 1: ion.popescu@example.com / User1234 (Ion Popescu)
+- User 2: crys.cristi@yahoo.com / [parola setată] (dssd)
+- Guest: guest@example.com / Guest1234 (Vizitator)
+
+🎟️ **Date reale din aplicație**:
+- Voucher activ: BUN VENIT (10% reducere)
+- Metode plată: Card Bancar, Numerar la Livrare
+- 18 categorii active (Branză, Lapte, Ouă, Carne, Animale vii, etc.)
+- 26 produse în catalog (Caș de capră, Lapte de vacă, Ouă, Carne, etc.)
 
 🛠️ **TEHNOLOGII**:
 - Frontend: Next.js 16, React 19, Tailwind CSS 4, TypeScript
