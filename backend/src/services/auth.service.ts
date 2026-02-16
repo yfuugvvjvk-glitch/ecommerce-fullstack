@@ -140,4 +140,29 @@ export class AuthService {
       role: user.role,
     });
   }
+
+
+    async createUser(data: {
+      email: string;
+      password: string;
+      name: string;
+      phone?: string;
+      emailVerified?: boolean;
+    }): Promise<User> {
+      const user = await prisma.user.create({
+        data: {
+          id: require('crypto').randomUUID(),
+          email: data.email,
+          password: data.password,
+          name: data.name,
+          phone: data.phone,
+          emailVerified: data.emailVerified || false,
+          emailVerifiedAt: data.emailVerified ? new Date() : null,
+          role: 'user',
+        },
+      });
+
+      return user;
+    }
+
 }

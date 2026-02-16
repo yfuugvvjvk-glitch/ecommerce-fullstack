@@ -14,33 +14,10 @@ import bcrypt from 'bcrypt';
 const authService = new AuthService();
 
 export async function authRoutes(fastify: FastifyInstance) {
-  // Register endpoint - sends verification code
+  // Register endpoint - creates user directly without email verification
   fastify.post('/register', async (request, reply) => {
     try {
       const body = RegisterSchema.parse(request.body);
-      const ipAddress = request.ip;
-
-      // Check if account is locked
-      const isLocked = await securityService.isAccountLocked(body.email);
-      if (isLocked) {
-        reply.code(403).send({
-          success: false,
-          error:
-            'Contul dvs. a fost blocat temporar din cauza prea multor încercări eșuate. Vă rugăm să așteptați 1 oră.',
-        });
-        return;
-      }
-
-      // Check rate limit (5 codes per hour)
-      const rateLimitResult = await rateLimitService.checkLimit(body.email);
-      if (!rateLimitResult.allowed) {
-        reply.code(429).send({
-          success: false,
-          error: `Ați depășit limita de solicitări. Vă rugăm să așteptați ${rateLimitResult.waitTimeMinutes} minute.`,
-          waitTimeMinutes: rateLimitResult.waitTimeMinutes,
-        });
-        return;
-      }
 
       // Check if user already exists
       const existingUser = await authService.findUserByEmail(body.email);
@@ -55,29 +32,29 @@ export async function authRoutes(fastify: FastifyInstance) {
       // Hash password
       const hashedPassword = await bcrypt.hash(body.password, 10);
 
-      // Send verification code
-      const result = await verificationService.sendEmailVerificationCode(
-        body.email,
-        hashedPassword,
-        body.name,
-        body.phone
-      );
+      // Create user directly
+      const user = await authService.createUser({
+        email: body.email,
+        password: hashedPassword,
+        name: body.name,
+        phone: body.phone,
+        emailVerified: true, // Auto-verify since we're skipping email verification
+      });
 
-      // Record rate limit attempt
-      await rateLimitService.recordAttempt(body.email);
+      // Generate JWT token
+      const token = await authService.generateToken(user.id);
 
-      if (result.success) {
-        reply.code(201).send({
-          success: true,
-          message: result.message,
-          pendingUserId: result.pendingUserId,
-        });
-      } else {
-        reply.code(500).send({
-          success: false,
-          error: result.message,
-        });
-      }
+      reply.code(201).send({
+        success: true,
+        message: 'Contul a fost creat cu succes!',
+        token,
+        user: {
+          id: user.id,
+          email: user.email,
+          name: user.name,
+          phone: user.phone,
+        },
+      });
     } catch (error) {
       console.error('Registration error:', error);
       if (error instanceof Error) {
