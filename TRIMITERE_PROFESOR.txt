@@ -2,8 +2,6 @@
 PROIECT E-COMMERCE - INFORMAȚII PENTRU TRIMITERE
 ===================================================================
 
-📧 CE SĂ TRIMIȚI PROFESORULUI:
-
 1. Link-ul către repository GitHub:
    https://github.com/yfuugvvjvk-glitch/ecommerce-fullstack
 
