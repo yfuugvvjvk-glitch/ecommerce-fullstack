@@ -71,6 +71,11 @@ export class AuthService {
       throw new Error('Invalid email or password');
     }
 
+    // Check if email is verified
+    if (!user.emailVerified) {
+      throw new Error('Email not verified. Please verify your email before logging in.');
+    }
+
     // Generate token
     const token = generateToken({
       userId: user.id,
