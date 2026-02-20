@@ -247,5 +247,5 @@ MIT
 ## 👨‍💻 Autor
 
 **Petrescu Cristian**
-Lucrare de Licență - 2026
+Lucrare de Licență - 2027
 ---
