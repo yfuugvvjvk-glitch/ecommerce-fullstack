@@ -54,3 +54,12 @@ pgadmin-data/
 
 # Prisma - NU exclude migrations, sunt necesare!
 # backend/prisma/migrations/
+
+# Video files (too large for GitHub)
+*.mp4
+*.avi
+*.mov
+*.wmv
+*.flv
+*.mkv
+Înregistrare*.mp4
