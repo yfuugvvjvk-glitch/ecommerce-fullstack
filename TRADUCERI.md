@@ -23,10 +23,25 @@
 
 ### 2. Categorii (14)
 
-- ✅ Nume categorii
-- ✅ Descrieri categorii
+- ✅ Nume categorii (nameEn, nameDe, nameFr, nameEs, nameIt)
+- ✅ Toate categoriile principale și subcategorii
 
-### 3. Interfață
+### 3. Locații Livrare (3)
+
+- ✅ Nume locații (nameEn, nameDe, nameFr, nameEs, nameIt)
+- ✅ Instrucțiuni speciale traduse
+
+### 4. Carousel (12 items)
+
+- ✅ Titluri carousel (customTitleEn, customTitleDe, customTitleFr, customTitleEs, customTitleIt)
+- ✅ Descrieri carousel traduse
+
+### 5. Reguli Cadouri
+
+- ✅ Nume reguli (nameEn, nameDe, nameFr, nameEs, nameIt)
+- ✅ Descrieri reguli traduse
+
+### 6. Interfață
 
 - ✅ Butoane și meniuri
 - ✅ Mesaje de eroare
@@ -120,6 +135,24 @@ cd backend
 node translate-descriptions.js
 ```
 
+### 3. translate-everything.js
+
+Traduce TOTUL în TOATE limbile (produse, categorii, locații, carousel, reguli cadouri).
+
+```bash
+cd backend
+node translate-everything.js
+```
+
+### 4. check-translations.js
+
+Verifică statusul traducerilor pentru toate entitățile.
+
+```bash
+cd backend
+node check-translations.js
+```
+
 ---
 
 ## 🌍 Limbi Suportate
@@ -164,11 +197,14 @@ contentIt      TEXT     -- Conținut în italiană
 
 ## ✅ Status Traduceri
 
-- ✅ **Produse:** 26/26 traduse (EN)
-- ✅ **Categorii:** 14/14 traduse
+- ✅ **Produse:** 26/26 traduse în TOATE limbile (RO, EN, DE, FR, ES, IT)
+- ✅ **Categorii:** 14/14 traduse în TOATE limbile
+- ✅ **Locații Livrare:** 3/3 traduse în TOATE limbile
+- ✅ **Carousel:** 12/12 items traduse în TOATE limbile
+- ✅ **Reguli Cadouri:** 1/1 traduse în TOATE limbile
 - ✅ **Interfață:** Complet tradusă
 - ✅ **Componente:** Toate suportă multilingv
-- ⚠️ **DE, FR, ES, IT:** Traduceri parțiale (folosesc EN ca fallback)
+- ✅ **Imagini Carousel:** 25 imagini media urcate pe GitHub
 
 ---
 
