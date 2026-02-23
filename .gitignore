@@ -49,8 +49,8 @@ pgadmin-data/
 *.swo
 *~
 
-# Uploads
-backend/public/uploads/
+# Uploads - Commented out to include media files for project submission
+# backend/public/uploads/
 
 # Prisma - NU exclude migrations, sunt necesare!
 # backend/prisma/migrations/
