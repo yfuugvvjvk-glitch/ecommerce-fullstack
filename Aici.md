@@ -2,14 +2,14 @@
 
 ## 👤 Student: Petrescu Cristiana
 
-## 📅 Data: 23 Februarie 2026
+## 📅 Data: Iulie 2027
 
 ## 🎓 Informații Academice
 
 - **Universitatea:** Universitatea Danubius Galați
 - **Facultatea:** Științe Economice
 - **Specializarea:** Informatică Economică
-- **An:** 2026
+- **An:** 2027
 - **Tip:** Proiect de Licență
 
 ## 📊 Date Aplicație (REALE din Baza de Date!)
@@ -29,7 +29,7 @@
 - **Universitatea:** Universitatea Danubius Galați
 - **Facultatea:** Științe Economice
 - **Specializarea:** Informatică Economică
-- **An:** 2026
+- **An:** 2027
 - **Tip:** Proiect de Licență
 
 ---
