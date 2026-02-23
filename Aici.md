@@ -16,6 +16,16 @@
 
 ---
 
+## 🎓 Informații Proiect
+
+- **Universitatea:** Universitatea Danubius Galați
+- **Facultatea:** Științe Economice
+- **Specializarea:** Informatică Economică
+- **An:** 2026
+- **Tip:** Proiect de Licență
+
+---
+
 ## 🎯 Despre Proiect
 
 Platformă e-commerce full-stack pentru vânzarea de produse agricole, cu funcționalități avansate de management, sistem de cadouri, chat în timp real și suport multi-valută.
