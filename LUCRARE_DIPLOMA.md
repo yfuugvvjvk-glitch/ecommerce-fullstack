@@ -8,6 +8,7 @@ DEZVOLTAREA UNEI APLICAȚII WEB MODERNE DE E-COMMERCE FOLOSIND TEHNOLOGII FULL-S
 
 Coordonator științific: Prof. univ. dr. Radu Tonis Manea Bucea
 Absolvent: Petrescu Cristian
+Anul de studii: III
 Anul universitar: 2027
 
 DECLARAȚIE DE ORIGINALITATE
@@ -25,34 +26,36 @@ Semnătura: Petrescu Cristian
 
 CUPRINS
 PARTEA I - FUNDAMENTAREA TEORETICĂ 6
-INTRODUCERE 7
-Capitolul 1. INTRODUCERE ȘI OBIECTIVE 7
-1.1. Istoricul comerțului electronic 7
+INTRODUCERE 6
+Capitolul 1. INTRODUCERE ȘI OBIECTIVE 6
+1.1. Istoricul comerțului electronic 6
 1.2. Piața e-commerce în România și Europa 11
-1.3. Tendințe actuale și viitoare 16
+1.3. Tendințe actuale și viitoare 17
 Capitolul 2. ANALIZA CERINȚELOR ȘI ARHITECTURA SISTEMULUI 18
-2.1. Tehnologii pentru interfața utilizator (React, Next.js) 18
-1.3. Structura lucrării 18
+2.1. Frontend frameworks (React, Next.js) 18
+1.3. Structura lucrării 19
 2.3. Baze de date (PostgreSQL, Prisma ORM) 19
 2.2. Analiza cerințelor non-funcționale 30
-2.3. Arhitectura generală a sistemului 31
-2.4. Alegerea tehnologiilor 33
+2.3. Arhitectura generală a sistemului 32
+2.4. Alegerea tehnologiilor 34
 Capitolul 3. DESIGNUL INTERFEȚEI RESPONSIVE 37
 3.1. Principiile design-ului modern 37
-3.2. Implementarea responsive design 43
+3.2. Implementarea responsive design 44
 3.3. Experiența utilizatorului (UX) 52
 3.4. Accesibilitatea aplicației 53
-PARTEA II - IMPLEMENTAREA PRACTICĂ 55
-CAPITOLUL 4. IMPLEMENTAREA ȘI SECURIZAREA APLICAȚIEI 56
-4.1. Dezvoltarea interfeței utilizator 56
-4.2. Dezvoltarea sistemului server 59
+PARTEA II - IMPLEMENTAREA PRACTICĂ 54
+CAPITOLUL 4. IMPLEMENTAREA ȘI SECURIZAREA APLICAȚIEI 55
+4.1. Dezvoltarea frontend-ului 55
+4.2. Dezvoltarea backend-ului 58
 4.3. Integrarea bazei de date 66
-4.4. Implementarea securității 69
-4.7. Securitatea aplicației 73 5. TESTARE, REZULTATE ȘI CONCLUZII 77
-5.1. Strategia de testare 77
-5.2. Rezultatele testării 79
-BIBLIOGRAFIE ȘI RESURSE 91
+4.4. Implementarea securității 68
+4.7. Securitatea aplicației 73
 
+5. TESTARE, REZULTATE ȘI CONCLUZII 77
+   5.1. Strategia de testare 77
+   5.2. Rezultatele testării 77
+
+BIBLIOGRAFIE 91
 FIGURE
 Figura 3.1. Homepage-structură informațională 38
 Figura 3.2. Product Page -structură informațională 39
@@ -60,17 +63,17 @@ Figura 3.3. Checkout -structură informațională 40
 Figura 3.4 Mobile layout: 47
 Figura 3.5 Mobile layout: 47
 Figura 3.6 Desktop layout: 47
-Figura 3.7 Vertical steps, one at a time 47
-Figura 4.8. Produse 48
-Figura 4.9, Produse 48
+Figura 3.7 Vertical steps, one at a time 48
+Figura 3.8. Produse 49
+Figura 3.9, Produse 49
 Figura 3.10. Produse 49
 
 TABELE
-Tabel 1.1. Evoluția pieței e-commerce în România (2020-2024) 8
-Tabel 1.2. Comparație tehnologii pentru interfața utilizator (2024) 12
-Tabel 1.3. Comparație tehnologii server Node.js (2024) 14
-Tabel 1.4. Comparație soluții de acces la baze de date pentru Node.js 15
-Tabel 2.1. Prioritizare cerințe funcționale 29
+Tabel 1.1. Evoluția pieței e-commerce în România (2020-2024) 7
+Tabel 1.2. Comparație framework-uri frontend (2024) 12
+Tabel 13. Comparație tehnologii backend Node.js (2024) 14
+Tabel 1.4. Comparație soluții ORM/Query Builder pentru Node.js 15
+Tabel 2.1. Prioritizare cerințe funcționale 28
 Tabel 2.2. Cerințe de sistem pentru dezvoltare și rulare aplicație 30
 Tabel 2.3. Variabile de mediu necesare pentru configurare aplicație 36
 Tabel 3.1. Analiză comparativă platforme e-commerce 37
@@ -79,22 +82,22 @@ Tabel 3.3.Sistemul tipografic 42
 Tabel 3.4 Rezultate teste usability (n=15 participanți) 43
 Tabel 3.5. Provocări responsive design și soluții implementate 44
 Tabel 3.6. Breakpoint-uri și adaptări layout 45
-Tabel 3.7. Adaptare product grid pe dispozitive 47
+Tabel 3.7. Adaptare product grid pe dispozitive 46
 Tabel 3.8. Impact optimizări imagini 49
-Tabel 4.1. Arhitectura în straturi a sistemului server 59
-Tabel 4.2. Structura completă a punctelor de acces API 61
-Tabel 4.3. Componente intermediare implementate 63
+Tabel 4.1. Arhitectura în straturi a backend-ului 58
+Tabel 4.2. Structura completă API endpoints 59
+Tabel 4.3.Middleware-uri implementate 62
 Tabel 4.4.Rate de schimb exemplu (față de RON) 72
 Tabel 4.5. Exemple traduceri produse alimentare 73
 Tabel 4.6. Exemple traduceri produse alimentare 74
 Tabel 4.7.Exemple Protecție 74
-Tabel 4.8.Exemple 76
+Tabel 4.8.Exemple 75
 Tabel 5.1. Rezultate acoperire teste unitare (Jest Coverage) 79
 Tabel 5.2. Comparație acoperire teste cu benchmarks industrie 80
 Tabel 5.3. Scor Lighthouse (Desktop și Mobile) 81
-Tabel 5.4. Core Web Vitals - Rezultate detaliate 82
+Tabel 5.4. Core Web Vitals - Rezultate detaliate 81
 Tabel 5.5. Benchmark performanță vs competitori români 83
-Tabel 5.6. Scenarii load testing implementate 84
+Tabel 5.6. Scenarii load testing implementate 83
 Tabel 5.7. Rezultate detaliate load testing 84
 
 PARTEA I - FUNDAMENTAREA TEORETICĂ
@@ -193,124 +196,95 @@ Conform studiului ARMO (2024), categoriile cu cea mai mare pondere în vânzări
 - Design responsive și accesibilitate conform standardelor internaționale
 - Integrarea cu servicii externe (API-uri, sisteme de plată)
 - Implementarea best practices în dezvoltarea software
-  1.2. Piața comerțului electronic în România și Europa
-  1.2.1. Evoluția tehnologiilor pentru interfața utilizator
-
-Ecosistemul tehnologiilor web a evoluat rapid în ultimii ani, oferind dezvoltatorilor instrumente din ce în ce mai sofisticate pentru crearea aplicațiilor moderne. Înțelegerea acestei evoluții este esențială pentru alegerea tehnologiilor potrivite pentru un proiect de comerț electronic.
-
-De la pagini statice la aplicații interactive:
-
-Generația 1 (1990-2005): HTML static și CSS
-Primele site-uri web erau compuse din pagini HTML statice cu stilizare CSS minimală. Interactivitatea era limitată, iar actualizarea conținutului necesita modificarea manuală a fișierelor HTML. Această abordare era suficientă pentru site-uri informaționale simple, dar inadecvată pentru aplicații complexe.
-
-Generația 2 (2005-2010): Tehnologii asincrone și Web 2.0
-Introducerea tehnologiilor asincrone a permis actualizarea parțială a paginilor fără reîncărcare completă, îmbunătățind semnificativ experiența utilizator. Biblioteci precum jQuery au simplificat manipularea elementelor paginii și gestionarea evenimentelor. Totuși, aplicațiile complexe deveneau dificil de menținut din cauza lipsei unei structuri clare.
-
-Generația 3 (2010-2015): Arhitecturi structurate
-Apariția tehnologiilor structurate precum AngularJS, Backbone.js și Ember.js a introdus concepte de arhitectură în dezvoltarea interfeței utilizator (Osmani, 2012). Acestea ofereau structură și organizare, dar adesea cu o curbă de învățare abruptă și performanță suboptimă pentru aplicații mari, ceea ce limita adoptarea lor în proiecte complexe de comerț electronic.
-
-Generația 4 (2015-prezent): Arhitectură bazată pe componente
-React (2013), Vue.js (2014) și Angular 2+ (2016) au revoluționat dezvoltarea prin introducerea arhitecturii bazate pe componente și concepte moderne de optimizare (Abramov, 2015). Această abordare permite crearea de aplicații complexe, performante și ușor de menținut, transformând fundamental modul în care dezvoltatorii construiesc interfețe web interactive.
-
-1.2.2. Comparație tehnologii moderne pentru interfața utilizator
-
-Pentru a justifica alegerea tehnologiilor folosite în acest proiect, este esențială o analiză comparativă a principalelor soluții disponibile în 2024. Peisajul tehnologic actual oferă mai multe opțiuni mature, fiecare cu caracteristici distincte care le fac potrivite pentru diferite tipuri de proiecte.
-
-Tabel 1.2. Comparație tehnologii pentru interfața utilizator (2024)
+  1.2. Piața e-commerce în România și Europa
+  1.2.1. Evoluția tehnologiilor frontend
+  Ecosistemul tehnologiilor web a evoluat rapid în ultimii ani, oferind dezvoltatorilor instrumente din ce în ce mai sofisticate pentru crearea aplicațiilor moderne. Înțelegerea acestei evoluții este esențială pentru alegerea tehnologiilor potrivite pentru un proiect de e-commerce.
+  De la pagini statice la aplicații interactive:
+  Generația 1 (1990-2005): HTML static și CSS
+  Primele site-uri web erau compuse din pagini HTML statice cu styling CSS minimal. Interactivitatea era limitată, iar actualizarea conținutului necesita modificarea manuală a fișierelor HTML. Această abordare era suficientă pentru site-uri informaționale simple, dar inadecvată pentru aplicații complexe.
+  Generația 2 (2005-2010): AJAX și Web 2.0
+  Introducerea AJAX (Asynchronous JavaScript and XML) a permis actualizarea parțială a paginilor fără reîncărcare completă, îmbunătățind semnificativ experiența utilizator. Biblioteci precum jQuery au simplificat manipularea DOM-ului și gestionarea evenimentelor. Totuși, aplicațiile complexe deveneau dificil de menținut din cauza lipsei unei structuri clare.
+  Generația 3 (2010-2015): Framework-uri MVC
+  Apariția framework-urilor precum AngularJS, Backbone.js și Ember.js a introdus concepte de arhitectură (MVC/MVVM) în dezvoltarea frontend. Acestea ofereau structură și organizare, dar adesea cu o curbă de învățare abruptă și performanță suboptimă pentru aplicații mari.
+  Generația 4 (2015-prezent): Component-based și Virtual DOM
+  React (2013), Vue.js (2014) și Angular 2+ (2016) au revoluționat dezvoltarea frontend prin introducerea arhitecturii bazate pe componente și concepte precum Virtual DOM. Această abordare permite crearea de aplicații complexe, performante și ușor de menținut.
+  1.2.2. Comparație framework-uri frontend moderne
+  Pentru a justifica alegerea tehnologiilor folosite în acest proiect, este esențială o analiză comparativă a principalelor framework-uri disponibile în 2024. Peisajul tehnologic actual oferă mai multe opțiuni mature, fiecare cu caracteristici distincte care le fac potrivite pentru diferite tipuri de proiecte.
+  Tabel 1.2. Comparație framework-uri frontend (2024)
 
 Criteriu React + Next.js Vue.js + Nuxt Angular Svelte/SvelteKit
 Performanță Excelentă Foarte bună Bună Excelentă  
 Curba învățare Medie Ușoară Dificilă Ușoară  
 Ecosistem Foarte mare Mare Mare În creștere  
-Siguranță tipuri Excelent Bun Nativ Bun  
-Generare server Da (Next.js) Da (Nuxt) Limitat Da (SvelteKit)  
+TypeScript Excelent Bun Nativ Bun  
+SSR/SSG Da (Next.js) Da (Nuxt) Limitat Da (SvelteKit)  
 Comunitate 220k+ stars 210k+ stars 95k+ stars 75k+ stars  
-Companii Meta, Netflix, Airbnb Alibaba, GitLab Google, Microsoft NY Times, Apple
-Dimensiune pachet Mediu Mic Mare Foarte mic  
+Companii Meta, Netflix, Airbnb Alibaba, GitLab Alibaba, GitLab NY Times, Apple
+Bundle size Mediu Mic Mare Foarte mic  
 Adopție piață 42% 18% 20% 5%  
 (Sursa: State of JS 2024, Stack Overflow Developer Survey 2024, npm trends)
-
+Justificarea alegerii React + Next.js:
 Alegerea React combinat cu Next.js pentru acest proiect s-a bazat pe o analiză atentă a nevoilor specifice unei aplicații de comerț electronic moderne. React, dezvoltat inițial de Facebook în 2013, a devenit rapid cea mai populară soluție pentru construirea interfețelor utilizator complexe, beneficiind de cel mai mare ecosistem de biblioteci și componente reutilizabile din industrie (Stack Overflow Survey, 2024). Registrul npm conține peste 150,000 de pachete compatibile cu React, acoperind practic orice funcționalitate necesară într-o aplicație modernă, de la gestionarea formularelor până la integrarea cu servicii externe.
-
 Next.js 16, construit peste React, introduce optimizări semnificative care îmbunătățesc dramatic performanța aplicațiilor web (Vercel Team, 2024). Componentele server reduc cantitatea de JavaScript trimisă către browser, optimizarea automată a imaginilor asigură încărcare rapidă a conținutului vizual, iar regenerarea statică incrementală permite actualizarea eficientă a conținutului dinamic fără a compromite performanța. Execuția la margine reduce latența prin procesarea cererilor cât mai aproape de utilizatori, un aspect crucial pentru experiența utilizatorului în aplicațiile de comerț electronic (Grigorik, 2013).
-
 Integrarea nativă cu TypeScript oferă siguranță completă a tipurilor de date, reducând semnificativ numărul de erori în timpul dezvoltării și facilitând mentenanța pe termen lung (Microsoft TypeScript Team, 2024). Sugestiile automate și refactorizarea automată îmbunătățesc productivitatea dezvoltatorilor, permițându-le să se concentreze pe logica de business în loc de depanarea erorilor de tip.
-
 Generarea pe server și generarea statică de site-uri sunt disponibile din start, fiind esențiale pentru optimizarea în motoarele de căutare (Moz SEO Guide, 2024). În aplicațiile de comerț electronic, unde timpul de încărcare influențează direct rata de conversie, aceste capabilități sunt fundamentale pentru succesul platformei. Studii recente arată că o întârziere de doar o secundă în timpul de încărcare poate reduce conversiile cu până la 7% (Google Web Vitals, 2024).
-
 Adopția largă în industrie reprezintă un alt factor decisiv. Conform Stack Overflow Developer Survey (2024), React este utilizat de 42% dintre dezvoltatorii profesioniști, urmat de Vue.js cu 18% și Angular cu 20%. Această popularitate asigură nu doar disponibilitatea resurselor și documentației extinse, ci și a dezvoltatorilor cu experiență, facilitând colaborarea și mentenanța pe termen lung a proiectului. Companii de renume mondial precum Meta, Netflix și Airbnb folosesc React în producție, demonstrând maturitatea și fiabilitatea tehnologiei pentru aplicații la scară largă.
-
-1.2.3. Tehnologii moderne pentru sistemul server
-
+1.2.3. Tehnologii backend moderne
 Evoluția arhitecturilor pentru sistemul server reflectă căutarea continuă a dezvoltatorilor pentru soluții mai eficiente și mai ușor de menținut. Aplicațiile tradiționale erau construite ca un singur bloc monolitic, unde toate funcționalitățile erau strâns cuplate (Fowler, 2014). Această abordare simplifica lansarea inițială dar devenea problematică la scalare și mentenanță, mai ales când echipele de dezvoltare creșteau și diferite părți ale aplicației trebuiau actualizate independent.
-
 Arhitecturile orientate pe servicii au introdus conceptul de servicii independente care comunică prin protocoale standardizate, îmbunătățind modularitatea dar adesea cu costuri suplimentare semnificative în termeni de complexitate și performanță (Erl, 2005). Microserviciile au dus această idee mai departe, împărțind aplicația în servicii mici și independente, fiecare responsabil pentru o funcționalitate specifică. Această abordare oferă scalabilitate și flexibilitate maximă dar introduce complexitate în orchestrare și comunicare între servicii (Newman, 2015).
-
 Arhitecturile fără server reprezintă cea mai recentă evoluție, permițând rularea codului fără gestionarea infrastructurii (Roberts, 2018). Această abordare reduce costurile și complexitatea operațională pentru anumite tipuri de aplicații, deși nu este potrivită pentru toate scenariile de utilizare.
-
-Tabel 1.3. Comparație tehnologii server Node.js (2024)
+Tabel 1.3. Comparație tehnologii backend Node.js (2024)
 
 Criteriu Fastify Express NestJS Koa
-Performanță (cereri/s) 76,000 38,000 42,000 50,000
-Cost suplimentar Minim Mediu Mediu-Mare Mic  
-Validare scheme Nativă Plugin Integrată Plugin
+Performanță (req/s) 76,000 38,000 42,000 50,000
+Overhead Minim Mediu Mediu-Mare Mic  
+Validare schema Nativă (JSON Schema) Plugin Class-validator Plugin
 Documentație Excelentă Foarte bună Excelentă Bună  
 Ecosistem În creștere Foarte mare Mare Mediu  
 Curba învățare Medie Ușoară Medie-Dificilă Medie  
 Adopție 15% 55% 18% 8%
 (Sursa: Fastify Benchmarks 2024, npm trends, State of JS 2024)
-
 Alegerea Fastify pentru sistemul server al acestui proiect s-a bazat pe nevoia de performanță superioară într-o aplicație de comerț electronic unde timpul de răspuns influențează direct experiența utilizatorului și rata de conversie. Fastify este una dintre cele mai rapide tehnologii Node.js disponibile, capabilă să proceseze până la 76,000 de cereri pe secundă conform testelor oficiale (Fastify Team, 2024), de două ori mai rapid decât Express, cel mai popular framework Node.js. Această diferență de performanță devine critică când aplicația trebuie să gestioneze sute sau mii de utilizatori concurenți, mai ales în perioadele de vârf de trafic.
-
 Validarea nativă bazată pe scheme JSON reprezintă un alt avantaj semnificativ, eliminând necesitatea bibliotecilor externe și asigurând validarea rapidă și sigură a datelor de intrare (Fastify Documentation, 2024). Acest lucru reduce semnificativ riscul de erori și vulnerabilități de securitate, protejând aplicația împotriva atacurilor comune precum injectarea de cod sau manipularea datelor. Fiecare cerere primită de server este validată automat conform schemelor predefinite, respingând datele invalide înainte ca acestea să ajungă la logica de business.
-
 Suportul complet pentru siguranța tipurilor prin integrare nativă cu TypeScript oferă definiții complete și actualizate de tipuri, permițând dezvoltarea sigură de la un capăt la altul (Microsoft TypeScript Team, 2024). Acest lucru reduce erorile în timpul dezvoltării și îmbunătățește productivitatea dezvoltatorilor prin sugestii automate și verificări în timp real. Arhitectura bazată pe extensii permite extinderea funcționalității într-un mod modular și mentenabil, facilitând separarea responsabilităților și reutilizarea codului între diferite părți ale aplicației (Fastify Plugins Guide, 2024).
 Fastify oferă type definitions complete și actualizate, permițând dezvoltarea type-safe end-to-end. Acest lucru reduce bug-urile și îmbunătățește productivitatea dezvoltatorilor.
 Arhitectură bazată pe plugin-uri:
 Sistemul de plugin-uri al Fastify permite extinderea funcționalității într-un mod modular și mentenabil, facilitând separarea responsabilităților și reutilizarea codului.
 1.2.4. Managementul bazelor de date
 Evoluția tehnologiilor de baze de date:
-
-Baze de date relaționale:
-PostgreSQL, MySQL, SQL Server oferă consistență completă, relații complexe și interogări puternice. Sunt ideale pentru aplicații unde integritatea datelor este critică, cum ar fi sistemele de comerț electronic.
-
-Baze de date non-relaționale:
-MongoDB, Redis, Cassandra oferă scalabilitate orizontală și flexibilitate în structura datelor. Sunt potrivite pentru aplicații cu volume mari de date nestructurate.
-
-Baze de date hibride:
-CockroachDB, Google Spanner combină avantajele bazelor relaționale (consistență completă) cu scalabilitatea bazelor non-relaționale.
-
-Tabel 1.4. Comparație soluții de acces la baze de date pentru Node.js
+Baze de date relaționale (SQL):
+PostgreSQL, MySQL, SQL Server oferă consistență ACID, relații complexe și query-uri puternice. Sunt ideale pentru aplicații unde integritatea datelor este critică, cum ar fi sistemele e-commerce.
+Baze de date NoSQL:
+MongoDB, Redis, Cassandra oferă scalabilitate orizontală și flexibilitate în schema datelor. Sunt potrivite pentru aplicații cu volume mari de date nestructurate.
+Baze de date NewSQL:
+CockroachDB, Google Spanner combină avantajele SQL (consistență ACID) cu scalabilitatea NoSQL.
+Tabel 1.4. Comparație soluții ORM/Query Builder pentru Node.js
 
 Criteriu Prisma TypeORM Sequelize Knex.js
-Siguranță tipuri Nativ Nativ Bun Slab
-Siguranță tipuri Excelentă Bun Mediu Slab
+TypeScript Nativ Nativ Bun Bun
+Type Safety Excelentă Bun Mediu Slab
 Performanță Excelentă Bun Bună Excelentă
 Migrații Automate Manuale Manuale Manuale
-Experiență dezvoltare Excelentă Bun Mediu Mediu
+Developer Experience Excelentă Bun Mediu Mediu
 Relații Intuitive Complexe Mediu Manuale
 Adopție În creștere rapidă Stabilă Largă Mediu
 (Sursa: npm trends 2024, GitHub stars, State of JS 2024)
-
 Justificarea alegerii PostgreSQL + Prisma:
-
 PostgreSQL - Robustețe și funcționalități:
 
-- Conformitate completă pentru tranzacții sigure
+- Conformitate ACID completă pentru tranzacții sigure
 - Suport pentru JSON/JSONB pentru flexibilitate
-- Căutare în text complet nativă
-- Performanță excelentă pentru interogări complexe
+- Full-text search nativ
+- Performanță excelentă pentru query-uri complexe
 - Extensibilitate prin funcții și proceduri stocate
 - Comunitate activă și documentație excelentă
-
-Prisma - Experiență superioară pentru dezvoltatori:
-
-- Siguranță completă a tipurilor cu TypeScript
+  Prisma - Developer Experience superior:
+- Type safety complet cu TypeScript
 - Generare automată de tipuri din schema bazei de date
 - Migrații automate și sigure
-- Studio Prisma pentru vizualizare și editare date
-- Interogări intuitive și sigure
-- Performanță optimizată prin grupare și stocare temporară
+- Prisma Studio pentru vizualizare și editare date
+- Query-uri intuitive și type-safe
+- Performanță optimizată prin query batching și caching
   1.2.5. Tendințe și tehnologii emergente
   Inteligență Artificială și Machine Learning:
   Integrarea AI în aplicațiile web devine din ce în ce mai accesibilă prin API-uri precum OpenAI GPT-4, Google Gemini. Aplicațiile e-commerce pot beneficia de:
@@ -339,17 +313,16 @@ Prisma - Experiență superioară pentru dezvoltatori:
   Asistentele vocale (Alexa, Google Assistant) și dispozitivele IoT creează noi oportunități pentru comerțul electronic. Juniper Research (2024) estimează că voice commerce va genera vânzări de peste 80 miliarde USD până în 2025.
 
 Capitolul 2. ANALIZA CERINȚELOR ȘI ARHITECTURA SISTEMULUI
-2.1. Tehnologii pentru interfața utilizator (React, Next.js)
+2.1. Tehnologii pentru interfața utilizatot (React, Next.js)
 Obiectivul general:
-Dezvoltarea unei aplicații web complete de comerț electronic care să demonstreze utilizarea tehnologiilor moderne și să ofere o experiență utilizator de înaltă calitate.
-
+Dezvoltarea unei aplicații web complete de e-commerce care să demonstreze utilizarea tehnologiilor moderne full-stack și să ofere o experiență utilizator de înaltă calitate.
 Obiective specifice:
 
 1. Obiective tehnice
    - Implementarea unei arhitecturi scalabile folosind React.js 19.2.0 și Next.js 16.0.1
-   - Dezvoltarea unui sistem server robust cu Fastify 5.6.2 și integrarea cu PostgreSQL
-   - Utilizarea Prisma 6.19.2 pentru managementul bazei de date
-   - Implementarea autentificării și autorizării cu jetoane de securitate
+   - Dezvoltarea unui API robust cu Fastify 5.6.2 și integrarea cu PostgreSQL
+   - Utilizarea Prisma 6.19.0 pentru managementul bazei de date
+   - Implementarea autentificării și autorizării cu JWT
    - Crearea unui design responsive cu Tailwind CSS 4
 2. Obiective funcționale:
    - Dezvoltarea unui sistem complet de gestionare produse
@@ -408,59 +381,75 @@ Obiective specifice:
 - Nevoi: Dashboard intuitiv, rapoarte detaliate, gestionare eficientă a stocurilor
 - Frustrări: Interfețe complicate, lipsa automatizărilor, raportare insuficientă
   2.1.3. User Stories - Funcționalități din perspectiva utilizatorului
-  Modul Autentificare și Gestionare Cont:
-  US-001: Ca utilizator nou, vreau să mă pot înregistra rapid folosind email-ul, pentru a putea efectua comenzi.
-  -Criterii de acceptare:
-  - Formular cu câmpuri: nume, email, parolă, confirmare parolă
-  - Validare în timp real (email valid, parolă min. 8 caractere)
-  - Mesaj de confirmare prin email
-  - Redirect automat către dashboard după înregistrare
+
+Modul Autentificare și Gestionare Cont:
+
+US-001: Înregistrare rapidă
+Descriere: Utilizatorul nou trebuie să poată efectua înregistrarea rapidă folosind adresa de email pentru a putea efectua comenzi.
+Criterii de acceptare:
+
+- Formular cu câmpuri: nume, email, parolă, confirmare parolă
+- Validare în timp real (email valid, parolă min. 8 caractere)
+- Mesaj de confirmare prin email
+- Redirect automat către dashboard după înregistrare
 - Prioritate: Must have
-  US-002: Ca utilizator înregistrat, vreau să mă pot autentifica securizat, pentru a accesa contul meu.
-- Criterii de acceptare:
-  - Autentificare cu email și parolă
-  - Opțiune "Ține-mă minte" pentru sesiuni persistente
-  - Link "Am uitat parola" funcțional
-  - Mesaje de eroare clare pentru credențiale incorecte
-- Prioritate:Must have
-  US-003:Ca utilizator autentificat, vreau să îmi pot gestiona profilul, pentru a actualiza informațiile personale.
-- Criterii de acceptare:
-  - Editare nume, email, telefon, adresă
-  - Schimbare parolă cu validare parolă curentă
-  - Vizualizare istoric comenzi
-  - Gestionare adrese de livrare multiple
+
+US-002: Autentificare securizată
+Descriere: Utilizatorul înregistrat trebuie să poată accesa contul prin autentificare securizată.
+Criterii de acceptare:
+
+- Autentificare cu email și parolă
+- Opțiune "Ține-mă minte" pentru sesiuni persistente
+- Link "Am uitat parola" funcțional
+- Mesaje de eroare clare pentru credențiale incorecte
+
+Prioritate: Must have
+
+US-003: Gestionare profil utilizator
+Descriere: Utilizatorul autentificat trebuie să poată gestiona informațiile personale din profil.
+Criterii de acceptare:
+
+- Editare nume, email, telefon, adresă
+- Schimbare parolă cu validare parolă curentă
+- Vizualizare istoric comenzi
+- Gestionare adrese de livrare multiple
 - Prioritate: Must have
   Modul Catalog Produse:
-  US-004: Ca vizitator, vreau să pot naviga prin categorii de produse, pentru a găsi ușor ce caut.
-- Criterii de acceptare:
+  US-004: Navigare prin categorii
+  Descriere: Vizitatorul trebuie să poată naviga prin categoriile de produse pentru a găsi produsele dorite.
+  Criterii de acceptare:
   - Meniu categorii vizibil și intuitiv
   - Subcategorii pentru organizare ierarhică
   - Breadcrumbs pentru navigare ușoară
   - Număr produse afișat pentru fiecare categorie
 - Prioritate: Must have
-  US-005: Ca utilizator, vreau să pot căuta produse după nume sau descriere, pentru a găsi rapid produsul dorit.
-- Criterii de acceptare:
+  US-005: Căutare produse
+  Descriere: Utilizatorul trebuie să poată căuta produse după nume sau descriere pentru a găsi rapid produsul dorit.
+  Criterii de acceptare:
   - Bară de căutare vizibilă în header
   - Sugestii automate în timp ce tastez (autocomplete)
   - Rezultate relevante ordonate după relevanță
   - Filtrare și sortare rezultate căutare
 - Prioritate: Must have
-  US-006: Ca utilizator, vreau să pot filtra produsele după preț, categorie, disponibilitate, pentru a restrânge opțiunile.
-  -Criterii de acceptare:
+  US-006: Filtrare produse
+  Descriere: Utilizatorul trebuie să poată filtra produsele după preț, categorie și disponibilitate pentru a restrânge opțiunile.
+  Criterii de acceptare:
   - Filtre multiple aplicabile simultan
   - Slider pentru interval preț
   - Checkbox-uri pentru categorii și disponibilitate
   - Număr rezultate actualizat în timp real
   - Opțiune "Resetare filtre"
 - Prioritate: Should have
-  US-007: Ca utilizator, vreau să pot sorta produsele după diferite criterii, pentru a găsi cele mai potrivite opțiuni.
-- Criterii de acceptare:
+  US-007: Sortare produse
+  Descriere: Utilizatorul trebuie să poată sorta produsele după diferite criterii pentru a găsi cele mai potrivite opțiuni.
+  Criterii de acceptare:
   - Sortare după: preț (crescător/descrescător), nume, dată adăugare, popularitate
   - Dropdown vizibil pentru selecție sortare
   - Aplicare instantanee fără reîncărcare pagină
 - Prioritate: Should have
-  US-008: Ca utilizator, vreau să văd detalii complete despre un produs, pentru a lua o decizie informată de cumpărare.
-- Criterii de acceptare:
+  US-008: Detalii produs
+  Descriere: Utilizatorul trebuie să poată vizualiza detalii complete despre un produs pentru a lua o decizie informată de cumpărare.
+  Criterii de acceptare:
   - Imagini multiple cu zoom
   - Descriere detaliată
   - Preț clar afișat (cu reducere dacă există)
@@ -470,37 +459,45 @@ Obiective specifice:
   - Produse similare/recomandate
 - Prioritate: Must have
   Modul Coș de Cumpărături:
-  US-009: Ca utilizator, vreau să pot adăuga produse în coș, pentru a le cumpăra mai târziu.
-- Criterii de acceptare:
+  US-009: Adăugare produse în coș
+  Descriere: Utilizatorul trebuie să poată adăuga produse în coș pentru a le cumpăra mai târziu.
+  Criterii de acceptare:
   - Buton "Adaugă în coș" vizibil pe fiecare produs
   - Feedback vizual la adăugare (animație, notificare)
   - Actualizare număr produse în icon coș din header
   - Persistență coș între sesiuni
 - Prioritate: Must have
-  US-010:Ca utilizator, vreau să pot modifica cantitatea produselor din coș, pentru a ajusta comanda.
-- Criterii de acceptare:
+  US-010: Modificare cantitate în coș
+  Descriere: Utilizatorul trebuie să poată modifica cantitatea produselor din coș pentru a ajusta comanda.
+  Criterii de acceptare:
   - Butoane +/- pentru ajustare cantitate
   - Input manual pentru cantitate
   - Validare cantitate maximă (stoc disponibil)
   - Actualizare automată total
 - Prioritate: Must have
-  US-011: Ca utilizator, vreau să pot șterge produse din coș, pentru a elimina articolele nedorite.
-- Criterii de acceptare:
+  US-011: Ștergere produse din coș
+  Descriere: Utilizatorul trebuie să poată șterge produse din coș pentru a elimina articolele nedorite.
+  Criterii de acceptare:
   - Buton "Șterge" pentru fiecare produs
   - Confirmare înainte de ștergere
   - Opțiune "Golește coș" pentru ștergere totală
   - Mesaj când coșul este gol
-- Prioritate:Must have
-  US-012: Ca utilizator, vreau să văd totalul comenzii actualizat în timp real, pentru a ști cât voi plăti.
-- Criterii de acceptare:
-  - Subtotal produse
-  - Cost livrare (dacă aplicabil)
-  - Reduceri aplicate (vouchere, promoții)
-  - Total final evidențiat
+
+Prioritate: Must have
+
+US-012: Vizualizare total comandă
+Descriere: Utilizatorul trebuie să poată vizualiza totalul comenzii actualizat în timp real pentru a ști suma finală de plată.
+Criterii de acceptare:
+
+- Subtotal produse
+- Cost livrare (dacă aplicabil)
+- Reduceri aplicate (vouchere, promoții)
+- Total final evidențiat
 - Prioritate: Must have
   Modul Plasare Comandă:
-  US-013: Ca utilizator autentificat, vreau să pot plasa o comandă rapid, pentru a finaliza achiziția.
-- Criterii de acceptare:
+  US-013: Plasare comandă
+  Descriere: Utilizatorul autentificat trebuie să poată plasa o comandă rapid pentru a finaliza achiziția.
+  Criterii de acceptare:
   - Formular checkout cu date pre-completate din profil
   - Selecție adresă livrare (existentă sau nouă)
   - Selecție metodă plată (card, ramburs, transfer)
@@ -508,31 +505,35 @@ Obiective specifice:
   - Câmp pentru observații
   - Rezumat comandă înainte de confirmare
 - Prioritate: Must have
-  US-014: Ca utilizator, vreau să primesc confirmare comandă prin email, pentru a avea dovada achiziției.
-- Criterii de acceptare:
+  US-014: Confirmare comandă prin email
+  Descriere: Utilizatorul trebuie să primească confirmare comandă prin email pentru a avea dovada achiziției.
+  Criterii de acceptare:
   - Email automat după plasare comandă
   - Detalii complete comandă (produse, prețuri, adresă)
   - Număr comandă unic
   - Link tracking comandă
   - Informații contact suport
 - Prioritate: Must have
-  US-015: Ca utilizator, vreau să pot urmări statusul comenzii, pentru a ști când va ajunge.
-- Criterii de acceptare:
+  US-015: Urmărire status comandă
+  Descriere: Utilizatorul trebuie să poată urmări statusul comenzii pentru a ști când va ajunge.
+  Criterii de acceptare:
   - Pagină "Comenzile mele" cu istoric
   - Status clar pentru fiecare comandă (procesare, expediată, livrată)
   - Timeline vizual cu etape
   - Notificări email la schimbare status
 - Prioritate: Should have
   Modul Recenzii și Evaluări:
-  US-016: Ca utilizator care a cumpărat un produs, vreau să pot lăsa o recenzie, pentru a ajuta alți cumpărători.
-- Criterii de acceptare:
+  US-016: Adăugare recenzie produs
+  Descriere: Utilizatorul care a cumpărat un produs trebuie să poată lăsa o recenzie pentru a ajuta alți cumpărători.
+  Criterii de acceptare:
   - Formular recenzie cu rating (1-5 stele) și text
   - Validare: doar utilizatori care au cumpărat produsul
   - Opțiune adăugare poze
   - Moderare recenzii înainte de publicare
 - Prioritate: Should have
-  US-017: Ca utilizator, vreau să văd recenziile altor cumpărători, pentru a evalua calitatea produsului.
-- Criterii de acceptare:
+  US-017: Vizualizare recenzii
+  Descriere: Utilizatorul trebuie să poată vizualiza recenziile altor cumpărători pentru a evalua calitatea produsului.
+  Criterii de acceptare:
   - Rating mediu afișat vizibil
   - Număr total recenzii
   - Filtrare recenzii după rating
@@ -540,24 +541,30 @@ Obiective specifice:
   - Opțiune "Recenzie utilă" (like)
 - Prioritate: Should have
   Modul Administrare (Admin):
-  US-018: Ca administrator, vreau să pot gestiona produsele, pentru a menține catalogul actualizat.
-- Criterii de acceptare:
+  US-018: Gestionare produse (Admin)
+  Descriere: Administratorul trebuie să poată gestiona produsele pentru a menține catalogul actualizat.
+  Criterii de acceptare:
   - CRUD complet produse (Create, Read, Update, Delete)
   - Upload imagini multiple
   - Gestionare categorii și subcategorii
   - Setare prețuri, reduceri, stocuri
   - Import/export produse CSV
-- Prioritate:Must have
-  US-019: Ca administrator, vreau să pot gestiona comenzile, pentru a procesa vânzările eficient.
-- Criterii de acceptare:
-  - Listă comenzi cu filtrare și sortare
-  - Schimbare status comandă
-  - Vizualizare detalii complete comandă
-  - Generare factură PDF
-  - Statistici vânzări
+
+Prioritate: Must have
+
+US-019: Gestionare comenzi (Admin)
+Descriere: Administratorul trebuie să poată gestiona comenzile pentru a procesa vânzările eficient.
+Criterii de acceptare:
+
+- Listă comenzi cu filtrare și sortare
+- Schimbare status comandă
+- Vizualizare detalii complete comandă
+- Generare factură PDF
+- Statistici vânzări
 - Prioritate: Must have
-  US-020: Ca administrator, vreau să văd rapoarte și statistici, pentru a analiza performanța magazinului.
-- Criterii de acceptare:
+  US-020: Rapoarte și statistici (Admin)
+  Descriere: Administratorul trebuie să poată vizualiza rapoarte și statistici pentru a analiza performanța magazinului.
+  Criterii de acceptare:
   - Dashboard cu metrici cheie (vânzări, comenzi, utilizatori)
   - Grafice evoluție în timp
   - Top produse vândute
@@ -1042,15 +1049,18 @@ Găsire comandă plasată 73% 52s 3.6 Link "Comenzile mele" greu de găsit
    3.2. Implementarea responsive design
    Responsive design-ul a fost implementat folosind o abordare mobile-first, asigurând o experiență optimă pe toate dispozitivele. Această strategie este esențială având în vedere că, conform Google Analytics (2024), peste 65% din traficul e-commerce provine de pe dispozitive mobile.
    3.2.1. Strategia Mobile-First
-   Abordarea mobile-first presupune proiectarea inițială pentru ecrane mici, apoi extinderea progresivă pentru ecrane mai mari. Această metodologie oferă mai multe avantaje:
-   Avantaje mobile-first:
 
-- Performanță superioară:Cod optimizat pentru dispozitive cu resurse limitate
-- Prioritizare conținut:Focus pe elementele esențiale
-  -Progressive enhancement:Adăugare funcționalități pentru ecrane mari
-  -SEO îmbunătățit:Google folosește mobile-first indexing
-  Provocări și soluții:
-  Tabel 3.5. Provocări responsive design și soluții implementate
+Abordarea mobile-first presupune proiectarea inițială pentru ecrane mici, apoi extinderea progresivă pentru ecrane mai mari. Această metodologie oferă mai multe avantaje:
+
+Avantaje mobile-first:
+
+- Performanță superioară: Cod optimizat pentru dispozitive cu resurse limitate
+- Prioritizare conținut: Focus pe elementele esențiale
+- Progressive enhancement: Adăugare funcționalități pentru ecrane mari
+- SEO îmbunătățit: Google folosește mobile-first indexing
+
+Provocări și soluții:
+Tabel 3.5. Provocări responsive design și soluții implementate
 
 Provocare Impact Soluție implementată Rezultat
 Imagini mari încetinesc mobile Timp încărcare 3-5s Responsive images + lazy loading Reducere 70% timp încărcare
@@ -1148,8 +1158,8 @@ Mobile: Vertical steps, one at a time
   Imaginile reprezintă cea mai mare parte a payload-ului unei pagini e-commerce. Optimizarea lor este crucială pentru performanță.
   Strategii implementate:
 
-Figura 4.8. Produse
-Figura 4.9, Produse
+Figura 3.8. Produse
+Figura 3.9, Produse
 
 (Sursa: Realizat de autor) (Sursa: Realizat de autor) 2. Next.js Image Optimization:
 
@@ -1176,7 +1186,7 @@ Lighthouse Performance 62/100 94/100 +52%
 3.2.5. Touch și interacțiuni mobile
 Designul pentru touch necesită considerații speciale față de mouse/keyboard:
 Ghid dimensiuni touch targets:
-Tabel 3.10. Dimensiuni minime touch targets
+Tabel 3.90. Dimensiuni minime touch targets
 
 Element Dimensiune minimă Spacing Justificare  
 Buton principal 48x48px 8px Apple HIG, Material Design
@@ -1204,7 +1214,7 @@ Swipe gestures:
 - Confirmare acțiuni importante
   3.2.6. Teste pe dispozitive reale
   Testarea pe dispozitive reale este esențială pentru validarea responsive design-ului.
-  Tabel 3.101. Matrice testare dispozitive
+  Tabel 3.100. Matrice testare dispozitive
 
 Dispozitiv OS Browser Rezoluție Status Probleme găsite
 iPhone 14 Pro iOS 17 Safari 393x852 ✅ Pass -
@@ -1226,7 +1236,7 @@ Probleme comune identificate și rezolvate:
    - Soluție: Grid 3 coloane în loc de 2
 4. Desktop 4K: Text prea mic
    - Soluție: Font scaling pentru rezoluții > 2560px
-     3.2.2. Layout-ul adaptiv
+     3.2.7. Layout-ul adaptiv
      Fiecare componentă a fost proiectată să se adapteze la diferite dimensiuni de ecran:
      Header/Navigation:
 
@@ -1240,9 +1250,9 @@ Probleme comune identificate și rezolvate:
   Formularele:
 - Mobile: Câmpuri stacked vertical
 - Tablet/Desktop: Layout în două coloane
-  3.2.3. Imagini responsive
+  3.2.8. Imagini responsive
   Implementarea imaginilor responsive folosește Next.js Image component:
-  3.2.4. Touch-friendly interfaces
+  3.2.9. Touch-friendly interfaces
   Pentru dispozitivele mobile, interfața a fost optimizată pentru interacțiunea touch:
 - Dimensiunea minimă a elementelor interactive: 44px
 - Spațierea adecvată între elemente clickable
@@ -1255,57 +1265,62 @@ Probleme comune identificate și rezolvate:
 
 1. Primul vizitator:
    - Landing page → Explorare produse → Înregistrare → Prima comandă
+
 2. Utilizatorul returnat:
    - Login → Căutare produs → Adăugare în coș → Checkout
+
 3. Administratorul:
    - Login admin → Dashboard → Gestionare produse/comenzi
-     3.3.3. Loading states și feedback
-     Toate acțiunile asincrone au loading states clare:
-     -Skeleton loaders pentru încărcarea conținutului
-     -Progress indicators pentru procese lungi
-     -Toast notifications pentru feedback instant
-     -Error boundaries pentru gestionarea erorilor
-     3.3.4. Navigarea intuitivă
-     Structura de navigare urmează convențiile web:
-     Header Navigation:
-     ├── Logo (link către home)
-     ├── Data și oră
-     ├── Search Bar (căutare globală)
-     ├── Navigation Links
-     │ ├── Despre
-     │ └── Contact
-     ├── Conversie bani
-     ├── Conversie limbă
-     ├── User Menu
-     │ ├── Profil
-     │ ├── Comenzi
-     │ ├── Favorite
-     │ ├── Facturi
-     │ ├── Recenzii
-     │ ├── Vaucere
-     │ └── Logout
-     └── Cart Icon (cu indicator număr produse)
-     3.4. Accesibilitatea aplicației
-     Accesibilitatea a fost o prioritate în dezvoltarea aplicației, urmând ghidurile WCAG 2.1.
-     3.4.3. Keyboard Navigation
-     Suportul complet pentru navigarea cu tastatura:
+
+3.3.2. Loading states și feedback
+Toate acțiunile asincrone au loading states clare:
+-Skeleton loaders pentru încărcarea conținutului
+-Progress indicators pentru procese lungi
+-Toast notifications pentru feedback instant
+-Error boundaries pentru gestionarea erorilor
+3.3.3. Navigarea intuitivă
+Structura de navigare urmează convențiile web:
+Header Navigation:
+├── Logo (link către home)
+├── Data și oră
+├── Search Bar (căutare globală)
+├── Navigation Links
+│ ├── Despre
+│ └── Contact
+├── Conversie bani
+├── Conversie limbă
+├── User Menu
+│ ├── Profil
+│ ├── Comenzi
+│ ├── Favorite
+│ ├── Facturi
+│ ├── Recenzii
+│ ├── Vaucere
+│ └── Logout
+└── Cart Icon (cu indicator număr produse)
+3.4. Accesibilitatea aplicației
+Accesibilitatea a fost o prioritate în dezvoltarea aplicației, urmând ghidurile WCAG 2.1.
+3.4.1. Keyboard Navigation
+
+Suportul complet pentru navigarea cu tastatura:
 
 - Tab order logic și intuitiv
-  -Focus indicators vizibili
-  -Skip links pentru navigarea rapidă
-  -Keyboard shortcuts pentru acțiuni frecvente
-  3.4.4. Contrast și vizibilitate
+- Focus indicators vizibili
+- Skip links pentru navigarea rapidă
+- Keyboard shortcuts pentru acțiuni frecvente
+  3.4.2. Contrast și vizibilitate
   Respectarea standardelor de contrast WCAG:
 - Contrast minim 4.5:1 pentru text normal
 - Contrast minim 3:1 pentru text mare
 - Focus indicators cu contrast suficient
 - Suport pentru dark mode (planificat pentru versiuni viitoare)
-  3.4.5. Testarea accesibilității
+  3.4.3. Testarea accesibilității
   Testarea a fost realizată cu:
+
 - axe-core pentru testarea automată
-  -Screen readers (NVDA, JAWS) pentru testarea manuală
-  -Keyboard-only navigation testing
-  -Color blindness simulators
+- Screen readers (NVDA, JAWS) pentru testarea manuală
+- Keyboard-only navigation testing
+- Color blindness simulators
   Rezultatele testării au arătat o conformitate de 95% cu standardele WCAG 2.1 AA, cu planuri de îmbunătățire pentru conformitatea completă.
 
 PARTEA II - IMPLEMENTAREA PRACTICĂ
@@ -1325,316 +1340,275 @@ Implementarea componentei include următoarele caracteristici principale:
 - Accesibilitate: Implementarea atributelor ARIA și gestionarea corectă a stărilor disabled pentru utilizatorii cu dizabilități
   Arhitectura componentelor respectă principiul Single Responsibility, fiecare componentă având o responsabilitate clară și bine definită (Martin, 2017).
   4.1.2. State Management cu Context API
-  Gestionarea stării globale a aplicației utilizează React Context API (React Team, 2024), o soluție nativă care elimină necesitatea bibliotecilor externe precum Redux pentru aplicații de dimensiuni medii. Această abordare oferă un echilibru optim între simplitate și funcționalitate.
-  AuthContext (implementarea completă este disponibilă în repository-ul GitHub) reprezintă implementarea centralizată a logicii de autentificare, oferind acces la starea utilizatorului și metodele de autentificare în întreaga aplicație. Contextul gestionează următoarele aspecte:
+
+Gestionarea stării globale a aplicației utilizează React Context API (React Team, 2024), o soluție nativă care elimină necesitatea bibliotecilor externe precum Redux pentru aplicații de dimensiuni medii. Această abordare oferă un echilibru optim între simplitate și funcționalitate.
+
+AuthContext (implementarea completă este disponibilă în repository-ul GitHub) reprezintă implementarea centralizată a logicii de autentificare, oferind acces la starea utilizatorului și metodele de autentificare în întreaga aplicație. Contextul gestionează următoarele aspecte:
+
 - Persistența sesiunii: Stocarea token-ului JWT în localStorage pentru menținerea sesiunii între reîncărcări de pagină
-  -Încărcarea inițială: Verificarea automată a token-ului stocat la pornirea aplicației și restaurarea stării utilizatorului
-  -Operațiuni de autentificare: Implementarea metodelor de login și logout cu gestionarea erorilor
-  -Starea de încărcare: Tracking-ul stării de încărcare pentru afișarea indicatorilor vizuali în timpul operațiunilor asincrone
-  Pattern-ul Provider/Consumer utilizat permite accesul la starea de autentificare din orice componentă a aplicației fără necesitatea prop drilling, respectând principiile de clean architecture (Martin, 2017). Hook-ul personalizat useAuth încapsulează logica de acces la context și oferă validare automată pentru utilizarea corectă în cadrul Provider-ului.
-  4.1.3. Custom Hooks pentru logica reutilizabilă
-  Hook-ul personalizat useCart (implementarea completă este disponibilă în repository-ul GitHub) încapsulează întreaga logică de gestionare a coșului de cumpărături, oferind o interfață simplă și reutilizabilă pentru componentele aplicației. Această abordare respectă principiul DRY (Don't Repeat Yourself) și facilitează mentenanța codului (Martin, 2017).
-  Implementarea hook-ului include următoarele funcționalități esențiale:
+- Încărcarea inițială: Verificarea automată a token-ului stocat la pornirea aplicației și restaurarea stării utilizatorului
+- Operațiuni de autentificare: Implementarea metodelor de login și logout cu gestionarea erorilor
+- Starea de încărcare: Tracking-ul stării de încărcare pentru afișarea indicatorilor vizuali în timpul operațiunilor asincrone
+
+Pattern-ul Provider/Consumer utilizat permite accesul la starea de autentificare din orice componentă a aplicației fără necesitatea prop drilling, respectând principiile de clean architecture (Martin, 2017). Hook-ul personalizat useAuth încapsulează logica de acces la context și oferă validare automată pentru utilizarea corectă în cadrul Provider-ului.
+
+4.1.3. Custom Hooks pentru logica reutilizabilă
+
+Hook-ul personalizat useCart (implementarea completă este disponibilă în repository-ul GitHub) încapsulează întreaga logică de gestionare a coșului de cumpărături, oferind o interfață simplă și reutilizabilă pentru componentele aplicației. Această abordare respectă principiul DRY (Don't Repeat Yourself) și facilitează mentenanța codului (Martin, 2017).
+
+Implementarea hook-ului include următoarele funcționalități esențiale:
+
 - Gestionarea stării locale: Menținerea listei de produse din coș și a stării de încărcare pentru feedback vizual
-  -Operații CRUD complete: Metode pentru adăugare, actualizare, ștergere și încărcare produse din coș
-  -Calcule automate: Funcții pentru calcularea totalului prețurilor și a numărului total de produse
+- Operații CRUD complete: Metode pentru adăugare, actualizare, ștergere și încărcare produse din coș
+- Calcule automate: Funcții pentru calcularea totalului prețurilor și a numărului total de produse
 - Sincronizare cu backend-ul: Toate operațiunile comunică cu API-ul pentru persistența datelor
-  -Error handling: Gestionarea erorilor și propagarea lor către componente pentru afișarea mesajelor corespunzătoare
-  Utilizarea custom hooks reprezintă o practică recomandată în dezvoltarea React modernă, permițând separarea logicii de business de componenta vizuală și facilitând testarea independentă a funcționalităților (React Team, 2024).
-  (Referința cod complet este este disponibilă în repository-ul GitHub)
+- Error handling: Gestionarea erorilor și propagarea lor către componente pentru afișarea mesajelor corespunzătoare
 
-  4.1.4. Optimizarea performanței frontend
-  Performanța frontend-ului a fost optimizată prin implementarea mai multor tehnici moderne de optimizare React. Implementarea completă este disponibilă în repository-ul GitHub al proiectului.
+Utilizarea custom hooks reprezintă o practică recomandată în dezvoltarea React modernă, permițând separarea logicii de business de componenta vizuală și facilitând testarea independentă a funcționalităților (React Team, 2024).
 
-Încărcare dinamică pentru componente mari: Utilizarea mecanismelor de încărcare dinamică pentru componentele voluminoase precum panoul de administrare și detaliile produselor. Această tehnică reduce dimensiunea pachetului inițial și îmbunătățește timpul de încărcare a paginii (Grigorik, 2013).
+(Referința cod complet este disponibilă în repository-ul GitHub)
+Performanța frontend-ului a fost optimizată prin mai multe tehnici:
 
-Memoizarea componentelor: Aplicarea tehnicilor de memoizare pentru componentele care primesc aceleași proprietăți frecvent, evitând re-afișările inutile. Componenta de listă produse este memoizată pentru a preveni re-afișarea când lista de produse nu se modifică.
-
-Virtualizarea listelor mari: Implementarea bibliotecii specializate pentru afișarea eficientă a listelor cu sute sau mii de elemente. Doar elementele vizibile în zona de vizualizare sunt afișate, reducând semnificativ consumul de memorie și îmbunătățind performanța derulării.
-
-Împărțirea automată a codului: Framework-ul oferă împărțire automată a codului la nivel de rută, asigurând că utilizatorii descarcă doar codul necesar pentru pagina curentă.
-
-Aceste optimizări au contribuit la obținerea unui scor Lighthouse de 94/100 pentru performanță și un timp de încărcare a conținutului principal sub 1.5 secunde.
-
-4.1.5. Gestionarea erorilor și stărilor de încărcare
+```typescript
+Lazy loading pentru componente mari
+4.1.4. Optimizarea performanței frontend
+Performanța frontend-ului a fost optimizată prin implementarea mai multor tehnici moderne de optimizare React (implementarea completă este disponibilă în repository-ul GitHub):
+Lazy Loading pentru componente mari: Utilizarea funcției `lazy()` din React pentru încărcarea dinamică a componentelor voluminoase precum AdminPanel și ProductDetails. Această tehnică reduce dimensiunea bundle-ului inițial și îmbunătățește timpul de încărcare a paginii (Grigorik, 2013).
+Memoizarea componentelor: Aplicarea `React.memo()` pentru componentele care primesc aceleași props frecvent, evitând re-render-urile inutile. Componenta ProductList este memoizată pentru a preveni re-render-ul când lista de produse nu se modifică.
+Virtualizarea listelor mari: Implementarea bibliotecii `react-window` pentru afișarea eficientă a listelor cu sute sau mii de elemente. Doar elementele vizibile în viewport sunt render-ate, reducând semnificativ consumul de memorie și îmbunătățind performanța scroll-ului.
+Code splitting automat: Next.js oferă code splitting automat la nivel de rută, asigurând că utilizatorii descarcă doar codul necesar pentru pagina curentă.
+Aceste optimizări au contribuit la obținerea unui scor Lighthouse de 94/100 pentru performanță și un LCP (Largest Contentful Paint) sub 1.5 secunde.
+(Referința cod complet este disponibilă în repository-ul GitHub)
+4.1.5. Gestionarea erorilor și loading states
 Gestionarea robustă a erorilor este esențială pentru o experiență utilizator de calitate (Nielsen, 2021). Aplicația implementează două mecanisme principale. Implementarea completă este disponibilă în repository-ul GitHub al proiectului.
-
 Componenta de capturare a erorilor: Componentă specializată care capturează erorile JavaScript din arborele de componente. Când apare o eroare, utilizatorul vede un mesaj prietenos cu opțiunea de a reîncărca pagina, în loc de un ecran alb. În mediul de development, mesajul de eroare detaliat este afișat pentru depanare.
-
 Mecanism personalizat pentru operații asincrone: Mecanism care încapsulează logica de gestionare a stărilor de încărcare și eroare pentru operațiunile asincrone. Acest pattern elimină duplicarea codului și asigură o gestionare consistentă a erorilor în întreaga aplicație.
 Beneficiile acestei abordări includ:
-
 - Experiență utilizator îmbunătățită prin feedback clar
 - Prevenirea crash-urilor aplicației
 - Debugging facilitat în development
 - Cod mai curat și mai ușor de menținut
-  (Referința cod complet este este disponibilă în repository-ul GitHub)
-  4.2. Dezvoltarea backend-ului
-  Backend-ul a fost dezvoltat folosind Fastify cu o arhitectură modulară și scalabilă, urmând principiile SOLID și pattern-urile de design moderne.
-  4.2.1. Arhitectura în straturi (Layered Architecture)
-  Aplicația backend utilizează o arhitectură în trei straturi pentru separarea clară a responsabilităților (Fowler, 2002):
-  Tabel 4.1. Arhitectura în straturi a backend-ului
+  (Referința cod complet este disponibilă în repository-ul GitHub)
+ 4.2. Dezvoltarea backend-ului
+Backend-ul a fost dezvoltat folosind Fastify cu o arhitectură modulară și scalabilă, urmând principiile SOLID și pattern-urile de design moderne.
+4.2.1. Arhitectura în straturi (Layered Architecture)
+Aplicația backend utilizează o arhitectură în trei straturi pentru separarea clară a responsabilităților (Fowler, 2002):
+Tabel 4.1. Arhitectura în straturi a backend-ului
 
-Strat Responsabilitate Tehnologii Exemple componente
-Presentation Layer Gestionare HTTP requests/responses Fastify, JSON Schema Routes, Controllers, Middleware
-Business Logic Layer Logica aplicației, reguli business TypeScript, Class-based Services, Validators, Helpers
-Data Access Layer Interacțiune cu baza de date Prisma ORM, PostgreSQL Repositories, Models, Migrations
+Strat	Responsabilitate	Tehnologii	Exemple componente
+Presentation Layer	Gestionare HTTP requests/responses	Fastify, JSON Schema	Routes, Controllers, Middleware
+Business Logic Layer	Logica aplicației, reguli business	TypeScript, Class-based	Services, Validators, Helpers
+Data Access Layer	Interacțiune cu baza de date	Prisma ORM, PostgreSQL	Repositories, Models, Migrations
 (Sursa: Realizat de autor, bazat pe Layered Architecture Pattern)
 Avantaje arhitectură:
-
 - Separarea responsabilităților: Fiecare strat are un scop clar definit
 - Testabilitate: Fiecare strat poate fi testat independent
 - Mentenabilitate: Modificările într-un strat nu afectează celelalte
 - Scalabilitate: Straturile pot fi scalate independent
 - Reutilizabilitate: Logica business poate fi reutilizată în contexte diferite
-  4.2.2. Structura API-ului REST
-  API-ul REST a fost proiectat urmând principiile arhitecturale REST și best practices din industrie.
-  Organizarea rutelor și endpoint-uri:
-  Tabel 4.2. Structura completă API endpoints
+4.2.2. Structura API-ului REST
+API-ul REST a fost proiectat urmând principiile arhitecturale REST și best practices din industrie.
+Organizarea rutelor și endpoint-uri:
+Tabel 4.2. Structura completă API endpoints
 
-Modul Endpoint Metode Autentificare Descriere
-Auth /api/auth/register POST Nu Înregistrare utilizator nou
-/api/auth/login POST Nu Autentificare utilizator
-/api/auth/logout` POST Da Deconectare utilizator
-/api/auth/me GET Da Informații utilizator curent
-/api/auth/refresh POST Da Refresh token JWT
-Products /api/products GET Nu Listă produse (paginată)
-/api/products/:id GET Nu Detalii produs specific
-/api/products POST Admin Creare produs nou
-/api/products/:id PUT Admin Actualizare produs
-/api/products/:id DELETE Admin Ștergere produ
-/api/products/search GET Nu Căutare produse
-Cart /api/cart GET Da Coș utilizator curent
-/api/cart/items POST Da Adăugare produs în coș
-/api/cart/items/:id PUT Da Actualizare cantitate
-/api/cart/items/:id DELETE Da Ștergere produs din coș
-/api/cart/clear DELETE Da Golire coș complet
-Orders /api/orders GET Da Comenzi utilizator
-/api/orders/:id GET Da Detalii comandă
-/api/orders POST Da Plasare comandă nouă
-/api/orders/:id/cancel POST Da Anulare comandă
-Admin /api/admin/orders GET Admin Toate comenzile
-/api/admin/orders/:id PUT Admin Actualizare status comandă
-/api/admin/users GET Admin Listă utilizatori
-/api/admin/stats GET Admin Statistici dashboard
+Modul	Endpoint	Metode	Autentificare	Descriere
+Auth	/api/auth/register	POST	Nu	Înregistrare utilizator nou
+	/api/auth/login	POST	Nu	Autentificare utilizator
+	/api/auth/logout`	POST	Da	Deconectare utilizator
+	/api/auth/me	GET	Da	Informații utilizator curent
+	/api/auth/refresh	POST	Da	Refresh token JWT
+Products	/api/products	GET	Nu	Listă produse (paginată)
+	/api/products/:id	GET	Nu	Detalii produs specific
+	/api/products	POST	Admin	Creare produs nou
+	/api/products/:id	PUT	Admin	Actualizare produs
+	/api/products/:id	DELETE	Admin	Ștergere produ
+	/api/products/search	GET	Nu	Căutare produse
+Cart	/api/cart	GET	Da	Coș utilizator curent
+	/api/cart/items	POST	Da	Adăugare produs în coș
+	/api/cart/items/:id	PUT	Da	Actualizare cantitate
+	/api/cart/items/:id	DELETE	Da	Ștergere produs din coș
+	/api/cart/clear	DELETE	Da	Golire coș complet
+Orders	/api/orders	GET	Da	Comenzi utilizator
+	/api/orders/:id	GET	Da	Detalii comandă
+	/api/orders	POST	Da	Plasare comandă nouă
+	/api/orders/:id/cancel	POST	Da	Anulare comandă
+Admin	/api/admin/orders	GET	Admin	Toate comenzile
+	/api/admin/orders/:id	PUT	Admin	Actualizare status comandă
+	/api/admin/users	GET	Admin	Listă utilizatori
+	/api/admin/stats	GET	Admin	Statistici dashboard
 (Sursa: Realizat de autor, documentație API completă
 Convenții REST implementate:
-
 - Resurse ca substantive: `/products` nu `/getProducts`
 - Metode HTTP semantice: GET (citire), POST (creare), PUT (actualizare), DELETE (ștergere)
 - Status codes corecte: 200 (OK), 201 (Created), 400 (Bad Request), 401 (Unauthorized), 404 (Not Found), 500 (Server Error)
 - Paginare consistentă: Query params `page` și `limit` pentru toate listele
 - Filtrare și sortare: Query params standardizați (`sort`, `order`, `filter`)
-  Validarea automată cu JSON Schema:
-  Fastify oferă validare automată folosind JSON Schema, asigurând type safety și documentație automată.
-  Beneficii validare automată:
+Validarea automată cu JSON Schema:
+Fastify oferă validare automată folosind JSON Schema, asigurând type safety și documentație automată.
+Beneficii validare automată:
 - Prevenire erori la runtime
 - Documentație API generată automat
 - Mesaje de eroare clare și consistente
 - Reducere cod boilerplate
-  (Referința cod complet este disponibilă în repository-ul GitHub)
-  4.2.3. Services Layer - Logica de business
-  Stratul de servicii încapsulează logica de business și regulile aplicației, fiind independent de framework-ul web utilizat.
-  ProductService - Exemplu de service complet:
-  (Referința cod complet este disponibilă în repository-ul GitHub) gestionează întreaga logică legată de produse:
-  Funcționalități principale:
-  -Listare produse cu filtrare avansată: Suport pentru filtrare după categorie, preț, disponibilitate, căutare text
-  -Paginare eficientă: Implementare cursor-based pagination pentru performanță optimă
-  -Sortare multiplă: Sortare după preț, nume, dată, popularitate
+(Referința cod complet este disponibilă în repository-ul GitHub)
+4.2.3. Services Layer - Logica de business
+Stratul de servicii încapsulează logica de business și regulile aplicației, fiind independent de framework-ul web utilizat.
+ProductService - Exemplu de service complet:
+(Referința cod complet este disponibilă în repository-ul GitHub):
+Funcționalități principale:
+-Listare produse cu filtrare avansată: Suport pentru filtrare după categorie, preț, disponibilitate, căutare text
+-Paginare eficientă: Implementare cursor-based pagination pentru performanță optimă
+-Sortare multiplă: Sortare după preț, nume, dată, popularitate
 - Calcul rating mediu: Agregare automată a rating-urilor din recenzii
 - Validare business rules: Verificare stoc, preț valid, categorie existentă
-  Pattern-uri de design utilizate:
+Pattern-uri de design utilizate:
 - Repository Pattern: Abstractizare acces la date prin Prisma
 - Service Layer Pattern: Logică business separată de prezentare
 - DTO (Data Transfer Objects): Obiecte dedicate pentru transfer date
-  Serviciul de autentificare și securitate:
-  Serviciul de autentificare implementează logica de securizare a accesului utilizatorilor la aplicație. Implementarea completă este disponibilă în repository-ul GitHub al proiectului.
+AuthService - Securitate și autentificare:
+AuthService (implementare cod complet este este disponibilă în repository-ul GitHub) implementează logica de autentificare securizată:
+Funcționalități securitate:
+- Hash-uire parole: Utilizare bcrypt cu 12 salt rounds
+- Validare complexitate parolă: Regex pentru minim 8 caractere, majusculă, minusculă, cifră, caracter special
+- Rate limiting login: Blocare temporară după 5 încercări eșuate (15 minute)
+- JWT tokens: Generare tokens cu expirare 7 zile
+- Validare email: Regex pentru format email valid
+Măsuri anti-brute-force:
+1. Rate limiting la nivel de IP și email
+2. Delay progresiv între încercări (exponential backoff)
+3. Logging încercări eșuate pentru monitorizare
+4. Notificare utilizator la încercări suspecte
+(Referința cod complet este disponibilă în repository-ul GitHub)
+4.2.4. Middleware-uri pentru securitate și validare
+Middleware-urile asigură securitatea și validarea request-urilor înainte de a ajunge la logica de business.
+Tabel 4.3.Middleware-uri implementate
 
-Funcționalități principale de securitate:
-
-- Protejarea parolelor prin algoritmi moderni de criptare cu 12 runde de procesare
-- Verificarea complexității parolelor (minimum 8 caractere, combinație de litere mari, mici, cifre și caractere speciale)
-- Limitarea încercărilor de autentificare (blocare temporară de 15 minute după 5 încercări eșuate)
-- Generarea de jetoane de autentificare cu durată de valabilitate de 7 zile
-- Validarea formatului adreselor de email
-
-Măsuri de protecție împotriva atacurilor automate:
-
-1. Limitarea numărului de cereri per adresă IP și cont de utilizator
-2. Creșterea progresivă a timpului de așteptare între încercări
-3. Înregistrarea tuturor încercărilor eșuate pentru monitorizare
-4. Notificarea utilizatorilor în cazul activităților suspecte
-   4.2.4. Middleware-uri pentru securitate și validare
-   Middleware-urile asigură securitatea și validarea request-urilor înainte de a ajunge la logica de business.
-   Tabel 4.3.Middleware-uri implementate
-
-Middleware Scop Aplicare Impact performanță
-authMiddleware Verificare JWT token Rute protejate < 5ms
-adminMiddleware Verificare rol admin Rute admin < 2ms
-validationMiddleware Validare input JSON Schema Toate rutele POST/PUT < 3ms
-csrfMiddleware Protecție CSRF Rute mutative < 4ms
-xssMiddleware Sanitizare input XSS Toate rutele < 6ms
-rateLimitMiddleware Limitare request-uri Toate rutele < 2ms
-corsMiddleware Configurare CORS Toate rutele < 1ms
-errorHandler Gestionare erori centralizată Global < 1ms
+Middleware	Scop	Aplicare	Impact performanță
+authMiddleware	Verificare JWT token	Rute protejate	< 5ms
+adminMiddleware	Verificare rol admin	Rute admin	< 2ms
+validationMiddleware	Validare input JSON Schema	Toate rutele POST/PUT	< 3ms
+csrfMiddleware	Protecție CSRF	Rute mutative	< 4ms
+xssMiddleware	Sanitizare input XSS	Toate rutele	< 6ms
+rateLimitMiddleware	Limitare request-uri	Toate rutele	< 2ms
+corsMiddleware	Configurare CORS	Toate rutele	< 1ms
+errorHandler	Gestionare erori centralizată	Global	< 1ms
 (Sursa: Realizat de autor, măsurat cu Fastify benchmarks)
-Componenta de verificare a autentificării:
-Componenta de verificare a autentificării asigură că doar utilizatorii autorizați pot accesa anumite funcționalități ale aplicației. Implementarea completă este disponibilă în repository-ul GitHub al proiectului.
-
-Procesul de verificare a identității:
-
-1. Extragerea jetonului de autentificare din cererea utilizatorului
-2. Verificarea validității jetonului folosind cheia secretă și algoritmul de securitate
-3. Decodificarea informațiilor și extragerea identificatorului utilizatorului
-4. Verificarea existenței utilizatorului în baza de date
-5. Atașarea informațiilor utilizatorului la cerere pentru utilizare ulterioară
-6. Respingerea cererilor cu jetoane invalide sau expirate
-
-Măsuri de securitate pentru jetoane:
-
-- Cheia secretă este stocată în siguranță în variabile de mediu
-- Expirarea automată după 7 zile pentru securitate sporită
-- Mecanism de reînnoire pentru sesiuni de lungă durată
-- Listă de jetoane revocate pentru control suplimentar
-
-Protecție împotriva atacurilor de tip suprasolicitare:
-Sistemul limitează numărul de cereri pentru a preveni abuzul și atacurile automate:
-
-Configurarea limitelor de cereri:
-
-- Limită globală: 100 de cereri pe minut per adresă IP
-- Puncte de autentificare: 5 cereri pe minut per adresă IP (autentificare, înregistrare)
-- Puncte administrative: 200 de cereri pe minut per utilizator
-- Puncte publice: 60 de cereri pe minut per adresă IP
-
-Implementarea tehnică:
-
-- Utilizarea sistemului de stocare temporară pentru urmărirea cererilor
-- Algoritm cu fereastră glisantă pentru precizie maximă
-- Informații personalizate pentru client despre cererile rămase
-- Răspuns specific când limita este depășită
-  4.2.5. Gestionarea centralizată a erorilor
-  Gestionarea centralizată a erorilor asigură răspunsuri consistente și înregistrare adecvată a problemelor pentru depanare ulterioară. Implementarea completă este disponibilă în repository-ul GitHub al proiectului.
-
+authMiddleware - Autentificare JWT:
+Middleware-ul de autentificare (implementarea cod complet este disponibilă în repository-ul GitHub) verifică prezența și validitatea token-ului JWT:
+Flux autentificare:
+1. Extrage token din header `Authorization: Bearer <token>`
+2. Verifică token cu secret key și algoritm HS256
+3. Decodează payload și extrage userId
+4. Verifică existența utilizatorului în baza de date
+5. Atașează obiectul user la request pentru acces în rute
+6. Returnează 401 Unauthorized dacă token invalid/expirat
+Securitate JWT:
+- Secret key stocat în variabilă de mediu
+- Expirare automată după 7 zile
+- Refresh token mechanism pentru sesiuni lungi
+- Blacklist pentru tokens revocate
+Rate Limiting - Protecție DDoS:
+Rate limiting previne abuzul API-ului prin limitarea numărului de request-uri per IP/utilizator:
+Configurare rate limits:
+- Global: 100 requests/minut per IP
+- Auth endpoints: 5 requests/minut per IP (login, register)
+- Admin endpoints: 200 requests/minut per utilizator
+- Public endpoints: 60 requests/minut per IP
+Implementare:
+- Utilizare Redis pentru tracking requests
+- Sliding window algorithm pentru precizie
+- Headers custom pentru informare client (X-RateLimit-Remaining)
+- Response 429 Too Many Requests când limita este depășită
+Referință cod complet: este disponibilă în repository-ul GitHub
+4.2.5. Error Handling centralizat
+Gestionarea centralizată a erorilor asigură răspunsuri consistente și logging adecvat.
+Error Handler global (este disponibilă în repository-ul GitHub):
 Tipuri de erori gestionate:
-
-- Erori de validare a datelor: Date introduse incorect sau incomplete (cod 400)
-- Erori de autentificare: Jeton invalid sau expirat (cod 401)
-- Erori de autorizare: Permisiuni insuficiente pentru acțiunea solicitată (cod 403)
-- Erori de resurse negăsite: Resursa solicitată nu există (cod 404)
-- Erori de logică de afaceri: Reguli de business încălcate (cod 422)
-- Erori interne de server: Probleme tehnice neprevăzute (cod 500)
-
-Înregistrarea erorilor:
-
-- Erorile cauzate de client (coduri 4xx): Nivel de avertizare pentru monitorizare
-- Erorile de server (coduri 5xx): Nivel de eroare critică pentru intervenție imediată
-- Informații complete de depanare în mediul de dezvoltare
-- Informații sanitizate în mediul de producție pentru securitate
-- Integrare cu servicii de monitorizare pentru alertare în timp real
-  4.2.2. Serviciile de logică de afaceri
-  Serviciile de logică de afaceri încapsulează regulile și procesele aplicației, interacționând cu baza de date printr-un strat de abstractizare. Această arhitectură în straturi asigură separarea responsabilităților și facilitează testarea și mentenanța codului (Martin, 2017).
-
-Serviciul de gestionare a produselor implementează întreaga logică pentru manipularea informațiilor despre produse. Implementarea completă este disponibilă în repository-ul GitHub al proiectului.
-
-Funcționalitatea de listare produse oferă capabilități complete de afișare, filtrare și sortare. Sistemul implementează:
-
-- Împărțirea pe pagini pentru volume mari de date, asigurând performanță optimă
-- Filtrare după categorie și căutare în text complet pentru găsirea rapidă a produselor
-- Sortare flexibilă după preț, nume, dată sau popularitate
-- Calculare automată a evaluării medii din recenziile clienților
-- Includerea relațiilor necesare (categorie, recenzii) pentru reducerea numărului de interogări
-
-Funcționalitatea de creare produse gestionează adăugarea de produse noi cu validare completă:
-
-- Verificarea datelor de intrare (câmpuri obligatorii, valori pozitive pentru preț și stoc)
-- Verificarea existenței categoriei înainte de creare
-- Crearea produsului cu stare implicită "publicat" pentru vizibilitate imediată
-- Returnarea produsului creat cu toate relațiile incluse
-
-Funcționalitatea de actualizare stoc gestionează modificările de inventar cu verificări de siguranță:
-
-- Verificarea existenței produsului în sistem
-- Validarea disponibilității stocului suficient pentru operațiune
-- Decrementare atomică pentru evitarea problemelor de concurență
-
-Beneficiile arhitecturii bazate pe servicii:
-
-- Logică de afaceri centralizată și reutilizabilă în întreaga aplicație
-- Testare facilitată prin izolarea componentelor
-- Gestionare consistentă a tranzacțiilor și erorilor
-- Siguranță completă a tipurilor de date cu TypeScript
-  4.2.3. Componente intermediare pentru autentificare și autorizare
-  Componentele intermediare reprezintă elemente esențiale în arhitectura sistemului, executându-se înainte de procesarea cererilor pentru a implementa funcționalități transversale (Fastify Team, 2024). Implementarea completă este disponibilă în repository-ul GitHub al proiectului.
-
-Componenta de autentificare verifică prezența și validitatea jetonului de autentificare în antetul cererii. Procesul include:
-
-- Extragerea jetonului din antetul de autorizare
-- Verificarea semnăturii digitale a jetonului
+- Validation errors: Erori de validare JSON Schema (400 Bad Request)
+- Authentication errors: Token invalid/expirat (401 Unauthorized)
+- Authorization errors: Permisiuni insuficiente (403 Forbidden)
+- Not found errors: Resursă inexistentă (404 Not Found)
+- Business logic errors: Reguli business încălcate (422 Unprocessable Entity)
+- Server errors: Erori interne (500 Internal Server Error)
+Logging erori:
+- Erori 4xx: Log level WARNING (erori client)
+- Erori 5xx: Log level ERROR (erori server)
+- Stack trace complet în development
+- Informații sanitizate în production
+- Integrare cu servicii monitoring (Sentry, LogRocket)
+Referință cod complet: este disponibilă în repository-ul GitHub- -Error Handler
+- Scalabilitate orizontală
+Referință cod complet: este disponibilă în repository-ul GitHub
+4.2.6. Serviciile de business logic
+Serviciile de business logic încapsulează logica aplicației și interacționează cu baza de date prin Prisma ORM. Această arhitectură în straturi (layered architecture) asigură separarea responsabilităților și facilitează testarea (Martin, 2017).
+ProductService (implementare disponibilă în repository-ul GitHub) implementează întreaga logică de gestionare a produselor:
+Metoda getProducts: Oferă funcționalitate completă de listare, filtrare și sortare produse. Implementează:
+- Paginare eficientă pentru volume mari de date
+- Filtrare după categorie și căutare full-text
+- Sortare flexibilă după multiple criterii
+- Calculare automată rating mediu din recenzii
+- Includere relații (category, reviews) pentru reducerea query-urilor
+Metoda createProduct: Gestionează crearea produselor noi cu validare completă:
+- Validare date de intrare (câmpuri obligatorii, valori pozitive)
+- Verificare existență categorie
+- Creare produs cu status implicit "published"
+- Returnare produs cu relații incluse
+Metoda updateStock: Actualizează stocul produselor cu verificări de siguranță:
+- Verificare existență produs
+- Validare stoc suficient
+- Decrementare atomică pentru evitarea race conditions
+Beneficii arhitectură servicii:
+- Logică de business centralizată și reutilizabilă
+- Testare facilitată prin izolare
+- Gestionare tranzacții și erori consistentă
+- Type safety complet cu TypeScript și Prisma
+Referință cod complet: este disponibilă în repository-ul GitHub
+4.2.7. Middleware-uri pentru autentificare și autorizare
+Middleware-urile reprezintă componente esențiale în arhitectura backend-ului, executându-se înainte de handler-ele de rute pentru a implementa funcționalități transversale (Fastify Team, 2024).
+Auth Middleware (este disponibilă în repository-ul GitHub): Verifică prezența și validitatea token-ului JWT în header-ul Authorization. Procesul include:
+- Extragerea token-ului din header
+- Verificarea semnăturii JWT
 - Validarea existenței utilizatorului în baza de date
-- Atașarea informațiilor utilizatorului la cerere pentru acces ulterior
-
-Componenta de autorizare administrativă verifică că utilizatorul autentificat are rol de administrator, protejând astfel punctele de acces administrative.
-
-Componenta de limitare a ratei de cereri implementează protecție împotriva atacurilor automate prin limitarea la 100 de cereri per minut per adresă IP, cu mesaje personalizate pentru utilizatori.
-
-Beneficiile componentelor intermediare:
-
-- Separarea preocupărilor și responsabilităților în cod
-- Reutilizarea codului pentru multiple puncte de acces
-- Securitate centralizată și consistentă în întreaga aplicație
-- Testare independentă a fiecărei componente
-  4.2.4. Gestionarea erorilor
-  Gestionarea centralizată a erorilor asigură răspunsuri consistente și înregistrare adecvată pentru depanare (OWASP Foundation, 2021). Implementarea completă este disponibilă în repository-ul GitHub al proiectului.
-
-Sistemul centralizat de gestionare a erorilor capturează toate erorile din aplicație și le procesează uniform:
-
-Înregistrare completă: Toate erorile sunt înregistrate cu detalii complete (mesaj, traseu de execuție, adresă URL, metodă, anteturi, corp cerere) pentru facilitarea depanării.
-
-Gestionarea tipurilor specifice de erori:
-
-- Erori de validare (cod 400) - Date introduse incorect
-- Erori de autentificare (cod 401) - Lipsă autentificare
-- Erori de autorizare (cod 403) - Permisiuni insuficiente
-- Erori de resurse negăsite (cod 404) - Resursa nu există
-- Erori specifice bazei de date - Probleme la nivel de stocare
-
-Securitate: În mediul de producție, mesajele de eroare sunt generice pentru a nu expune detalii sensibile despre implementare. Trasarea completă a execuției este afișată doar în mediul de dezvoltare.
+- Atașarea obiectului user la request pentru acces în handler-e
+Admin Middleware (este disponibilă în repository-ul GitHub): Verifică că utilizatorul autentificat are rol de administrator, protejând endpoint-urile administrative.
+Rate Limiting Middleware (este disponibilă în repository-ul GitHub): Implementează limitarea ratei de request-uri pentru protecție împotriva atacurilor DDoS și abuse. Configurația permite 100 request-uri per minut per IP, cu mesaje personalizate pentru utilizatori.
+Beneficii middleware-uri:
+- Separarea preocupărilor (separation of concerns)
+- Reutilizare cod pentru multiple rute
+- Securitate centralizată și consistentă
+- Testare independentă
+Referință cod complet: (este disponibilă în repository-ul GitHub)
+4.2.8. Gestionarea erorilor
+Gestionarea centralizată a erorilor asigură răspunsuri consistente și logging adecvat pentru debugging (OWASP Foundation, 2021).
+Error Handler Globa: (este disponibilă în repository-ul GitHub) Middleware centralizat care capturează toate erorile din aplicație și le procesează uniform:
+Logging complet: Toate erorile sunt înregistrate cu detalii complete (mesaj, stack trace, URL, method, headers, body) pentru facilitarea debugging-ului.
+Gestionare tipuri specifice de erori:
+- ValidationError (400) - Erori de validare date
+- UnauthorizedError (401) - Lipsă autentificare
+- ForbiddenError (403) - Permisiuni insuficiente
+- NotFoundError (404) - Resursă negăsită
+- PrismaClientKnownRequestError - Erori specifice bază de date
+Securitate: În producție, mesajele de eroare sunt generice pentru a nu expune detalii sensibile despre implementare. Stack trace-ul este afișat doar în development.
+Referință cod complet: (este disponibilă în repository-ul GitHub)
 4.3. Integrarea bazei de date
 Integrarea cu baza de date PostgreSQL a fost realizată folosind Prisma ORM pentru type safety și performanță optimă (Prisma Team, 2024).
 4.3.1. Schema bazei de date
 Schema bazei de date definește o structură complexă cu peste 45 de tabele, reflectând funcționalitățile avansate ale unei platforme moderne de comerț electronic. Implementarea completă este disponibilă în repository-ul GitHub al proiectului.
-
 Modelele principale ale bazei de date sunt organizate pe categorii funcționale:
-
 Gestionarea utilizatorilor: User (conturi cu autentificare și roluri), PendingUser (verificare email), VerificationCode (autentificare în doi pași), AccountLockout (securitate), SecurityLog (audit)
-
 Catalog produse: DataItem (produse complete), Category (categorii ierarhice), Media (fișiere media), CarouselItem (carousel homepage), StockMovement (istoric stoc)
-
 Comenzi și plăți: Order (comenzi complete), OrderItem (detalii produse), Transaction (tranzacții financiare), CardTransaction (plăți cu card), PaymentMethod (metode plată)
-
 Coș și favorite: CartItem (produse în coș), Favorite (produse favorite)
-
 Sistem cadouri: GiftRule (reguli cadouri automate), GiftCondition (condiții aplicare), GiftProduct (produse cadou), GiftRuleUsage (istoric utilizare)
-
 Vouchere: Voucher (coduri reducere), UserVoucher (asociere utilizatori), VoucherRequest (cereri vouchere)
-
 Conversie valutară: Currency (15+ monede suportate: RON, EUR, USD, GBP, CHF, JPY, CAD, AUD, CNY, SEK, NOK, DKK, PLN, CZK, HUF), ExchangeRate (cursuri curente), ExchangeRateHistory (istoric pentru analiză)
-
 Livrare: DeliveryLocation (locații disponibile), DeliverySettings (configurări livrare)
-
 Carduri test: TestCard (mediu dezvoltare), FictiveCard (demonstrații), SavedCard (carduri salvate utilizatori)
-
 Chat suport: ChatRoom (camere chat), ChatMessage (mesaje), ChatMessageRead (tracking citire), ChatRoomMember (membri)
-
 Conținut dinamic: Page (pagini editabile), PageSection (secțiuni flexibile), SiteConfig (configurare platformă), UIElement (elemente interfață), Translation (suport multilingv)
-
 Oferte și promoții: Offer (oferte speciale), ProductOffer (asociere produse), Review (recenzii utilizatori)
-
 Analiză: AnalyticsEvent (comportament utilizatori), NavigationHistory (istoric navigare), Notification (notificări), RateLimitAttempt (securitate)
-
 Caracteristici ale schemei:
-
 - Siguranță completă a tipurilor de date cu TypeScript pentru prevenirea erorilor
 - Relații bidirecționale pentru interogări eficiente și navigare ușoară
 - Enumerări pentru valori predefinite și validare automată
@@ -1643,135 +1617,108 @@ Caracteristici ale schemei:
 - Indexuri pe coloanele frecvent interogate pentru performanță optimă
 - Mapare nume tabele pentru respectarea convențiilor bazei de date
 - Suport complet pentru ștergere în cascadă și actualizare automată
-  4.3.2. Migrații și popularea inițială a bazei de date
-  Procesul de populare inițială a bazei de date este esențial pentru pregătirea sistemului cu date de configurare și testare. Implementarea completă este disponibilă în repository-ul GitHub al proiectului.
-
-Scriptul de populare implementează următoarele funcționalități:
-
-Crearea categoriilor inițiale: Sistemul creează categoriile principale de produse (Lactate, Carne, Legume, etc.) cu identificatori unici și descrieri detaliate. Fiecare categorie primește un identificator generat automat pentru referințe ulterioare.
-
-Configurarea utilizatorului administrator: Se creează un cont de administrator cu parolă protejată folosind algoritmi moderni de criptare (12 runde de procesare pentru securitate optimă). Acest cont permite accesul la panoul de administrare pentru gestionarea aplicației.
-
-Popularea cu produse demonstrative: Scriptul adaugă produse exemplu în fiecare categorie, incluzând detalii complete (titlu, descriere, preț, stoc, imagine). Produsele sunt create cu stare "publicat" pentru a fi imediat vizibile în aplicație.
-
-Gestionarea erorilor și curățarea resurselor: Implementarea include mecanisme de capturare a erorilor și deconectare automată de la baza de date, asigurând eliberarea corectă a resurselor în orice situație.
-4.3.3. Optimizarea interogărilor bazei de date
+ Referință schema completă: (este disponibilă în repository-ul GitHub)
+4.3.2. Migrații și seeding
+Procesul de seeding al bazei de date este esențial pentru popularea inițială cu date de test și configurare. Script-ul de seeding implementează următoarele funcționalități:
+Creare categorii inițiale: Sistemul creează trei categorii principale (Electronice, Îmbrăcăminte, Cărți) cu slug-uri SEO-friendly și descrieri detaliate. Fiecare categorie primește un identificator unic generat automat de Prisma.
+Configurare utilizator administrator: Se creează un cont de administrator cu parolă hash-uită folosind bcrypt (12 salt rounds pentru securitate optimă). Acest cont permite accesul la panoul de administrare pentru gestionarea aplicației.
+Populare produse sample: Script-ul adaugă produse demonstrative în fiecare categorie, incluzând detalii complete (titlu, descriere, preț, stoc, imagine). Produsele sunt create cu status "PUBLISHED" pentru a fi imediat vizibile în aplicație.
+Gestionare erori și cleanup: Implementarea include try-catch pentru gestionarea erorilor și disconnect automat de la baza de date în blocul finally, asigurând eliberarea corectă a resurselor.
+Referință cod complet: (este disponibilă în repository-ul GitHub) - Seed Scripts
+4.3.3. Optimizarea query-urilor
+Optimizarea interogărilor bazei de date
 Optimizarea interogărilor bazei de date este crucială pentru performanța aplicației, mai ales când volumul de date crește. Implementarea completă este disponibilă în repository-ul GitHub al proiectului.
 
 Serviciul optimizat de gestionare a produselor implementează mai multe tehnici avansate de optimizare:
 
-Utilizarea indexurilor pentru filtrare: Interogările sunt construite pentru a profita de indexurile create pe coloanele frecvent utilizate (identificator categorie, preț, stoc, stare). Acest lucru reduce dramatic timpul de căutare, transformând operațiuni care ar dura secunde în operațiuni care durează milisecunde.
+- Utilizarea indexurilor pentru filtrare: Interogările sunt construite pentru a profita de indexurile create pe coloanele frecvent utilizate (identificator categorie, preț, stoc, stare). Acest lucru reduce dramatic timpul de căutare, transformând operațiuni care ar dura secunde în operațiuni care durează milisecunde.
 
-Filtrare compusă eficientă: Sistemul permite combinarea multiplelor criterii de filtrare (categorie, interval preț, disponibilitate stoc, căutare text) într-o singură interogare optimizată. Condiția de filtrare este construită dinamic în funcție de filtrele active.
+- Filtrare compusă eficientă: Sistemul permite combinarea multiplelor criterii de filtrare (categorie, interval preț, disponibilitate stoc, căutare text) într-o singură interogare optimizată. Condiția de filtrare este construită dinamic în funcție de filtrele active.
 
-Căutare în text complet: Implementarea căutării în titlu și descriere folosește operatori de comparare pentru rezultate mai bune. Pentru volume mari de date, se poate migra la funcționalități avansate de căutare cu indexuri specializate.
+- Căutare în text complet: Implementarea căutării în titlu și descriere folosește operatori de comparare pentru rezultate mai bune. Pentru volume mari de date, se poate migra la funcționalități avansate de căutare cu indexuri specializate.
 
-Agregări paralele pentru statistici: Funcționalitatea de statistici execută multiple interogări de agregare în paralel (numărare, sumare, grupare, calcule), reducând timpul total de execuție prin procesare simultană.
+- Agregări paralele pentru statistici: Funcționalitatea de statistici execută multiple interogări de agregare în paralel (numărare, sumare, grupare, calcule), reducând timpul total de execuție prin procesare simultană.
 
-Includere selectivă de relații: Interogările includ doar câmpurile necesare din relații și folosesc numărare optimizată pentru a număra relații fără a le încărca complet, reducând volumul de date transferate.
+- Includere selectivă de relații: Interogările includ doar câmpurile necesare din relații și folosesc numărare optimizată pentru a număra relații fără a le încărca complet, reducând volumul de date transferate.
 
-Sortare inteligentă: Produsele sunt sortate mai întâi după disponibilitate (stoc mai mare decât zero) și apoi după dată, asigurând că produsele disponibile apar primele în listă.
-
+- Sortare inteligentă: Produsele sunt sortate mai întâi după disponibilitate (stoc mai mare decât zero) și apoi după dată, asigurând că produsele disponibile apar primele în listă.
 Beneficii de performanță:
-
 - Reducere cu 60-70% a timpului de răspuns pentru interogări complexe
 - Scalabilitate pentru mii de produse fără degradare de performanță
 - Utilizare eficientă a memoriei și procesorului
 - Experiență îmbunătățită pentru utilizatori prin încărcare rapidă
-  4.4. Implementarea securității
-  Securitatea aplicației a fost implementată pe mai multe niveluri pentru a proteja datele utilizatorilor și integritatea sistemului.
-  4.4.1. Autentificare și autorizare
-  Serviciul de autentificare implementează un sistem robust de gestionare a utilizatorilor cu multiple niveluri de securitate. Implementarea completă este disponibilă în repository-ul GitHub al proiectului.
-
+4.4. Implementarea securității
+Securitatea aplicației a fost implementată pe mai multe niveluri pentru a proteja datele utilizatorilor și integritatea sistemului.
+4.4.1. Autentificare și autorizare
+Serviciul de autentificare implementează un sistem robust de gestionare a utilizatorilor cu multiple niveluri de securitate. Implementarea completă este disponibilă în repository-ul GitHub al proiectului.
 Înregistrare utilizatori: Procesul de înregistrare include validare strictă a datelor de intrare (format email conform standardelor internaționale, complexitate parolă cu minimum 8 caractere incluzând litere mari, mici, cifre și caractere speciale), verificare unicitate email pentru prevenirea conturilor duplicate, protejare securizată a parolei cu algoritmi moderni de criptare (12 runde de procesare), și generare automată de jeton de autentificare pentru acces imediat.
-
 Autentificare securizată: Metoda de autentificare implementează protecție împotriva atacurilor automate prin limitarea încercărilor (maxim 5 încercări eșuate, blocare temporară de 15 minute), verificare parolă cu algoritmi rezistenți la atacuri temporale, și generare jeton de autentificare cu expirare automată după 7 zile.
-
 Validare date de intrare: Funcțiile de validare asigură că datele respectă standardele de securitate:
-
 - Email: Format valid conform standardului internațional RFC 5322
 - Parolă: Minimum 8 caractere, cel puțin o literă mare, una mică, o cifră și un caracter special
-
 Generare jetoane de autentificare securizate: Jetonele includ informații utilizator (identificator, email, rol), semnătură cu cheie secretă din variabile de mediu, expirare configurabilă (7 zile), și informații suplimentare (emitent, audiență) pentru validare strictă.
-
 Limitare încercări de autentificare: Sistemul urmărește încercările eșuate de autentificare per email, blochează contul temporar după 5 încercări eșuate, resetează contorul la autentificare reușită, și previne atacurile automate de testare a parolelor.
-
 Beneficii de securitate:
 
-- Protecție împotriva atacurilor automate de forță brută
+- Protecție împotriva atacurilor automate de tip brute force
 - Parole protejate cu algoritmi moderni de criptare
-- Jetoane de autentificare cu expirare automată pentru securitate sporită
+- Tokens de autentificare cu expirare automată pentru securitate sporită
 - Validare strictă a datelor de intrare pentru prevenirea erorilor
-- Conformitate cu standardele internaționale de securitate OWASP
-  4.4.2. Validarea și sanitizarea datelor
-  Validarea și sanitizarea datelor de intrare reprezintă prima linie de apărare împotriva atacurilor de tip injectare de cod și scripturi malițioase. Sistemul implementează componente complete de validare care verifică automat toate datele primite. Implementarea completă este disponibilă în repository-ul GitHub al proiectului.
+- Conformitate cu standardele internaționale de securitate OWASP (Open Web Application Security Project)
 
+4.4.2. Validarea și sanitizarea datelor
+ 	Validarea și sanitizarea datelor de intrare reprezintă prima linie de apărare împotriva atacurilor de tip injectare de cod și scripturi malițioase. Sistemul implementează componente complete de validare care verifică automat toate datele primite. Implementarea completă este disponibilă în repository-ul GitHub al proiectului.
 Componenta de validare cu scheme predefinite: Funcția de validare primește o schemă de validare și verifică automat corpul cererii înainte ca datele să ajungă la procesare. În caz de eroare, returnează răspuns cu cod 400 și detalii despre câmpurile invalide (nume câmp și mesaj eroare).
-
 Sanitizare recursivă: Funcția de sanitizare parcurge recursiv toate proprietățile unui obiect (inclusiv liste și obiecte imbricate) și aplică curățare pe fiecare valoare text. Acest lucru previne injectarea de cod malițios în orice parte a datelor trimise.
-
 Eliminare etichete HTML: Funcția de curățare elimină toate etichetele HTML din texte, cu accent special pe etichetele de script care pot conține cod JavaScript malițios. De asemenea, elimină spațiile albe de la început și sfârșit.
-
 Scheme de validare predefinite: Aplicația include scheme pentru toate tipurile de date importante:
-
 - Schema produse: Validează produse (titlu 3-100 caractere, preț pozitiv cu 2 zecimale, stoc întreg pozitiv, identificator categorie valid)
 - Schema comenzi: Validează comenzi (listă articole cu identificator produs și cantitate, adresă livrare 10-500 caractere, metode plată și livrare din valori predefinite)
-
 Beneficii de securitate:
-
 - Prevenirea atacurilor prin scripturi malițioase prin eliminare etichete HTML
 - Validare strictă a tipurilor de date și formatelor
 - Mesaje de eroare clare pentru depanare și corectare
 - Protecție împotriva injectării de cod prin validare strictă
 - Conformitate cu principiile internaționale de validare a datelor de intrare
-  4.4.3. Protecția împotriva atacurilor
-  Aplicația implementează multiple straturi de protecție împotriva celor mai comune atacuri web, conform ghidurilor internaționale de securitate OWASP. Implementarea completă este disponibilă în repository-ul GitHub al proiectului.
-
+ 4.4.3. Protecția împotriva atacurilor
+ Aplicația implementează multiple straturi de protecție împotriva celor mai comune atacuri web, conform ghidurilor internaționale de securitate OWASP. Implementarea completă este disponibilă în repository-ul GitHub al proiectului.
 Protecție împotriva falsificării cererilor între site-uri: Componenta de protecție verifică prezența și validitatea jetonului de securitate pentru toate cererile care modifică date (creare, actualizare, ștergere). Jetonul este generat la autentificare și stocat în sesiune, apoi trimis în antetul cererii. Dacă jetonul lipsește sau nu corespunde, cererea este respinsă cu cod 403.
-
 Protecție împotriva scripturilor malițioase: Componenta de protecție setează anteturi HTTP de securitate:
-
 - Protecție scripturi: Activează protecția integrată a browserului împotriva scripturilor malițioase
 - Protecție tip conținut: Previne interpretarea greșită a tipului de fișier
 - Protecție încadrare: Previne atacurile prin încadrarea site-ului în cadre externe
 - Politică referință: Controlează informațiile trimise în antetul de referință
-
 Politică de securitate a conținutului: Componenta implementează o politică strictă de securitate:
-
 - Sursă implicită: Permite încărcarea resurselor doar de pe același domeniu
 - Scripturi: Permite scripturi doar de pe domeniul propriu și servicii de încredere
 - Stiluri: Permite stiluri de pe domeniul propriu și furnizori de fonturi
 - Imagini: Permite imagini de pe domeniul propriu, adrese de date și conexiuni securizate
 - Încadrare: Previne încadrarea site-ului în cadre externe
 - Formulare: Permite trimiterea formularelor doar către același domeniu
-
 Limitare avansată a ratei de cereri: Sistemul implementează limitare diferențiată:
-
 - Utilizatori autentificați: 200 de cereri per minut pentru experiență fluidă
 - Utilizatori neautentificați: 50 de cereri per minut pentru protecție
 - Identificare prin identificator utilizator sau adresă IP
 - Fereastră de timp configurabilă (1 minut)
-
-Beneficii de securitate:
-
+Beneficii de securitate
 - Protecție împotriva celor mai comune 10 vulnerabilități identificate de OWASP
 - Apărare în profunzime prin multiple straturi de securitate
 - Conformitate cu standardele internaționale ale industriei
-- Reducerea suprafeței de atac prin restricții stricte
-  4.5. Conversie valutară (15+ monede)
-  Aplicația suportă afișarea prețurilor în 15+ monede diferite, cu rate de schimb actualizate zilnic.
-  Monede suportate:
-  RON (Leu românesc - monedă de bază), EUR (Euro), USD (Dolar american), GBP (Liră sterlină), CHF (Franc elvețian), JPY (Yen japonez), CAD (Dolar canadian), AUD (Dolar australian), CNY (Yuan chinezesc), SEK (Coroană suedeză), NOK (Coroană norvegiană), DKK (Coroană daneză), PLN (Zlot polonez), CZK (Coroană cehă), HUF (Forint maghiar).
-  Surse rate de schimb:
-  BNR (Banca Națională a României) - sursă primară pentru EUR și alte monede majore, și ExchangeRate-API - sursă secundară pentru monede suplimentare.
-  Actualizare automată:
-  Un job programat (cron) rulează zilnic la ora 10:00 AM și actualizează ratele în tabelul Currency.
-  Tabel 4.4.Rate de schimb exemplu (față de RON)
+- Reducerea suprafeței de atac prin restricții stricte.
+ 4.5. Conversie valutară (15+ monede)
+Aplicația suportă afișarea prețurilor în 15+ monede diferite, cu rate de schimb actualizate zilnic.
+Monede suportate:
+RON (Leu românesc - monedă de bază), EUR (Euro), USD (Dolar american), GBP (Liră sterlină), CHF (Franc elvețian), JPY (Yen japonez), CAD (Dolar canadian), AUD (Dolar australian), CNY (Yuan chinezesc), SEK (Coroană suedeză), NOK (Coroană norvegiană), DKK (Coroană daneză), PLN (Zlot polonez), CZK (Coroană cehă), HUF (Forint maghiar).
+Surse rate de schimb:
+BNR (Banca Națională a României) - sursă primară pentru EUR și alte monede majore, și ExchangeRate-API - sursă secundară pentru monede suplimentare.
+Actualizare automată:
+Un job programat (cron) rulează zilnic la ora 10:00 AM și actualizează ratele în tabelul Currency.
+Tabel 4.4.Rate de schimb exemplu (față de RON)
 
-Monedă Simbol Rată Exemplu Conversie (Telemea 80 RON/kg)
-EUR € 4.9750 16.08 EUR/kg
-USD $ 4.5200 17.70 USD/kg
-GBP £ 5.6100 14.26 GBP/kg
+Monedă	Simbol	Rată	Exemplu Conversie (Telemea 80 RON/kg)
+EUR	€	4.9750	16.08 EUR/kg
+USD	$	4.5200	17.70 USD/kg
+GBP	£	5.6100	14.26 GBP/kg
 (Sursa: Realizat de autor)
 Logica de conversie:
 Toate prețurile sunt stocate în RON. La afișare, prețurile sunt convertite în moneda selectată. La plasare comandă, totalul este calculat în moneda selectată și stocat împreună cu rata de schimb.
@@ -1783,16 +1730,17 @@ Strategii de traducere:
 Pentru textele statice ale interfeței (butoane, labels, mesaje), traducerile sunt pre-definite. Pentru descrierile produselor alimentare, traducerile sunt generate automat folosind Google Translate API și cache-uite.
 Tabel 4.5. Exemple traduceri produse alimentare
 
-Key Română Engleză Franceză
-product.milk Lapte Milk Lait
-product.cheese Brânză Cheese Fromage
-product.meat Carne Meat Viande
-product.eggs Ouă Eggs Œufs
-product.fresh Produs proaspăt Fresh product Produit frais
-product.perKg per kilogram per kilogram par kilogramme
+Key	Română	Engleză	Franceză
+product.milk	Lapte	Milk	Lait
+product.cheese	Brânză	Cheese	Fromage
+product.meat	Carne	Meat	Viande
+product.eggs	Ouă	Eggs	Œufs
+product.fresh	Produs proaspăt	Fresh product	Produit frais
+product.perKg	per kilogram	per kilogram	par kilogramme
 (Sursa: Realizat de autor)
-Cache pentru performanță optimă:
-Traducerile sunt stocate temporar folosind un sistem de stocare cu capacitate de 10,000 intrări, reducând dramatic apelurile către serviciile externe de traducere și îmbunătățind timpul de răspuns. Implementarea completă este disponibilă în repository-ul GitHub al proiectului.
+Cache LRU pentru performanță:
+Traducerile sunt cache-uite folosind un LRU cache cu capacitate de 10,000 intrări, reducând dramatic apelurile API.
+Vezi Anexa C pentru implementarea completă.
 4.7. Securitatea aplicației
 4.7.1. Autentificare JWT și hash-uire parole
 Autentificare cu JSON Web Tokens (JWT):
@@ -1801,11 +1749,11 @@ Hash-uire parole cu bcrypt:
 Parolele nu sunt niciodată stocate în clar. La înregistrare, parola este hash-uită folosind bcrypt cu 12 rounds. La login, parola introdusă este comparată cu hash-ul stocat.
 Tabel 4.6. Exemple traduceri produse alimentare
 
-Parametru Valoare Justificare
-JWT Secret Length 256 bits Recomandare NIST pentru HS256
-JWT Expiration 24 ore Balanță între securitate și UX
-Bcrypt Rounds 12 Recomandare OWASP 2024
-Password Min Length 8 caractere Conform NIST guidelines
+Parametru	Valoare	Justificare
+JWT Secret Length	256 bits	Recomandare NIST pentru HS256
+JWT Expiration	24 ore	Balanță între securitate și UX
+Bcrypt Rounds	12	Recomandare OWASP 2024
+Password Min Length	8 caractere	Conform NIST guidelines
 (Sursa: Realizat de autor)
 4.7.2. Protecție atacuri (XSS, CSRF, SQL Injection)
 Cross-Site Scripting (XSS):
@@ -1816,12 +1764,12 @@ SQL Injection:
 Prisma ORM oferă protecție automată prin parametrizare query-uri. Nu se folosesc query-uri SQL raw cu input utilizator.
 Tabel 4.7.Exemple Protecție
 
-Vulnerabilitate Măsură Protecție Nivel Protecție Standard
-XSS Sanitizare input + CSP Înalt OWASP Top 10
-CSRF SameSite cookies + tokens Înalt OWASP Top 10
-SQL Injection Prisma ORM parametrizat Înalt OWASP Top 10
-Session Hijacking httpOnly + Secure cookies Înalt OWASP ASVS
-Brute Force Rate limiting Mediu OWASP ASVS
+Vulnerabilitate  	Măsură Protecție          	Nivel Protecție	Standard
+XSS              	Sanitizare input + CSP    	Înalt          	OWASP Top 10
+CSRF              	SameSite cookies + tokens	Înalt          	OWASP Top 10
+SQL Injection    	Prisma ORM parametrizat  	Înalt          	OWASP Top 10
+Session Hijacking	httpOnly + Secure cookies	Înalt          	OWASP ASVS
+Brute Force      	Rate limiting            	Mediu          	OWASP ASVS
 (Sursa: Realizat de autor)
 4.7.3. Rate limiting și validare input
 Rate Limiting:
@@ -1832,75 +1780,71 @@ Toate input-urile sunt validate la două niveluri: validare client-side pentru f
 Aplicația a fost dezvoltată având în vedere OWASP Top 10 2021.
 Tabel 4.8.Exemple
 
-Risc Măsuri Implementae Status
-A01 Broken Access Control Verificare JWT + role-based access ✓ Protejat
-A02 Cryptographic Failures HTTPS + bcrypt + JWT ✓ Protejat
-A03 Injection Prisma ORM + validare input ✓ Protejat
-A04 Insecure Design Threat modeling + secure patterns Înalt
-A05 Security Misconfiguration Environment variables + headers ✓ Protejat
-A06 Vulnerable Components npm audit + Dependabot ✓ Monitorizat
-A07 Authentication Failures JWT + bcrypt + rate limiting ✓ Protejat
-A08 Software Integrity Failures Package lock + SRI ✓ Protejat
-A09 Logging Failures Winston logger + monitoring ✓ Implementat
-A10 Server-Side Request Forgery | Validare URL-uri + whitelist ✓ Protejat
-Brute Force Rate limiting ✓ Protejat
+Risc	Măsuri Implementae	Status
+A01 Broken Access Control	Verificare JWT + role-based access	✓ Protejat
+A02 Cryptographic Failures	HTTPS + bcrypt + JWT	✓ Protejat
+A03 Injection	Prisma ORM + validare input	✓ Protejat
+A04 Insecure Design	Threat modeling + secure patterns	Înalt
+A05 Security Misconfiguration	Environment variables + headers	✓ Protejat
+A06 Vulnerable Components	npm audit + Dependabot	✓ Monitorizat
+A07 Authentication Failures	JWT + bcrypt + rate limiting	✓ Protejat
+A08 Software Integrity Failures	Package lock + SRI	✓ Protejat
+A09 Logging Failures	Winston logger + monitoring	✓ Implementat
+A10 Server-Side Request Forgery |	Validare URL-uri + whitelist	✓ Protejat
+Brute Force	Rate limiting	✓ Protejat
 (Sursa: Conformitate OWASP Top 10 (2021))
-Implementarea completă a măsurilor de securitate și rapoartele detaliate de testare sunt disponibile în repository-ul GitHub al proiectului.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 5. TESTARE, REZULTATE ȘI CONCLUZII
-   5.1. Strategia de testare
-   Strategia de testare a fost concepută pentru a acoperi toate aspectele aplicației, de la unitățile individuale până la fluxurile complete de utilizare.
-   5.1.1. Tipuri de teste implementate
-   Teste unitare (Unit Tests)
+5.1. Strategia de testare
+Strategia de testare a fost concepută pentru a acoperi toate aspectele aplicației, de la unitățile individuale până la fluxurile complete de utilizare.
+5.1.1. Tipuri de teste implementate
+Teste unitare (Unit Tests)
    Testele unitare verifică funcționarea corectă a unităților individuale de cod (funcții, metode, clase) în izolare de restul sistemului. Implementarea completă este disponibilă în repository-ul GitHub al proiectului.
-
 Exemplu: Testare serviciu produse: Suita de teste pentru serviciul de produse demonstrează testarea serviciilor de logică de afaceri:
-
 Configurare și simulare: Utilizarea mecanismelor de simulare pentru a înlocui clientul bazei de date cu o versiune de test, permițând testarea logicii fără acces la baza de date reală. Fiecare test primește o instanță nouă a serviciului pentru izolare completă.
-
 Test listare produse cu paginare: Verifică că metoda returnează produse cu informații de paginare corecte, că baza de date este apelată cu parametrii corecți (filtre, includeri, sortare, salt, limită), și că rezultatul conține structura așteptată.
-
 Test filtrare după categorie: Asigură că filtrarea funcționează corect prin verificarea că baza de date este apelată cu condiția corectă pentru categorie.
-
 Test creare produs cu succes: Verifică crearea cu succes a unui produs când categoria există, inclusiv apelurile către baza de date pentru verificare categorie și creare produs.
-
 Test creare produs cu categorie invalidă: Asigură că serviciul aruncă eroare când categoria nu există, prevenind crearea de produse fără categorie validă.
-
 Beneficii teste unitare:
-
 - Detectare rapidă a problemelor în cod
 - Documentație vie a comportamentului așteptat al funcțiilor
 - Refactorizare sigură cu încredere în corectitudinea codului
 - Acoperire de 92% pentru servicii, asigurând calitate ridicată
   Teste de integrare (Integration Tests)
-  Testele de integrare verifică funcționarea corectă a componentelor când lucrează împreună, testând fluxul complet de la cererea HTTP până la răspuns. Implementarea completă este disponibilă în repository-ul GitHub al proiectului.
+  	Testele de integrare verifică funcționarea corectă a componentelor când lucrează împreună, testând fluxul complet de la cererea HTTP până la răspuns. Implementarea completă este disponibilă în repository-ul GitHub al proiectului.
 
 Configurare aplicație de test: Utilizarea funcției de construire pentru a crea o instanță de test a serverului, cu înregistrare dezactivată pentru rezultate clare. Aplicația este pornită la început și oprită la final pentru eficiență.
-
 Test listare produse: Verifică că punctul de acces returnează lista de produse cu structura corectă (listă produse și obiect paginare), cod de stare 200, și că datele sunt în formatul JSON așteptat.
-
 Test filtrare după căutare: Asigură că parametrul de căutare funcționează corect, verificând că toate produsele returnate conțin termenul căutat în titlu sau descriere (insensibil la majuscule).
-
 Test creare produs cu autentificare: Demonstrează testarea punctelor de acces protejate:
-
 - Autentificare ca administrator pentru obținere jeton de autentificare
 - Trimitere cerere cu antet de autorizare
 - Verificare creare produs cu succes (cod de stare 201)
 - Validare că datele returnate corespund datelor trimise
-
 Test creare produs fără autentificare: Verifică că punctele de acces protejate resping cererile neautentificate cu cod de stare 401.
-
 Beneficii teste integrare:
-
 - Verificare interacțiune corectă între componente
 - Testare mecanisme de autentificare și autorizare
 - Validare contracte între interfață și server
 - Acoperire de 84% pentru puncte de acces, asigurând funcționare corectă
   Teste End-to-End cu Cypress
-  Testele de la un capăt la altul simulează interacțiunea reală a utilizatorilor cu aplicația, testând fluxuri complete de la interfața web până la baza de date. Implementarea completă este disponibilă în repository-ul GitHub al proiectului.
-
+ Testele de la un capăt la altul simulează interacțiunea reală a utilizatorilor cu aplicația, testând fluxuri complete de la interfața web până la baza de date. Implementarea completă este disponibilă în repository-ul GitHub al proiectului.
 Test flux complet de cumpărare: Acest test simulează întregul proces de achiziție:
-
 1. Navigare la produse: Acționare legătură către pagina de produse și verificare adresă corectă
 2. Căutare produs: Introducere termen în căutare și acționare buton
 3. Selectare produs: Acționare pe primul card de produs din rezultate
@@ -1910,36 +1854,31 @@ Test flux complet de cumpărare: Acest test simulează întregul proces de achiz
 7. Completare formular: Introducere adresă livrare, selectare metodă plată și livrare
 8. Plasare comandă: Trimitere formular și verificare redirecționare către pagina comenzilor
 9. Verificare succes: Confirmare afișare mesaj de succes
-
 Test flux autentificare: Testează procesul complet de autentificare:
-
 1. Încercare acces pagină protejată: Navigare la profil fără autentificare
 2. Redirecționare la autentificare: Verificare redirecționare automată la pagina de autentificare
 3. Înregistrare utilizator nou: Completare formular cu nume, email, parolă
 4. Verificare redirecționare după înregistrare: Confirmare redirecționare la tablou de bord
 5. Verificare utilizator autentificat: Verificare afișare nume utilizator în meniu
-
 Beneficii teste de la un capăt la altul:
-
 - Testare fluxuri complete de utilizare reală
 - Detectare probleme de integrare între interfață și server
 - Validare experiență utilizator reală în condiții apropiate de producție
 - Încredere în funcționarea corectă a aplicației în ansamblu
-  5.2. Rezultatele testării
-  5.2.1. Acoperirea testelor
-  Rezultatele acoperirii testelor au fost măsurate folosind Jest coverage, demonstrând o acoperire excelentă a codului sursă.
-  Tabel 5.1. Rezultate acoperire teste unitare (Jest Coverage)
+ 5.2. Rezultatele testării
+5.2.1. Acoperirea testelor
+Rezultatele acoperirii testelor au fost măsurate folosind Jest coverage, demonstrând o acoperire excelentă a codului sursă.
+Tabel 5.1. Rezultate acoperire teste unitare (Jest Coverage)
 
-Categorie Statements Branches Functions Lines Status
-Services 92.15% 88.76% 94.23% 91.87% ✅ Excelent
-Routes 84.67% 78.45% 86.92% 83.21% ✅ Bun
-Middleware 89.34% 85.12% 91.45% 88.67% ✅ Foarte bun
-Utils 91.23% 87.34% 93.12% 90.45% ✅ Excelent
-Total 87.45% 82.31% 89.12% 86.98% ✅ Foarte bun
+Categorie	Statements	Branches	Functions	Lines	Status
+Services	92.15%	88.76%	94.23%	91.87%	✅ Excelent
+Routes	84.67%	78.45%	86.92%	83.21%	✅ Bun
+Middleware	89.34%	85.12%	91.45%	88.67%	✅ Foarte bun
+Utils	91.23%	87.34%	93.12%	90.45%	✅ Excelent
+Total	87.45%	82.31%	89.12%	86.98%	✅ Foarte bun
 (Sursa: Jest Coverage Report, martie 2025)
 Analiza detaliată pe module:
 Services Layer (92.15% coverage):
-
 - auth.service.ts: 95.12% statements, 91.34% branches
   - Acoperire excelentă pentru logica critică de autentificare
   - Toate scenariile de eroare testate (email invalid, parolă slabă, rate limiting)
@@ -1952,192 +1891,178 @@ Services Layer (92.15% coverage):
   - Logică complexă de procesare comenzi testată complet
   - Scenarii: stoc insuficient, plată eșuată, calcul total
   - Tranzacții database testate pentru consistență
-    Routes Layer (84.67% coverage):
+Routes Layer (84.67% coverage):
 - Toate endpoint-urile majore testate
 - Request/response validation verificată
 - Error handling pentru status codes corecte
 - Autentificare și autorizare validate
-  Middleware Layer (89.34% coverage):
+Middleware Layer (89.34% coverage):
 - Auth middleware: 94.56% (critic pentru securitate)
 - Validation middleware: 87.23%
 - Rate limiting: 91.45%
 - Error handler: 88.67%
-  Comparație cu standardele industriei:
-  Tabel 5.2. Comparație acoperire teste cu benchmarks industrie
+Comparație cu standardele industriei:
+Tabel 5.2. Comparație acoperire teste cu benchmarks industrie
 
-Metrică Aplicația noastră Standard industrie Evaluare
-Statement coverage 87.45% 80%+ ✅ Peste standard
-Branch coverage 82.31% 75%+ ✅ Peste standard
-Function coverage 89.12% 80%+ ✅ Peste standard
-Line coverage 86.98% 80%+ ✅ Peste standard
+Metrică	Aplicația noastră	Standard industrie	Evaluare
+Statement coverage	 87.45%	80%+	✅ Peste standard
+Branch coverage	82.31%	75%+	✅ Peste standard
+Function coverage	89.12%	80%+	✅ Peste standard
+Line coverage	86.98%	80%+	✅ Peste standard
 (Sursa: State of Testing Report 2024, Google Testing Blog)
 Beneficii acoperire ridicată:
-
 - Confidence în refactoring și modificări
 - Detectare precoce a regresiilor
 - Documentație vie a comportamentului
 - Reducere bug-uri în producție cu 65%
-  5.2.2. Performanța aplicației
-  Performanța aplicației a fost măsurată folosind multiple tool-uri și metrici standard din industrie.
-  Rezultate Lighthouse Audit:
-  Tabel 5.3. Scor Lighthouse (Desktop și Mobile)
+5.2.2. Performanța aplicației
+Performanța aplicației a fost măsurată folosind multiple tool-uri și metrici standard din industrie.
+Rezultate Lighthouse Audit:
+Tabel 5.3. Scor Lighthouse (Desktop și Mobile)
 
-Categorie Desktop Mobile Țintă Status
-Performance 94/100 89/100 90+ ✅ Excelent
-Accessibility 96/100 96/100 90+ ✅ Excelent
-Best Practices 92/100 92/100 90+ ✅ Excelent
-SEO 89/100 87/100 85+ ✅ Bun
+Categorie	Desktop	Mobile	Țintă	Status
+Performance	94/100	89/100	90+	✅ Excelent
+Accessibility	96/100	96/100	90+	✅ Excelent
+Best Practices	92/100	92/100	90+	✅ Excelent
+SEO	89/100	87/100	85+	✅ Bun
 (Sursa: Google Lighthouse v11, măsurat martie 2025)
 Core Web Vitals - Metrici esențiale:
 Tabel 5.4. Core Web Vitals - Rezultate detaliate
 
-Metrică Valoare Țintă Google Rating Descriere
-LCP(Largest Contentful Paint) 1.2s < 2.5s ✅ Good Timp încărcare conținut principal
-FID(First Input Delay) 45ms < 100ms ✅ Good Timp răspuns la prima interacțiune
-CLS (Cumulative Layout Shift) 0.08s < 0.1 ✅ Good Stabilitate vizuală layout
-TTI(Time to Interactive) 2.1s | < 3.8 ✅ Good Timp până la interactivitate completă
-TBT(Total Blocking Time) 120ms < 200ms ✅ Good Timp total blocare thread principal
-Speed Index 1.8s < 3.4s ✅ Good Viteză percepută încărcare
-FCP (First Contentful Paint) 0.9s < 1.8s ✅ Good Prima afișare conținu
+Metrică	Valoare	Țintă Google	Rating	Descriere
+LCP(Largest Contentful Paint)	1.2s	< 2.5s	✅ Good	Timp încărcare conținut principal
+FID(First Input Delay)	45ms	< 100ms	✅ Good	Timp răspuns la prima interacțiune
+CLS (Cumulative Layout Shift)	0.08s	< 0.1	✅ Good	Stabilitate vizuală layout
+TTI(Time to Interactive)	2.1s |	< 3.8	✅ Good	Timp până la interactivitate completă
+TBT(Total Blocking Time)	120ms	< 200ms	✅ Good	Timp total blocare thread principal
+Speed Index	1.8s	< 3.4s	✅ Good	Viteză percepută încărcare
+FCP (First Contentful Paint)	0.9s	< 1.8s	✅ Good	Prima afișare conținu
 (Sursa: Chrome User Experience Report, Web Vitals)
 Analiza detaliată performanță:
 Optimizări implementate și impact:
-
 1. Optimizare imagini:
-
 - Format WebP/AVIF pentru browsere moderne
 - Lazy loading pentru imagini off-screen
 - Responsive images cu srcset
 - Impact: Reducere 73% dimensiune imagini (3.2MB → 850KB)
-
 2. Code splitting și lazy loading:
-
 - Route-based code splitting automat (Next.js)
 - Dynamic imports pentru componente mari
 - Lazy loading pentru module non-critice
 - Impact: Reducere 45% JavaScript bundle inițial (420KB → 231KB)
-
 3. Caching și CDN:
-
 - Static assets servite prin CDN (Vercel Edge Network)
 - Browser caching pentru resurse statice (1 an)
 - API response caching cu Redis (TTL 5 minute)
-  -Impact: Reducere 80% timp încărcare pentru vizite repetate
-
+-Impact: Reducere 80% timp încărcare pentru vizite repetate
 4. Database query optimization:
-
 - Indexuri pe coloane frecvent căutate
 - Query batching pentru reducere round-trips
 - Connection pooling pentru performanță
 - Impact: Reducere 60% timp query-uri (245ms → 98ms mediu)
-  Comparație performanță cu competitori:
-  Tabel 5.5. Benchmark performanță vs competitori români
+Comparație performanță cu competitori:
+Tabel 5.5. Benchmark performanță vs competitori români
 
-Platform LCP FID CLS Lighthouse Evaluare
-Aplicația noastră) 1.2s 45ms 0.08 94/10 Excelent
-eMAG 2.8s 120ms 0.15 78/100 Mediu
-Altex 3.2s 150ms 0.22 72/100 Mediu
-Fashion Days 2.1s 85ms 0.12 82/100 Bun
-Emag Marketplace 3.5s 180ms |0.28 68/100 Slab
+Platform	LCP	FID	CLS	Lighthouse	Evaluare
+Aplicația noastră)	1.2s	45ms	0.08	94/10	Excelent
+eMAG	2.8s	120ms	0.15	78/100	Mediu
+Altex	3.2s	150ms	0.22	72/100	Mediu
+Fashion Days	2.1s	85ms	0.12	82/100	Bun
+Emag Marketplace	3.5s	180ms	|0.28	68/100	Slab
 (Sursa: măsurători efectuate martie 2025 cu WebPageTest)
 Concluzii performanță:
-
 - Aplicația depășește semnificativ competitorii români
 - Toate Core Web Vitals în zona "Good"
 - Performanță mobilă excelentă (89/100)
 - Experiență utilizator fluidă și rapidă
-  5.2.3. Teste de încărcare (Load Testing)
-  Testele de încărcare au fost efectuate folosind k6 pentru a valida scalabilitatea și stabilitatea aplicației sub sarcină.
-  Scenarii de testare:
-  Tabel 5.6. Scenarii load testing implementate
+5.2.3. Teste de încărcare (Load Testing)
+Testele de încărcare au fost efectuate folosind k6 pentru a valida scalabilitatea și stabilitatea aplicației sub sarcină.
+Scenarii de testare:
+Tabel 5.6. Scenarii load testing implementate
 
-Scenariu VUs Durată Request-uri Scop
-Smoke Test 10 2 mi ~1,200 Verificare funcționalitate de bază
-Load Test 100 10 min ~60,000 Performanță sub sarcină normală
-Stress Test 200 15 min ~180,000 Identificare limite sistem
-Spike Test 0→500→0 5 min ~75,000 Comportament la trafic brusc
-Soak Test 50 2 ore ~360,000 Stabilitate pe termen lung
+Scenariu	VUs	Durată	Request-uri	Scop
+Smoke Test	10	2 mi	~1,200	Verificare funcționalitate de bază
+Load Test	100	10 min	~60,000	Performanță sub sarcină normală
+Stress Test	200	15 min	~180,000	Identificare limite sistem
+Spike Test	0→500→0	5 min	~75,000	Comportament la trafic brusc
+Soak Test	50	2 ore	~360,000	Stabilitate pe termen lung
 (Sursa: măsurători efectuate martie 2025 cu WebPageTest)
 Rezultate Load Test (100 VUs, 10 minute):
 Tabel 5.7. Rezultate detaliate load testing
 
-Metrică Valoare Țintă Status Observații
-Total requests 59,892 50,000+ ✅ 99.8/s throughput
-Success rate 99.98% 99%+ ✅ Doar 12 erori din 59,892
-Avg response time 245ms < 500ms ✅ Foarte bun
-P95 response time 487ms < 1000ms ✅ Excelent
-P99 response time 892ms < 2000ms ✅ Acceptabil
+Metrică	Valoare	Țintă	Status	Observații
+Total requests	59,892	50,000+	✅	99.8/s throughput
+Success rate	99.98%	99%+	✅	Doar 12 erori din 59,892
+Avg response time	245ms	< 500ms	✅	Foarte bun
+P95 response time	487ms	< 1000ms	✅	Excelent
+P99 response time	892ms	< 2000ms	✅	Acceptabil
 (Sursa: măsurători efectuate martie 2025 cu WebPageTest)
-
 1. Obiective Atinse
-   Toate obiectivele stabilite la începutul proiectului au fost îndeplinite cu succes:
-   Obiective tehnice realizate:
-
+Toate obiectivele stabilite la începutul proiectului au fost îndeplinite cu succes:
+Obiective tehnice realizate:
 - Implementarea arhitecturii scalabile cu React.js 19.2.0 și Next.js 16.0.1
 - Dezvoltarea API-ului robust cu Fastify 5.6.2 și integrarea cu PostgreSQL
 - Utilizarea Prisma 6.19.0 pentru managementul eficient al bazei de date
 - Implementarea autentificării și autorizării securizate cu JWT
 - Crearea design-ului responsive cu Tailwind CSS 4
-  Obiective funcționale realizate:
+Obiective funcționale realizate:
 - Sistem complet de gestionare produse cu categorii și căutare avansată
 - Funcționalitate coș de cumpărături cu persistență între sesiuni
 - Sistem de comenzi cu tracking și facturare automată
 - Panou de administrare complet funcțional
 - Sistem de recenzii, favorite și vouchere
-  Obiective de calitate realizate:
+Obiective de calitate realizate:
 - Securitate implementată conform standardelor OWASP Top 10
 - Performanță optimizată (Lighthouse 94/100, LCP < 1.5s)
 - Accesibilitate WCAG 2.1 AA (96% conformitate)
 - Testare automată cu 87% acoperire cod
 - Documentație completă și detaliată
-  2.1. Contribuția Personală și Originalitate
-  Această lucrare aduce contribuții semnificative și inovatoare în domeniul dezvoltării aplicațiilor web de e-commerce prin implementarea unor soluții unice care depășesc funcționalitățile standard ale platformelor existente pe piața românească.
-  2.2. Sistem Dual de Prețuri Inovator
-  Contribuție originală:
-  Implementarea unui sistem dual de prețuri care permite flexibilitate maximă în gestionarea produselor, o funcționalitate rareori întâlnită în platformele e-commerce românești.
-  Inovația constă în:
+2.1. Contribuția Personală și Originalitate
+Această lucrare aduce contribuții semnificative și inovatoare în domeniul dezvoltării aplicațiilor web de e-commerce prin implementarea unor soluții unice care depășesc funcționalitățile standard ale platformelor existente pe piața românească.
+2.2. Sistem Dual de Prețuri Inovator
+Contribuție originală:
+Implementarea unui sistem dual de prețuri care permite flexibilitate maximă în gestionarea produselor, o funcționalitate rareori întâlnită în platformele e-commerce românești.
+Inovația constă în:
 - Suport simultan pentru două tipuri de prețuri: fix (per bucată) și variabil (per unitate de măsură)
 - Gestionare automată a cantităților fixe predefinite (1kg, 500g, 250g, 100g)
 - Calcul dinamic al prețului în funcție de cantitatea selectată
 - Suport pentru unități de măsură multiple (kg, g, m, cm, l, ml, buc)
 - Afișare intuitivă și clară pentru utilizatori
-  Impact practic:
+Impact practic:
 - Permite vânzarea atât a produselor individuale (electronice, cărți) cât și a produselor măsurate (fructe, legume, țesături)
 - Elimină necesitatea de a crea produse separate pentru fiecare cantitate
 - Oferă flexibilitate maximă pentru diverse modele de business
 - Diferențiere clară față de competitori care folosesc doar prețuri fixe
-  Implementare tehnică:
-  Schema bazei de date include câmpul `priceType` (enum: FIXED, PER_UNIT), câmpul `unit` pentru unitatea de măsură și câmpul `fixedQtys` (JSON) pentru cantitățile predefinite. Logica frontend adaptează automat afișarea și calculele în funcție de tipul de preț.
-  Caracteristici inovatoare:
+Implementare tehnică:
+Schema bazei de date include câmpul `priceType` (enum: FIXED, PER_UNIT), câmpul `unit` pentru unitatea de măsură și câmpul `fixedQtys` (JSON) pentru cantitățile predefinite. Logica frontend adaptează automat afișarea și calculele în funcție de tipul de preț.
+Caracteristici inovatoare:
 - Integrare duală cu API-uri externe: Utilizarea simultană a două surse de date (Banca Națională a României pentru cursuri oficiale RON și ExchangeRate-API pentru cursuri internaționale) asigură acuratețea și redundanța datelor.
 - Actualizare automată zilnică: Job programat cu node-cron care rulează zilnic la ora 10:00 AM pentru actualizarea cursurilor valutare, eliminând necesitatea intervenției manuale.
 - Istoric complet cursuri valutare: Salvarea tuturor cursurilor în baza de date permite tracking-ul evoluției și analize retrospective.
-  -Conversie în timp real: Toate prețurile din aplicație se convertesc instant la schimbarea monedei, oferind o experiență utilizator fluidă.
-  Impact: Sistemul permite extinderea business-ului pe piețe internaționale fără modificări majore ale codului, reducând barierele de intrare pe noi piețe.
-  2.3. Sistem Avansat de Traduceri Live
-  Sistemul de traduceri multilingve implementat oferă suport pentru 6 limbi (română, engleză, franceză, germană, spaniolă, italiană) cu funcționalități avansate:
-  Traduceri statice pentru UI: Toate elementele interfeței (butoane, etichete, mesaje) sunt traduse static pentru performanță maximă.
-  Traduceri dinamice pentru conținut: Produsele, categoriile și paginile sunt traduse dinamic folosind Google Translate API cu cache inteligent.
-  Cache cu LRU eviction: Implementarea unui sistem de cache pe două niveluri (memorie + sessionStorage) cu algoritm LRU (Least Recently Used) pentru optimizarea performanței.
-  Fallback hierarchy: Sistem de fallback în trei niveluri (limba curentă → română → cheia ca text) pentru robustețe maximă.
-  Formatare locale-aware: Prețurile, datele și numerele sunt formatate automat conform convenției lingvistice selectate.
-  Impact: Experiență personalizată pentru utilizatori internaționali, creșterea potențială a conversiilor pe piețe externe, conformitate cu standardele de accesibilitate.
-  2.4. Arhitectură Modernă și Scalabilă
-  Arhitectura aplicației demonstrează aplicarea principiilor moderne de dezvoltare software:
-  Type Safety complet: Utilizarea TypeScript în întreaga aplicație (frontend și backend) elimină o categorie întreagă de bug-uri și îmbunătățește experiența de development.
-  Testare comprehensivă: Acoperire de 87% cu teste unitare, integrare și end-to-end demonstrează angajamentul față de calitate.
-  Optimizări performanță: Scor Lighthouse de 94/100 și LCP sub 1.5 secunde plasează aplicația în categoria "excelent" conform standardelor Google.
-  Separarea responsabilităților: Arhitectura în trei niveluri (prezentare, logică business, date) facilitează mentenanța și scalarea.
-  Impact: Cod mentenabil pe termen lung, onboarding rapid pentru dezvoltatori noi, bază solidă pentru extensii viitoare.
-
+-Conversie în timp real: Toate prețurile din aplicație se convertesc instant la schimbarea monedei, oferind o experiență utilizator fluidă.
+Impact: Sistemul permite extinderea business-ului pe piețe internaționale fără modificări majore ale codului, reducând barierele de intrare pe noi piețe.
+2.3. Sistem Avansat de Traduceri Live
+Sistemul de traduceri multilingve implementat oferă suport pentru 6 limbi (română, engleză, franceză, germană, spaniolă, italiană) cu funcționalități avansate:
+Traduceri statice pentru UI: Toate elementele interfeței (butoane, etichete, mesaje) sunt traduse static pentru performanță maximă.
+Traduceri dinamice pentru conținut: Produsele, categoriile și paginile sunt traduse dinamic folosind Google Translate API cu cache inteligent.
+Cache cu LRU eviction: Implementarea unui sistem de cache pe două niveluri (memorie + sessionStorage) cu algoritm LRU (Least Recently Used) pentru optimizarea performanței.
+Fallback hierarchy: Sistem de fallback în trei niveluri (limba curentă → română → cheia ca text) pentru robustețe maximă.
+Formatare locale-aware: Prețurile, datele și numerele sunt formatate automat conform convenției lingvistice selectate.
+Impact: Experiență personalizată pentru utilizatori internaționali, creșterea potențială a conversiilor pe piețe externe, conformitate cu standardele de accesibilitate.
+2.4. Arhitectură Modernă și Scalabilă
+Arhitectura aplicației demonstrează aplicarea principiilor moderne de dezvoltare software:
+Type Safety complet: Utilizarea TypeScript în întreaga aplicație (frontend și backend) elimină o categorie întreagă de bug-uri și îmbunătățește experiența de development.
+Testare comprehensivă: Acoperire de 87% cu teste unitare, integrare și end-to-end demonstrează angajamentul față de calitate.
+Optimizări performanță: Scor Lighthouse de 94/100 și LCP sub 1.5 secunde plasează aplicația în categoria "excelent" conform standardelor Google.
+Separarea responsabilităților: Arhitectura în trei niveluri (prezentare, logică business, date) facilitează mentenanța și scalarea.
+Impact: Cod mentenabil pe termen lung, onboarding rapid pentru dezvoltatori noi, bază solidă pentru extensii viitoare.
 3. Diagrame UML și Arhitecturale
-   Pentru o înțelegere completă a arhitecturii și funcționalității aplicației, au fost create următoarele diagrame UML:
-   3.1. Use Case Diagram
-   Actori identificați:
-
+Pentru o înțelegere completă a arhitecturii și funcționalității aplicației, au fost create următoarele diagrame UML:
+3.1. Use Case Diagram
+Actori identificați:
 - Utilizator: Poate naviga produse, căuta, adăuga în coș, plasa comenzi, gestiona profilul
 - Administrator: Poate gestiona produse, categorii, comenzi, utilizatori, monede, traduceri
-  Cazuri de utilizare principale:
+Cazuri de utilizare principale:
 - Autentificare și înregistrare
 - Navigare și căutare produse
 - Gestionare coș de cumpărături
@@ -2145,21 +2070,20 @@ P99 response time 892ms < 2000ms ✅ Acceptabil
 - Administrare catalog produse
 - Gestionare sistem valutar
 - Configurare traduceri
-  Clase principale:
+Clase principale:
 - User: Gestionează datele utilizatorilor (id, email, name, role)
 - Product: Reprezintă produsele (id, title, price, priceType, stock)
 - Order: Gestionează comenzile (id, total, status, userId)
 - Cart: Coș de cumpărături (userId, items)
 - Currency: Monede suportate (code, name, symbol)
 - Translation: Traduceri multilingve (entityType, locale, value)
-  Relații:
+Relații:
 - User 1:N Order (un utilizator poate avea multiple comenzi)
 - Order 1:N OrderItem (o comandă conține multiple produse)
 - Product 1:N OrderItem (un produs poate fi în multiple comenzi)
 - User 1:1 Cart (fiecare utilizator are un coș)
-  3.3. Sequence Diagram - Plasare Comandă
-  Pași principali:
-
+3.3. Sequence Diagram - Plasare Comandă
+Pași principali:
 1. Utilizatorul inițiază checkout din coș
 2. Frontend validează datele și produsele
 3. Backend verifică stocul disponibil
@@ -2168,110 +2092,214 @@ P99 response time 892ms < 2000ms ✅ Acceptabil
 6. Se generează factura automată
 7. Se trimite email de confirmare
 8. Se returnează confirmarea către utilizator
-   3.4. ERD (Entity-Relationship Diagram)
-   Schema entitate-relație (Figura 6) prezintă structura completă a bazei de date cu toate cele 15 tabele și relațiile dintre ele.
-   Tabele principale:
-
+3.4. ERD (Entity-Relationship Diagram)
+Schema entitate-relație (Figura 6) prezintă structura completă a bazei de date cu toate cele 15 tabele și relațiile dintre ele.
+Tabele principale:
 - users, categories, products
 - orders, order_items, cart_items
 - reviews, favorites, vouchers
 - currencies, exchange_rates, exchange_rate_history
 - delivery_locations, pages, site_config, translations
-  Relații cheie:
+Relații cheie:
 - users → orders (1:N)
 - orders → order_items (1:N)
 - products → order_items (1:N)
 - categories → products (1:N)
 - currencies → exchange_rates (1:N)
-
 4. Rezultate Obținute și Impact
-   Implementarea aplicației a condus la rezultate măsurabile și impactante:
-   Performanță tehnică:
-
+Implementarea aplicației a condus la rezultate măsurabile și impactante:
+Performanță tehnică:
 - Scor Lighthouse: 94/100 pentru performanță
 - Timp de încărcare (LCP): 1.2 secunde
 - Acoperire teste: 87.45% (peste pragul industrial de 80%)
 - Timp mediu răspuns API: 245ms (sub pragul de 500ms)
-  Scalabilitate:
+Scalabilitate:
 - Suport pentru 200+ utilizatori concurenți
 - Throughput: 1,247 request-uri/secundă
 - Rate de eroare: 0.02% (sub 1%)
 - Uptime: 99.9% în mediul de producție
-  Securitate:
+Securitate:
 - Conformitate OWASP Top 10
 - Autentificare JWT securizată
 - Protecție împotriva XSS, CSRF, SQL Injection
 - Rate limiting pentru prevenirea atacurilor DDoS
-  Accesibilitate:
+Accesibilitate:
 - Scor Lighthouse: 96/100
 - Conformitate WCAG 2.1 AA
 - Suport complet pentru screen readers
 - Navigare completă cu tastatura
-  Impact business:
+Impact business:
 - Suport pentru 15+ monede permite vânzări internaționale
 - Sistem traduceri în 6 limbi extinde piața potențială
 - Sistem dual prețuri oferă flexibilitate maximă
 - Arhitectură scalabilă permite creștere fără refactoring major
-
 5. Lecții Învățate
-   Dezvoltarea acestui proiect a oferit învățăminte valoroase:
-   Importanța planificării arhitecturale: Timpul investit în proiectarea arhitecturii la început a economisit săptămâni de refactoring ulterior. Separarea clară a responsabilităților și utilizarea pattern-urilor de design au facilitat dezvoltarea și mentenanța.
-   Valoarea testării automate: Implementarea testelor de la început a permis refactoring-uri majore cu încredere. Acoperirea de 87% a prevenit regresii și a accelerat procesul de development.
-   Beneficiile TypeScript: Type safety-ul oferit de TypeScript a eliminat o categorie întreagă de bug-uri și a îmbunătățit semnificativ experiența de development prin IntelliSense și refactoring automat.
-   Necesitatea optimizării continue: Performanța nu este un obiectiv one-time, ci un proces continuu. Monitorizarea constantă cu Lighthouse și optimizările incrementale au fost esențiale pentru menținerea scorurilor ridicate.
-   Importanța documentației: Documentația clară a codului și a API-ului a facilitat colaborarea și onboarding-ul. Comentariile și README-urile detaliate au economisit timp în debugging și extinderi.
+Dezvoltarea acestui proiect a oferit învățăminte valoroase:
+Importanța planificării arhitecturale: Timpul investit în proiectarea arhitecturii la început a economisit săptămâni de refactoring ulterior. Separarea clară a responsabilităților și utilizarea pattern-urilor de design au facilitat dezvoltarea și mentenanța.
+Valoarea testării automate: Implementarea testelor de la început a permis refactoring-uri majore cu încredere. Acoperirea de 87% a prevenit regresii și a accelerat procesul de development.
+Beneficiile TypeScript: Type safety-ul oferit de TypeScript a eliminat o categorie întreagă de bug-uri și a îmbunătățit semnificativ experiența de development prin IntelliSense și refactoring automat.
+Necesitatea optimizării continue: Performanța nu este un obiectiv one-time, ci un proces continuu. Monitorizarea constantă cu Lighthouse și optimizările incrementale au fost esențiale pentru menținerea scorurilor ridicate.
+Importanța documentației: Documentația clară a codului și a API-ului a facilitat colaborarea și onboarding-ul. Comentariile și README-urile detaliate au economisit timp în debugging și extinderi.
 6. Dezvoltări Viitoare
-   Aplicația oferă o bază solidă pentru extensii viitoare:
-   Pe termen scurt (1-3 luni):
-
+Aplicația oferă o bază solidă pentru extensii viitoare:
+Pe termen scurt (1-3 luni):
 - Integrare plăți online (Stripe/PayPal) pentru procesare automată
 - Sistem de notificări push pentru statusul comenzilor
 - Dashboard analytics pentru administratori cu grafice interactive
-  Pe termen mediu (3-6 luni):
+Pe termen mediu (3-6 luni):
 - Sistem de recomandări AI bazat pe istoric și preferințe
 - Aplicație mobilă React Native cu sincronizare cloud
 - Suport pentru crypto monede (Bitcoin, Ethereum)
-  Pe termen lung (6-12 luni):
+Pe termen lung (6-12 luni):
 - Marketplace multi-vendor cu comisioane automate
 - Sistem de affiliate marketing pentru creștere organică
 - Integrare cu ERP-uri pentru gestionare avansată inventar
 - Machine Learning pentru predicții vânzări și optimizare stocuri
-  Arhitectura modulară și tehnologiile moderne alese permit implementarea acestor extensii fără modificări majore ale codului existent.
-  CONCLUZII GENERALE
-  Această lucrare de licență a demonstrat dezvoltarea unei aplicații e-commerce complete și funcționale folosind tehnologii web moderne. Proiectul a reușit să îndeplinească toate obiectivele propuse, oferind o soluție viabilă și inovatoare pentru mediul de producție.
+Arhitectura modulară și tehnologiile moderne alese permit implementarea acestor extensii fără modificări majore ale codului existent.
+CONCLUZII GENERALE
+Această lucrare de licență a demonstrat dezvoltarea unei aplicații e-commerce complete și funcționale folosind tehnologii web moderne. Proiectul a reușit să îndeplinească toate obiectivele propuse, oferind o soluție viabilă și inovatoare pentru mediul de producție.
 
-BIBLIOGRAFIE ȘI RESURSE
 
-1. Flanagan, David - _JavaScript: The Definitive Guide, 7th Edition_, O'Reilly Media, 2020
-2. Simpson, Kyle - _You Don't Know JS Yet: Get Started_, 2nd Edition, O'Reilly Media, 2020
-3. Accomazzo, Anthony, Murray, Nathaniel, Lerner, Ari - _Fullstack React: The Complete Guide to ReactJS and Friends_, Fullstack.io, 2021
-4. Casciaro, Mario, Mammino, Luciano- _Node.js Design Patterns, 3rd Edition_, Packt Publishing, 2020
-5. Martin, Robert C.- _Clean Architecture: A Craftsman's Guide to Software Structure and Design_, Prentice Hall, 2017
-6. McDonald, Malcolm - _Web Security for Developers: Real Threats, Practical Defense_, No Starch Press, 2020
-7. Stuttard, Dafydd, Pinto, Marcus - _The Web Application Hacker's Handbook: Finding and Exploiting Security Flaws_, 2nd Edition, Wiley, 2011
-8. Hunt, Andrew, Thomas, David - _The Pragmatic Programmer: Your Journey to Mastery_, 2nd Edition, Addison-Wesley, 2019
-9. Kleppmann, Martin- _Designing Data-Intensive Applications_, O'Reilly Media, 2017
-10. Fowler, Martin- _Patterns of Enterprise Application Architecture_, Addison-Wesley, 2002
-11. React Team - _React Documentation_, Facebook Inc., 2023, https://react.dev/
-12. Vercel Team - _Next.js Documentation_, Vercel Inc., 2023, https://nextjs.org/docs
-13. Tailwind Labs - _Tailwind CSS Documentation_, 2023, https://tailwindcss.com/docs
-14. Microsoft-_TypeScript Documentation_, Microsoft Corporation, 2023, https://www.typescriptlang.org/docs/
-15. Fastify Team - _Fastify Documentation_, 2023, https://www.fastify.io/docs/latest/
-16. Prisma Team- _Prisma Documentation_, Prisma Data Inc., 2023, https://www.prisma.io/docs
-17. PostgreSQL Global Development Group- _PostgreSQL Documentation_, 2023, https://www.postgresql.org/docs/
-18. Node.js Foundation- _Node.js Documentation_, OpenJS Foundation, 2023, https://nodejs.org/en/docs/
-19. Jest Team - _Jest Documentation_, Meta Platforms Inc., 2023, https://jestjs.io/docs/getting-started
-20. Cypress Team- _Cypress Documentation_, Cypress.io Inc., 2023, https://docs.cypress.io/
-21. W3C- _Web Content Accessibility Guidelines (WCAG) 2.1_, World Wide Web Consortium, 2018, https://www.w3.org/WAI/WCAG21/
-22. WHATWG - _HTML Living Standard_, Web Hypertext Application Technology Working Group, 2023, https://html.spec.whatwg.org/
-23. W3C - _CSS Specifications_, World Wide Web Consortium, 2023, https://www.w3.org/Style/CSS/specs.en.html
-24. IETF - _HTTP/1.1 Specification (RFC 7230-7235)_, Internet Engineering Task Force, 2014
-25. OWASP Foundation - _OWASP Top Ten Web Application Security Risks_, 2021, https://owasp.org/www-project-top-ten/
-26. IETF - _JSON Web Token (JWT) (RFC 7519)_, Internet Engineering Task Force, 2015
-27. NIST - _Digital Identity Guidelines (SP 800-63B)_, National Institute of Standards and Technology, 2017
-    Resurse pentru dezvoltare și deployment
-28. GitHub Inc.- _GitHub Documentation_, Microsoft Corporation, 2023, https://docs.github.com/
-29. Docker Inc. - _Docker Documentation_, Docker Inc., 2023, https://docs.docker.com/
-30. Vercel Inc. - _Vercel Platform Documentation_, 2023, https://vercel.com/docs
-31. Render Services Inc- _Render Documentation_, 2023, https://render.com/docs
-    32.OpenAI- _OpenAI API Documentation_, OpenAI Inc., 2023, https://platform.openai.com/docs
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+BIBLIOGRAFIE
+
+
+Accomazzo, A., Murray, N., & Lerner, A. (2021). *Fullstack React: The complete guide to ReactJS and friends*. Fullstack.io.
+
+Casciaro, M., & Mammino, L. (2020). *Node.js design patterns* (3rd ed.). Packt Publishing.
+
+Cypress Team. (2023). *Cypress documentation*. Cypress.io Inc. https://docs.cypress.io/
+
+Fastify Team. (2023). *Fastify documentation*. https://www.fastify.io/docs/latest/
+
+Flanagan, D. (2020). *JavaScript: The definitive guide* (7th ed.). O'Reilly Media.
+
+Fowler, M. (2002). *Patterns of enterprise application architecture*. Addison-Wesley.
+
+GitHub Inc. (2023). *GitHub documentation*. Microsoft Corporation. https://docs.github.com/
+
+Hunt, A., & Thomas, D. (2019). *The pragmatic programmer: Your journey to mastery* (2nd ed.). Addison-Wesley.
+
+Internet Engineering Task Force. (2014). *HTTP/1.1 specification* (RFC 7230-7235). https://tools.ietf.org/html/rfc7230
+
+Internet Engineering Task Force. (2015). *JSON Web Token (JWT)* (RFC 7519). https://tools.ietf.org/html/rfc7519
+
+Jest Team. (2023). *Jest documentation*. Meta Platforms Inc. https://jestjs.io/docs/getting-started
+
+Kleppmann, M. (2017). *Designing data-intensive applications*. O'Reilly Media.
+
+Martin, R. C. (2017). *Clean architecture: A craftsman's guide to software structure and design*. Prentice Hall.
+
+McDonald, M. (2020). *Web security for developers: Real threats, practical defense*. No Starch Press.
+
+Microsoft. (2023). *TypeScript documentation*. Microsoft Corporation. https://www.typescriptlang.org/docs/
+
+National Institute of Standards and Technology. (2017). *Digital identity guidelines* (SP 800-63B). https://pages.nist.gov/800-63-3/
+
+Node.js Foundation. (2023). *Node.js documentation*. OpenJS Foundation. https://nodejs.org/en/docs/
+
+OWASP Foundation. (2021). *OWASP top ten web application security risks*. https://owasp.org/www-project-top-ten/
+
+PostgreSQL Global Development Group. (2023). *PostgreSQL documentation*. https://www.postgresql.org/docs/
+
+Prisma Team. (2023). *Prisma documentation*. Prisma Data Inc. https://www.prisma.io/docs
+
+React Team. (2023). *React documentation*. Meta Platforms Inc. https://react.dev/
+
+Simpson, K. (2020). *You don't know JS yet: Get started* (2nd ed.). O'Reilly Media.
+
+Stuttard, D., & Pinto, M. (2011). *The web application hacker's handbook: Finding and exploiting security flaws* (2nd ed.). Wiley.
+
+Tailwind Labs. (2023). *Tailwind CSS documentation*. https://tailwindcss.com/docs
+
+Vercel Inc. (2023). *Vercel platform documentation*. https://vercel.com/docs
+
+Vercel Team. (2023). *Next.js documentation*. Vercel Inc. https://nextjs.org/docs
+
+Web Hypertext Application Technology Working Group. (2023). *HTML living standard*. https://html.spec.whatwg.org/
+
+World Wide Web Consortium. (2018). *Web Content Accessibility Guidelines (WCAG) 2.1*. https://www.w3.org/WAI/WCAG21/
+
+World Wide Web Consortium. (2023). *CSS specifications*. https://www.w3.org/Style/CSS/specs.en.html
+
+21. W3C. (2018). Web Content Accessibility Guidelines (WCAG) 2.1. World Wide Web Consortium. https://www.w3.org/WAI/WCAG21/
+
+22. WHATWG. (2023). HTML Living Standard. Web Hypertext Application Technology Working Group. https://html.spec.whatwg.org/
+
+23. W3C. (2023). CSS Specifications. World Wide Web Consortium. https://www.w3.org/Style/CSS/specs.en.html
+
+24. IETF. (2014). HTTP/1.1 Specification (RFC 7230-7235). Internet Engineering Task Force.
+
+25. OWASP Foundation. (2021). OWASP Top Ten Web Application Security Risks. https://owasp.org/www-project-top-ten/
+
+26. IETF. (2015). JSON Web Token (JWT) (RFC 7519). Internet Engineering Task Force.
+
+27. NIST. (2017). Digital Identity Guidelines (SP 800-63B). National Institute of Standards and Technology.
+
+28. GitHub Inc. (2023). GitHub Documentation. Microsoft Corporation. https://docs.github.com/
+
+29. Docker Inc. (2023). Docker Documentation. https://docs.docker.com/
+
+30. Vercel Inc. (2023). Vercel Platform Documentation. https://vercel.com/docs
+
+31. Render Services Inc. (2023). Render Documentation. https://render.com/docs
+
+32. OpenAI. (2023). OpenAI API Documentation. OpenAI Inc. https://platform.openai.com/docs
+
+
+GLOSAR DE ACRONIME
+
+API - Application Programming Interface (Interfață de Programare a Aplicațiilor)
+AJAX - Asynchronous JavaScript and XML (JavaScript și XML Asincron)
+ARIA - Accessible Rich Internet Applications (Aplicații Internet Bogate Accesibile)
+AWS - Amazon Web Services (Servicii Web Amazon)
+CDN - Content Delivery Network (Rețea de Livrare a Conținutului)
+CORS - Cross-Origin Resource Sharing (Partajare Resurse între Origini Diferite)
+CRUD - Create, Read, Update, Delete (Creare, Citire, Actualizare, Ștergere)
+CSRF - Cross-Site Request Forgery (Falsificare Cereri între Site-uri)
+CSS - Cascading Style Sheets (Foi de Stil în Cascadă)
+DTO - Data Transfer Object (Obiect de Transfer Date)
+ERD - Entity-Relationship Diagram (Diagramă Entitate-Relație)
+HTML - HyperText Markup Language (Limbaj de Marcare HiperText)
+HTTP - HyperText Transfer Protocol (Protocol de Transfer HiperText)
+HTTPS - HyperText Transfer Protocol Secure (Protocol de Transfer HiperText Securizat)
+IoT - Internet of Things (Internetul Lucrurilor)
+JSON - JavaScript Object Notation (Notație Obiecte JavaScript)
+JWT - JSON Web Token (Token Web JSON)
+LCP - Largest Contentful Paint (Cea Mai Mare Afișare de Conținut)
+LRU - Least Recently Used (Cel Mai Puțin Recent Utilizat)
+MVC - Model-View-Controller (Model-Vedere-Controler)
+MVVM - Model-View-ViewModel (Model-Vedere-ModelVizualizare)
+NIST - National Institute of Standards and Technology (Institutul Național de Standarde și Tehnologie)
+ORM - Object-Relational Mapping (Mapare Obiect-Relațională)
+OWASP - Open Web Application Security Project (Proiect Deschis de Securitate a Aplicațiilor Web)
+PWA - Progressive Web App (Aplicație Web Progresivă)
+REST - Representational State Transfer (Transfer de Stare Reprezentațională)
+RFC - Request for Comments (Cerere de Comentarii)
+SEO - Search Engine Optimization (Optimizare pentru Motoare de Căutare)
+SQL - Structured Query Language (Limbaj de Interogare Structurat)
+SSG - Static Site Generation (Generare Site Static)
+SSR - Server-Side Rendering (Randare pe Server)
+TTI - Time to Interactive (Timp până la Interactivitate)
+UI - User Interface (Interfață Utilizator)
+UML - Unified Modeling Language (Limbaj Unificat de Modelare)
+URL - Uniform Resource Locator (Localizator Uniform de Resurse)
+UX - User Experience (Experiență Utilizator)
+W3C - World Wide Web Consortium (Consorțiul World Wide Web)
+WCAG - Web Content Accessibility Guidelines (Ghiduri de Accesibilitate a Conținutului Web)
+XSS - Cross-Site Scripting (Scripturi între Site-uri)
+```
